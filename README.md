@@ -1,2 +1,2 @@
-# compract
+# ComPract
 Senior Project
