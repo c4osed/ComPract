@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "749898823132",
+    "firebase_url": "https://compract-d424c.firebaseio.com",
+    "project_id": "compract-d424c",
+    "storage_bucket": "compract-d424c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749898823132:android:4e8539e7fecb9ac1",
+        "android_client_info": {
+          "package_name": "com.zoazh.le.ComPract"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749898823132-4ff3eislg6p8bm1oa4otg1lf8d07tliq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zoazh.le.ComPract",
+            "certificate_hash": "7a9061a1c5bcc7092f5b8756cf50e8ae85a22f09"
+          }
+        },
+        {
+          "client_id": "749898823132-0ml6l1kkvviadbocpv422tp25g87crlh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6EvyatIDemfYiHS-zp35C46zaeHWM-vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749898823132-0ml6l1kkvviadbocpv422tp25g87crlh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

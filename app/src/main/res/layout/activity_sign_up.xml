@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondary"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Sign Up"
+                android:textAlignment="center"
+                android:textColor="@color/primary"
+                android:textSize="36sp"
+                android:textStyle="normal|bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ButtonRegisterProfilePicture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextSignUp"
+                app:srcCompat="@drawable/ic_profile_picture"
+                android:scaleType="centerCrop"
+                android:background="@drawable/background_circle" />
+
+            <EditText
+                android:id="@+id/InputRegisterEmail"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonRegisterProfilePicture"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginRight="32dp" />
+
+            <EditText
+                android:id="@+id/InputRegisterPassword"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                app:layout_constraintLeft_toLeftOf="@+id/InputRegisterEmail"
+                app:layout_constraintRight_toRightOf="@+id/InputRegisterEmail"
+                app:layout_constraintTop_toBottomOf="@+id/InputRegisterEmail" />
+
+            <EditText
+                android:id="@+id/InputRegisterConfirmPassword"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="@+id/InputRegisterPassword"
+                app:layout_constraintRight_toRightOf="@+id/InputRegisterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/InputRegisterPassword" />
+
+            <EditText
+                android:id="@+id/InputRegisterFirstName"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="@+id/InputRegisterConfirmPassword"
+                app:layout_constraintRight_toRightOf="@+id/InputRegisterConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/InputRegisterConfirmPassword" />
+
+            <EditText
+                android:id="@+id/InputRegisterLastName"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Last Name"
+                android:inputType="textPersonName"
+                app:layout_constraintLeft_toLeftOf="@+id/InputRegisterFirstName"
+                app:layout_constraintRight_toRightOf="@+id/InputRegisterFirstName"
+                app:layout_constraintTop_toBottomOf="@+id/InputRegisterFirstName" />
+
+            <Button
+                android:id="@+id/ButtonRegisterDOB"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_calendar"
+                android:hint="Date of birth"
+                android:textAlignment="viewStart"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="@+id/InputRegisterLastName"
+                app:layout_constraintRight_toRightOf="@+id/InputRegisterLastName"
+                app:layout_constraintTop_toBottomOf="@+id/InputRegisterLastName" />
+
+            <Button
+                android:id="@+id/ButtonRegisterGender"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonRegisterDOB"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonRegisterDOB"
+                app:layout_constraintRight_toLeftOf="@+id/Line1"
+                android:textAllCaps="false"
+                android:layout_marginTop="15dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginRight="10dp" />
+
+            <Button
+                android:id="@+id/ButtonRegisterCountry"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Country"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonRegisterDOB"
+                app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                app:layout_constraintRight_toRightOf="@+id/ButtonRegisterDOB"
+                android:textAllCaps="false"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintHorizontal_bias="0.0" />
+
+            <Button
+                android:id="@+id/ButtonRegisterNative"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Native"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonRegisterGender"
+                app:layout_constraintRight_toRightOf="@+id/ButtonRegisterGender"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonRegisterGender"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/ButtonRegisterLearn"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Learn"
+                app:layout_constraintBaseline_toBaselineOf="@+id/ButtonRegisterNative"
+                app:layout_constraintRight_toRightOf="@+id/ButtonRegisterCountry"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonRegisterCountry"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/ButtonRegisterSignUp"
+                style="@style/ButtonPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonRegisterNative"
+                app:layout_constraintRight_toRightOf="@+id/ButtonRegisterLearn"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonRegisterNative"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                android:padding="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="20dp" />
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="801dp"
+                android:id="@+id/Line1"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="192dp"
+                app:layout_constraintGuide_percent="0.5" />
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

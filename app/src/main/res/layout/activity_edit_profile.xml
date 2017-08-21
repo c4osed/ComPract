@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondary"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Edit Profile"
+                android:textAlignment="center"
+                android:textColor="@color/primary"
+                android:textSize="36sp"
+                android:textStyle="normal|bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ButtonEditProfileProfilePicture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:srcCompat="@drawable/ic_profile_picture"
+                android:scaleType="centerCrop"
+                android:background="@drawable/background_circle"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/TextEditProfile" />
+
+            <ImageView
+                android:id="@+id/ImageViewEditPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ButtonEditProfileProfilePicture"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileProfilePicture"
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileProfilePicture"
+                app:layout_constraintTop_toTopOf="@+id/ButtonEditProfileProfilePicture"
+                app:srcCompat="@drawable/ic_edit_picture" />
+
+            <EditText
+                android:id="@+id/InputEditProfileFirstName"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                android:layout_marginRight="32dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileProfilePicture"
+                app:layout_constraintHorizontal_bias="0.0" />
+
+            <EditText
+                android:id="@+id/InputEditProfileLastName"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Last Name"
+                android:inputType="textPersonName"
+                app:layout_constraintLeft_toLeftOf="@+id/InputEditProfileFirstName"
+                app:layout_constraintRight_toRightOf="@+id/InputEditProfileFirstName"
+                app:layout_constraintTop_toBottomOf="@+id/InputEditProfileFirstName" />
+
+            <EditText
+                android:id="@+id/InputEditProfileAbout"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="About"
+                android:inputType="textPersonName"
+                app:layout_constraintLeft_toLeftOf="@+id/InputEditProfileLastName"
+                app:layout_constraintRight_toRightOf="@+id/InputEditProfileLastName"
+                app:layout_constraintTop_toBottomOf="@+id/InputEditProfileLastName" />
+
+            <Button
+                android:id="@+id/ButtonEditProfileDOB"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_calendar"
+                android:hint="Date of birth"
+                android:textAlignment="viewStart"
+                app:layout_constraintLeft_toLeftOf="@+id/InputEditProfileAbout"
+                app:layout_constraintRight_toRightOf="@+id/InputEditProfileAbout"
+                app:layout_constraintTop_toBottomOf="@+id/InputEditProfileAbout" />
+
+            <Button
+                android:id="@+id/ButtonEditProfileGender"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileDOB"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB"
+                app:layout_constraintRight_toLeftOf="@+id/Line1"
+                android:textAllCaps="false"
+                android:layout_marginTop="15dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginRight="10dp" />
+
+            <Button
+                android:id="@+id/ButtonEditProfileCountry"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Country"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB"
+                app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileDOB"
+                android:textAllCaps="false"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintHorizontal_bias="0.0" />
+
+            <Button
+                android:id="@+id/ButtonEditProfileNative"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Native"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileGender"
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileGender"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileGender"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/ButtonEditProfileLearn"
+                style="@style/Dropdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Learn"
+                app:layout_constraintBaseline_toBaselineOf="@+id/ButtonEditProfileNative"
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileCountry"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileCountry"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/ButtonEditProfile"
+                style="@style/ButtonPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="20dp"
+                android:text="Update"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileNative"
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileLearn"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileNative" />
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="801dp"
+                android:id="@+id/Line1"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="192dp"
+                app:layout_constraintGuide_percent="0.5" />
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

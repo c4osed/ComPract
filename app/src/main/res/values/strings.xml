@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ComPract</string>
+    <string name="facebook_app_id">318604925221132</string>
+
+    <string name="required">All fields are required!!!</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>

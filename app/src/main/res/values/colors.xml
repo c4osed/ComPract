@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5BC9B1</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#5BC9B1</color>
+
+    <color name="primary">#2D404E</color>
+    <color name="secondary">#5BC9B1</color>
+    <color name="black">#444444</color>
+    <color name="grey">#757575</color>
+    <color name="silver">#CCCCCC</color>
+    <color name="bar">#F8F8F8</color>
+    <color name="background">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#9ccc65</color>
+    <color name="red">#E84E40</color>
+    <color name="blackop">#80444444</color>
+    <color name="transparent">#00000000</color>
+</resources>

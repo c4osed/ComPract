@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.zoazh.le.ComPract.controller.sub.ViewProfileActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/TopBar"
+        style="@style/bar"
+        android:background="@color/bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TextProfile"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonNotification"
+            style="@style/IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_activity"
+            android:layout_marginRight="@dimen/margin_activity"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ImageButtonChat"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_notification" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonChat"
+            style="@style/IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_chat" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopBar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/Line1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"
+                tools:layout_editor_absoluteX="192dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <ImageView
+                android:id="@+id/ImageViewProfilePicture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile_picture" />
+
+            <Button
+                android:id="@+id/ButtonMessage"
+                style="@style/WhiteShadow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/green"
+                android:text="Message"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/Line1"
+                app:layout_constraintTop_toBottomOf="@+id/ImageViewProfilePicture" />
+
+            <Button
+                android:id="@+id/ButtonFollow"
+                style="@style/WhiteShadow"
+                android:background="@drawable/background_ripple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Follow"
+                android:textAllCaps="false"
+                app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ImageViewProfilePicture" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/LayoutInformation"
+                style="@style/WhiteShadow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonMessage"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/ButtonBlock">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/Line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutStudent"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/Line1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/TextStudentLevel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Student Level"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextStudentLevelResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextStudentLevel"
+                        app:layout_constraintRight_toRightOf="@+id/TextStudentLevel" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutAdvisor"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/TextAdvisorLevel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Advisor Level"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextAdvisorLevelResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextAdvisorLevel"
+                        app:layout_constraintRight_toRightOf="@+id/TextAdvisorLevel" />
+                </android.support.constraint.ConstraintLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutFollowing"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/Line1"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutStudent">
+
+                    <TextView
+                        android:id="@+id/TextFollowing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Following"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextFollowingResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextFollowing"
+                        app:layout_constraintRight_toRightOf="@+id/TextFollowing" />
+                </android.support.constraint.ConstraintLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutFollower"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutAdvisor">
+
+                    <TextView
+                        android:id="@+id/TextFollower"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Follower"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextFollowerResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextFollower"
+                        app:layout_constraintRight_toRightOf="@+id/TextFollower" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutAbout"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutFollowing">
+
+                    <TextView
+                        android:id="@+id/TextAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="What's up"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextAboutResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextAbout"
+                        app:layout_constraintRight_toRightOf="@+id/TextAbout"
+                        app:layout_constraintTop_toBottomOf="@+id/TextAbout" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutQuestion"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/Line1"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutAbout">
+
+                    <TextView
+                        android:id="@+id/TextAge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Age"
+                        android:textAlignment="center"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextAgeResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="0dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutGender"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutAbout">
+
+                    <TextView
+                        android:id="@+id/TextGender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Gender"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextGenderResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="0dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutAnswer"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/Line1"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutQuestion">
+
+                    <TextView
+                        android:id="@+id/TextAnswer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Country"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextCountryResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextAnswer"
+                        app:layout_constraintRight_toRightOf="@+id/TextAnswer" />
+                </android.support.constraint.ConstraintLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutNative"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="@+id/Line1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutGender">
+
+                    <TextView
+                        android:id="@+id/TextNatuve"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Native"
+                        android:textAlignment="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextNativeResult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextNatuve"
+                        app:layout_constraintRight_toRightOf="@+id/TextNatuve" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/LayoutLearn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/background_border"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutAnswer">
+
+                    <TextView
+                        android:id="@+id/TextLearn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Learn"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/TextLearnResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        app:layout_constraintLeft_toLeftOf="@+id/TextLearn"
+                        app:layout_constraintRight_toRightOf="@+id/TextLearn"
+                        app:layout_constraintTop_toBottomOf="@+id/TextLearn" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/ButtonBlock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:background="@color/red"
+                android:text="Block"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/LayoutInformation"
+                app:layout_constraintRight_toRightOf="@+id/LayoutInformation" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
