@@ -203,7 +203,12 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
         myCalendar.set(Calendar.MONTH, month);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        cButtonRegisterDOB.setText(sdf.format(myCalendar.getTime()));
+        if(new Date().before(myCalendar.getTime())){
+            Toast.makeText(SignUpActivity.this, "Date of birth is incorrect!!!", Toast.LENGTH_LONG).show();
+            cButtonRegisterDOB.setText("");
+        }else{
+            cButtonRegisterDOB.setText(sdf.format(myCalendar.getTime()));
+        }
 
     }
 
