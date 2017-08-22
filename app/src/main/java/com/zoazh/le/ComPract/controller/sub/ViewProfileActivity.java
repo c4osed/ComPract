@@ -9,18 +9,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.main.ProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ViewProfileActivity extends BaseActivity {
 
+    FirebaseAuth cAuth = FirebaseAuth.getInstance();
+    DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
     private Button cButtonMessage;
+    private Button cButtonFollow;
 
     private ConstraintLayout cLayoutLearn;
 
@@ -47,7 +59,7 @@ public class ViewProfileActivity extends BaseActivity {
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
 
         cButtonMessage = (Button) findViewById(R.id.ButtonMessage);
-
+        cButtonFollow = (Button) findViewById(R.id.ButtonFollow);
         cLayoutLearn = (ConstraintLayout) findViewById(R.id.LayoutLearn);
 
         cTextName = (TextView) findViewById(R.id.TextProfile);
@@ -80,6 +92,7 @@ public class ViewProfileActivity extends BaseActivity {
         cTextLearn.setText(map.get("learnAbbreviation").replace(",", ", "));
 
         cButtonMessage.setOnClickListener(clickListener);
+        cButtonFollow.setOnClickListener(clickListener);
         cLayoutLearn.setOnClickListener(clickListener);
 
     }
@@ -103,6 +116,9 @@ public class ViewProfileActivity extends BaseActivity {
                 case R.id.ButtonMessage:
                     startActivity(new Intent(ViewProfileActivity.this, ChatActivity.class).putExtra("map", map));
                     break;
+                case R.id.ButtonFollow:
+                    follow();
+                    break;
                 case R.id.LayoutLearn:
                     listLearn();
                     break;
@@ -110,7 +126,7 @@ public class ViewProfileActivity extends BaseActivity {
         }
     };
 
-    private void listLearn(){
+    private void listLearn() {
         AlertDialog.Builder listLearn = new AlertDialog.Builder(ViewProfileActivity.this);
         listLearn.setItems(map.get("learnFull").split(","), new DialogInterface.OnClickListener() {
             @Override
@@ -119,5 +135,28 @@ public class ViewProfileActivity extends BaseActivity {
             }
         });
         listLearn.show();
+    }
+
+    private void follow() {
+        if (cButtonFollow.getText().equals("Follow")) {
+            cDatabaseRef.child("follow").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+//            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
+            cButtonFollow.setText("Unfollow");
+            Toast.makeText(getApplicationContext(), "Followed.", Toast.LENGTH_LONG).show();
+        } else {
+
+        }
     }
 }
