@@ -111,7 +111,7 @@ public class LoginActivity extends BaseActivity implements SinchService.StartFai
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(),"A network error (such as timeout, interrupted connection on unreachable host) has occurred.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"A network error (such as timeout, interrupted connection on unreachable host) has occurred. 5",Toast.LENGTH_LONG).show();
             }
         });
 
