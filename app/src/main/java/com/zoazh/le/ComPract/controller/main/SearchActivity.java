@@ -196,6 +196,7 @@ public class SearchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         OnlineTimer(true);
+        overridePendingTransition(0,0);
     }
 
     @Override

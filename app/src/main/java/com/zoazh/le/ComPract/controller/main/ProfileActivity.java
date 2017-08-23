@@ -55,6 +55,14 @@ public class ProfileActivity extends BaseActivity {
     String clistLearn;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        OnlineTimer(true);
+        overridePendingTransition(0,0);
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -163,6 +171,7 @@ public class ProfileActivity extends BaseActivity {
                     break;
                 case R.id.LayoutSearch:
                     startActivity(new Intent(ProfileActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    //overridePendingTransition(0,0);
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     break;
             }
