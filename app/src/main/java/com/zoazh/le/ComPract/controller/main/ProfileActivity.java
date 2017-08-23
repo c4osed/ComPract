@@ -46,6 +46,7 @@ public class ProfileActivity extends BaseActivity {
     Button cButtonSetting;
 
     ConstraintLayout cBottomBar;
+    ConstraintLayout cLayoutAdvise;
     ConstraintLayout cLayoutSearch;
     ConstraintLayout cLayoutProfile;
     ImageView cImageViewProfile;
@@ -106,6 +107,7 @@ public class ProfileActivity extends BaseActivity {
 
 
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
+        cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
         cLayoutProfile = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutProfile);
         cImageViewProfile = (ImageView) cBottomBar.findViewById(R.id.ImageViewProfile);
@@ -120,6 +122,7 @@ public class ProfileActivity extends BaseActivity {
         cButtonAbout.setOnClickListener(clickListener);
         cButtonSetting.setOnClickListener(clickListener);
 
+        cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
     }
 
@@ -152,6 +155,11 @@ public class ProfileActivity extends BaseActivity {
                     break;
                 case R.id.ButtonSetting:
                     startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+                    break;
+
+                case R.id.LayoutAdvise:
+                    startActivity(new Intent(ProfileActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     break;
                 case R.id.LayoutSearch:
                     startActivity(new Intent(ProfileActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
