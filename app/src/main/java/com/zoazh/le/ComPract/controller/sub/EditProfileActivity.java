@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Date;
 
 public class EditProfileActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -256,8 +257,13 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
         myCalendar.set(Calendar.MONTH, month);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        cButtonEditProfileDOB.setText(sdf.format(myCalendar.getTime()));
-
+        //cButtonEditProfileDOB.setText(sdf.format(myCalendar.getTime()));
+        if(new Date().before(myCalendar.getTime())){
+            Toast.makeText(EditProfileActivity.this, "Date of birth is incorrect!!!", Toast.LENGTH_LONG).show();
+            cButtonEditProfileDOB.setText("");
+        }else{
+            cButtonEditProfileDOB.setText(sdf.format(myCalendar.getTime()));
+        }
     }
 
     private void setGender() {
