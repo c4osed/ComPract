@@ -51,6 +51,9 @@ public class ViewProfileActivity extends BaseActivity {
 
     HashMap<String, String> map;
 
+    private int following;
+    private int follower;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +98,42 @@ public class ViewProfileActivity extends BaseActivity {
         cButtonFollow.setOnClickListener(clickListener);
         cLayoutLearn.setOnClickListener(clickListener);
 
+        cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    cButtonFollow.setText("Unfollow");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                following = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        cDatabaseRef.child("user").child(map.get("UID")).child("followerCount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                follower = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -138,24 +177,28 @@ public class ViewProfileActivity extends BaseActivity {
     }
 
     private void follow() {
+
+
         if (cButtonFollow.getText().equals("Follow")) {
-            cDatabaseRef.child("follow").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
-//            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
+            cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+            cDatabaseRef.child("follower").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").setValue(following + 1);
+            cDatabaseRef.child("user").child(map.get("UID")).child("followerCount").setValue(follower + 1);
 
             cButtonFollow.setText("Unfollow");
+            cTextFollower.setText(follower + 1 + "");
             Toast.makeText(getApplicationContext(), "Followed.", Toast.LENGTH_LONG).show();
         } else {
+            cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).removeValue();
+            cDatabaseRef.child("follower").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).removeValue();
+
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("followingCount").setValue(following - 1);
+            cDatabaseRef.child("user").child(map.get("UID")).child("followerCount").setValue(follower - 1);
+
+            cButtonFollow.setText("Follow");
+            cTextFollower.setText(follower - 1 + "");
+            Toast.makeText(getApplicationContext(), "Unfollowed.", Toast.LENGTH_LONG).show();
 
         }
     }
