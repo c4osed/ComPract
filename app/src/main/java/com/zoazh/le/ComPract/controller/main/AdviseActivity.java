@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.R;
+import com.zoazh.le.ComPract.controller.sub.ChatActivity;
+import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -50,7 +52,7 @@ public class AdviseActivity extends BaseActivity {
     private ProgressDialog cProgress;
 
 
-
+    private ImageButton cImageButtonCreateQuestion;
 
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutAdvise;
@@ -67,7 +69,7 @@ public class AdviseActivity extends BaseActivity {
         setContentView(R.layout.activity_advise);
 
 
-
+        cImageButtonCreateQuestion = (ImageButton) findViewById(R.id.ImageButtonCreateQuestion);
 
         //BTM BAR
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
@@ -81,6 +83,7 @@ public class AdviseActivity extends BaseActivity {
         cImageViewAdvise.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cImageButtonCreateQuestion.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
 
@@ -110,6 +113,9 @@ public class AdviseActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
+                case R.id.ImageButtonCreateQuestion:
+                    startActivity(new Intent(AdviseActivity.this, CreateQuestionActivity.class));
+                    break;
                 case R.id.LayoutSearch:
                     startActivity(new Intent(AdviseActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
