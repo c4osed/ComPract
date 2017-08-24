@@ -99,10 +99,10 @@ public class SearchActivity extends BaseActivity {
 
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
-        cLayoutAgeRange = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutAgeRange);
+        cLayoutAgeRange = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutNormalQuestion2);
         cInputAgeRangeX = (EditText) cLayoutFilter.findViewById(R.id.InputAgeRangeX);
         cInputAgeRangeY = (EditText) cLayoutFilter.findViewById(R.id.InputAgeRangeY);
-        cLayoutCountry = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutAnswer);
+        cLayoutCountry = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutChoiceQuestion);
         cTextCountryResult = (TextView) cLayoutFilter.findViewById(R.id.TextCountryResult);
         cLayoutNative = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutQuestion);
         cTextNativeResult = (TextView) cLayoutFilter.findViewById(R.id.TextNativeResult);
@@ -219,7 +219,7 @@ public class SearchActivity extends BaseActivity {
                 case R.id.ImageButtonFilter:
                     ShowFilter();
                     break;
-                case R.id.LayoutAnswer:
+                case R.id.LayoutChoiceQuestion:
                     CountryFilter();
                     break;
                 case R.id.LayoutQuestion:

@@ -390,7 +390,7 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/LayoutAnswer"
+                    android:id="@+id/LayoutChoiceQuestion"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:background="@drawable/background_border"
@@ -399,7 +399,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/LayoutQuestion">
 
                     <TextView
-                        android:id="@+id/TextAnswer"
+                        android:id="@+id/TextChoiceQuestion"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -418,8 +418,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="@+id/TextAnswer"
-                        app:layout_constraintRight_toRightOf="@+id/TextAnswer" />
+                        app:layout_constraintLeft_toLeftOf="@+id/TextChoiceQuestion"
+                        app:layout_constraintRight_toRightOf="@+id/TextChoiceQuestion" />
                 </android.support.constraint.ConstraintLayout>
 
 
@@ -464,7 +464,7 @@
                     android:background="@drawable/background_border"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/LayoutAnswer">
+                    app:layout_constraintTop_toBottomOf="@+id/LayoutChoiceQuestion">
 
                     <TextView
                         android:id="@+id/TextLearn"
