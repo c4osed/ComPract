@@ -22,7 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".model.SinchService" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity android:name=".controller.start.MainActivity">
             <intent-filter>
@@ -50,8 +53,10 @@
         <activity android:name=".controller.main.ProfileActivity" />
         <activity android:name=".controller.sub.CreateQuestionActivity" />
         <activity android:name=".controller.sub.ChatActivity" />
-        <activity android:name=".controller.sub.ViewProfileActivity"/>
-        <activity android:name=".controller.sub.EditProfileActivity"/>
+        <activity android:name=".controller.sub.ViewProfileActivity" />
+        <activity android:name=".controller.sub.EditProfileActivity" />
+        <activity android:name=".controller.sub.FollowingActivity" />
+        <activity android:name=".controller.sub.FollowerActivity"></activity>
     </application>
 
 </manifest>

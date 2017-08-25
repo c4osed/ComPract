@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
+import com.zoazh.le.ComPract.controller.sub.FollowerActivity;
+import com.zoazh.le.ComPract.controller.sub.FollowingActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 import com.zoazh.le.ComPract.model.database.User;
@@ -49,6 +51,8 @@ public class ProfileActivity extends BaseActivity {
     ConstraintLayout cLayoutAdvise;
     ConstraintLayout cLayoutSearch;
     ConstraintLayout cLayoutProfile;
+    ConstraintLayout cLayoutFollowing;
+    ConstraintLayout cLayoutFollower;
     ImageView cImageViewProfile;
     TextView cTextProfile;
 
@@ -79,7 +83,8 @@ public class ProfileActivity extends BaseActivity {
         cQuestionResult = (TextView) findViewById(R.id.TextQuestionResult);
         cLayoutAbout = (ConstraintLayout) findViewById(R.id.LayoutAbout);
         cLayoutLearn = (ConstraintLayout) findViewById(R.id.LayoutLearn);
-
+        cLayoutFollowing = (ConstraintLayout) findViewById(R.id.LayoutFollowing);
+        cLayoutFollower = (ConstraintLayout) findViewById(R.id.LayoutFollower);
         cButtonAbout = (Button) findViewById(R.id.ButtonAbout);
         cButtonSetting = (Button) findViewById(R.id.ButtonSetting);
 
@@ -129,7 +134,8 @@ public class ProfileActivity extends BaseActivity {
         cLayoutLearn.setOnClickListener(clickListener);
         cButtonAbout.setOnClickListener(clickListener);
         cButtonSetting.setOnClickListener(clickListener);
-
+        cLayoutFollowing.setOnClickListener(clickListener);
+        cLayoutFollower.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
     }
@@ -173,6 +179,13 @@ public class ProfileActivity extends BaseActivity {
                     startActivity(new Intent(ProfileActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //overridePendingTransition(0,0);
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    break;
+                case R.id.LayoutFollowing:
+                    startActivity(new Intent(ProfileActivity.this, FollowingActivity.class));
+                    break;
+
+                case R.id.LayoutFollower:
+                    startActivity(new Intent(ProfileActivity.this, FollowerActivity.class));
                     break;
             }
         }
