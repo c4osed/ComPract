@@ -382,7 +382,7 @@ public class CreateQuestionActivity extends BaseActivity {
             }
         }
 
-        Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, "Normal");
+        Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, new Date().getTime(), new Date().getTime() * -1, "Normal");
 
         cDatabaseRef.child("question").child(vKey).setValue(question);
     }

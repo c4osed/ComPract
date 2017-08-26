@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/TextNatuve"
+        android:id="@+id/TextNative"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextProfile"
@@ -73,9 +73,9 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/TextNatuve"
-        app:layout_constraintRight_toRightOf="@+id/TextNatuve"
-        app:layout_constraintTop_toBottomOf="@+id/TextNatuve"
+        app:layout_constraintLeft_toLeftOf="@+id/TextNative"
+        app:layout_constraintRight_toRightOf="@+id/TextNative"
+        app:layout_constraintTop_toBottomOf="@+id/TextNative"
         app:layout_constraintVertical_bias="0.0" />
 
 

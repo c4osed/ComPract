@@ -155,7 +155,7 @@ class ListFollowerAdappter extends ArrayAdapter {
 
         ImageView ImageViewPicture = (ImageView) row.findViewById(R.id.ImageViewPicture);
         TextView TextName = (TextView) row.findViewById(R.id.TextProfile);
-        TextView TextNative = (TextView) row.findViewById(R.id.TextNatuve);
+        TextView TextNative = (TextView) row.findViewById(R.id.TextNative);
         TextView TextLearn = (TextView) row.findViewById(R.id.TextLearn);
 
 

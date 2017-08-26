@@ -53,6 +53,20 @@
     </android.support.constraint.ConstraintLayout>
 
 
+    <ListView
+        android:id="@+id/ListViewPractice"
+        style="@style/WhiteShadow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/BottomBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopBar" />
+
     <include
         android:id="@+id/BottomBar"
         layout="@layout/bottombar"

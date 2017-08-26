@@ -22,6 +22,8 @@ public class Question {
     public String ChoiceC;
     public String ChoiceD;
     public String Answer;
+    public long ASCQuestionTime;
+    public long DESCQuestionTime;
     public String QuestionStatus;
 
 
@@ -29,7 +31,7 @@ public class Question {
 
     }
 
-    public Question(String questionAuthor, String questionLanguage, String questionType, String questionPicture, String question, String choiceA, String choiceB, String choiceC, String choiceD, String answer, String questionStatus) {
+    public Question(String questionAuthor, String questionLanguage, String questionType, String questionPicture, String question, String choiceA, String choiceB, String choiceC, String choiceD, String answer, long ascQuestion, long descTime, String questionStatus) {
         QuestionAuthor = questionAuthor;
         QuestionLanguage = questionLanguage;
         QuestionType = questionType;
@@ -40,6 +42,8 @@ public class Question {
         ChoiceC = choiceC;
         ChoiceD = choiceD;
         Answer = answer;
+        ASCQuestionTime = ascQuestion;
+        DESCQuestionTime = descTime;
         QuestionStatus = questionStatus;
     }
 
@@ -57,6 +61,8 @@ public class Question {
         result.put("ChoiceC", ChoiceC);
         result.put("ChoiceD", ChoiceD);
         result.put("Answer", Answer);
+        result.put("ASCQuestionTime", ASCQuestionTime);
+        result.put("DESCQuestionTime", DESCQuestionTime);
         result.put("QuestionStatus", QuestionStatus);
 
         return result;

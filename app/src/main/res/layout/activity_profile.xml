@@ -282,7 +282,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/LayoutAbout">
 
                     <TextView
-                        android:id="@+id/TextNatuve"
+                        android:id="@+id/TextNative"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -303,8 +303,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="@+id/TextNatuve"
-                        app:layout_constraintRight_toRightOf="@+id/TextNatuve" />
+                        app:layout_constraintLeft_toLeftOf="@+id/TextNative"
+                        app:layout_constraintRight_toRightOf="@+id/TextNative" />
                 </android.support.constraint.ConstraintLayout>
 
 

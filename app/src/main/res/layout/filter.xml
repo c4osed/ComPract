@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/LayoutNormalQuestion2"
+        android:id="@+id/LayoutAgeRange"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_ripple"
@@ -65,23 +65,23 @@
             android:text="100"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/LayoutNormalQuestion2"
+            app:layout_constraintRight_toRightOf="@+id/LayoutAgeRange"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/LayoutChoiceQuestion"
+        android:id="@+id/LayoutCountry"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_ripple"
         android:padding="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LayoutNormalQuestion2">
+        app:layout_constraintTop_toBottomOf="@+id/LayoutAgeRange">
 
         <TextView
-            android:id="@+id/TextChoiceQuestion"
+            android:id="@+id/TextCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Country"
@@ -101,17 +101,17 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/LayoutQuestion"
+        android:id="@+id/LayoutNative"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_ripple"
         android:padding="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LayoutChoiceQuestion">
+        app:layout_constraintTop_toBottomOf="@+id/LayoutCountry">
 
         <TextView
-            android:id="@+id/TextNatuve"
+            android:id="@+id/TextNative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Native Language"
@@ -138,7 +138,7 @@
         android:padding="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LayoutQuestion">
+        app:layout_constraintTop_toBottomOf="@+id/LayoutNative">
 
         <TextView
             android:id="@+id/TextLearnResult"

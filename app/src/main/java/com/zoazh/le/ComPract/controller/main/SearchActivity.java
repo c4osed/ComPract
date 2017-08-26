@@ -48,7 +48,7 @@ public class SearchActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
-    MyAdapter adapter;
+    ListSearch adapter;
 
     private EditText cInputSearch;
     private ImageButton cButtonSearch;
@@ -101,12 +101,12 @@ public class SearchActivity extends BaseActivity {
 
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
-        cLayoutAgeRange = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutNormalQuestion2);
+        cLayoutAgeRange = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutAgeRange);
         cInputAgeRangeX = (EditText) cLayoutFilter.findViewById(R.id.InputAgeRangeX);
         cInputAgeRangeY = (EditText) cLayoutFilter.findViewById(R.id.InputAgeRangeY);
-        cLayoutCountry = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutChoiceQuestion);
+        cLayoutCountry = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutCountry);
         cTextCountryResult = (TextView) cLayoutFilter.findViewById(R.id.TextCountryResult);
-        cLayoutNative = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutQuestion);
+        cLayoutNative = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutNative);
         cTextNativeResult = (TextView) cLayoutFilter.findViewById(R.id.TextNativeResult);
         cLayoutLearn = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutLearn);
         cTextLearnResult = (TextView) cLayoutFilter.findViewById(R.id.TextLearnResult);
@@ -425,7 +425,7 @@ public class SearchActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //final ArrayList<HashMap<String, String>> ListUserName = new ArrayList<HashMap<String, String>>();
                 cListUser.clear();
-                adapter = new MyAdapter(getApplicationContext(), cListUser);
+                adapter = new ListSearch(getApplicationContext(), cListUser);
                 cListView.setAdapter(adapter);
                 for (DataSnapshot userID : dataSnapshot.getChildren()) {
                     User user = userID.getValue(User.class);
@@ -514,7 +514,7 @@ public class SearchActivity extends BaseActivity {
 //                            }
 //                        });
                         cListUser.add(map);
-                        adapter = new MyAdapter(getApplicationContext(), cListUser);
+                        adapter = new ListSearch(getApplicationContext(), cListUser);
                         cListView.setAdapter(adapter);
                     }
                 }
@@ -550,11 +550,11 @@ public class SearchActivity extends BaseActivity {
 }
 
 
-class MyAdapter extends ArrayAdapter {
+class ListSearch extends ArrayAdapter {
     private StorageReference cStorageRef = FirebaseStorage.getInstance().getReference();
     List<HashMap<String, String>> cListUser;
 
-    public MyAdapter(Context context, List<HashMap<String, String>> listUser) {
+    public ListSearch(Context context, List<HashMap<String, String>> listUser) {
         super(context, R.layout.listview_search, R.id.TextProfile, listUser);
         this.cListUser = listUser;
     }
@@ -578,7 +578,7 @@ class MyAdapter extends ArrayAdapter {
 
         ImageView ImageViewPicture = (ImageView) row.findViewById(R.id.ImageViewPicture);
         TextView TextName = (TextView) row.findViewById(R.id.TextProfile);
-        TextView TextNative = (TextView) row.findViewById(R.id.TextNatuve);
+        TextView TextNative = (TextView) row.findViewById(R.id.TextNative);
         TextView TextLearn = (TextView) row.findViewById(R.id.TextLearn);
 
 //        if (vImage == null) {
