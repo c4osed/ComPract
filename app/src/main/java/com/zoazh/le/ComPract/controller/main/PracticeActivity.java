@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
+import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -158,9 +159,14 @@ public class PracticeActivity extends BaseActivity {
                             map.put("AuthorID", question.QuestionAuthor);
                             map.put("AuthorPicture", user.profilePicture);
                             map.put("AuthorName", user.fullName);
+                            map.put("QuestionLanguage", question.QuestionLanguage);
                             map.put("QuestionType", question.QuestionType);
                             map.put("Question", question.Question);
                             map.put("QuestionPicture", question.QuestionPicture);
+                            map.put("ChoiceA", question.ChoiceA);
+                            map.put("ChoiceB", question.ChoiceB);
+                            map.put("ChoiceC", question.ChoiceC);
+                            map.put("ChoiceD", question.ChoiceD);
 
                             cListQuestion.add(map);
 
@@ -187,14 +193,14 @@ public class PracticeActivity extends BaseActivity {
         });
 
 
-//        cListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//
-//        {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                startActivity(new Intent(PracticeActivity.this, ViewProfileActivity.class).putExtra("map", cListQuestion.get(position)));
-//            }
-//        });
+        cListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(PracticeActivity.this, QuestionActivity.class).putExtra("map", cListQuestion.get(position)));
+            }
+        });
     }
 }
 
@@ -218,6 +224,7 @@ class ListPractice extends ArrayAdapter {
         String vAuthorID = map.get("AuthorID");
         String vAuthorPicture = map.get("AuthorPicture");
         String vQuestionAuthorName = map.get("AuthorName");
+        String vQuestionLanguage = map.get("QuestionLanguage");
         String vQuestionType = map.get("QuestionType");
         String vQuestion = map.get("Question");
         String vImage = map.get("QuestionPicture");
@@ -266,8 +273,8 @@ class ListPractice extends ArrayAdapter {
         MyClass mc = new MyClass();
         mc.SetImage(getContext(), ImageViewPicture, vAuthorPicture, vAuthorID);
         TextQuestionAuthor.setText(vQuestionAuthorName);
-        TextQuestion.setText("\n"+"      "+vQuestion+"\n");
-        TextQuestionType.setText(vQuestionType);
+        TextQuestion.setText("\t\t\t\t" + vQuestion + "\n");
+        TextQuestionType.setText(vQuestionLanguage + " (" + vQuestionType + ")");
         Picasso.with(getContext()).load(vImage).into(ImageViewQuestion);
 //        TextName.setText(vName);
 //        TextNative.setText("Native: " + vNative);

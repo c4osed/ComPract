@@ -52,6 +52,7 @@
         <activity android:name=".controller.main.AdviseActivity" />
         <activity android:name=".controller.main.SearchActivity" />
         <activity android:name=".controller.main.ProfileActivity" />
+        <activity android:name=".controller.sub.QuestionActivity" />
         <activity android:name=".controller.sub.CreateQuestionActivity" />
         <activity android:name=".controller.sub.ChatActivity" />
         <activity android:name=".controller.sub.ViewProfileActivity" />

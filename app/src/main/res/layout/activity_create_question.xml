@@ -222,7 +222,7 @@
 
                 <include
                     android:id="@+id/IncludeNormalQuestion"
-                    layout="@layout/normal_question"
+                    layout="@layout/create_normal_question"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -248,7 +248,7 @@
 
                 <include
                     android:id="@+id/IncludeChoiceQuestion"
-                    layout="@layout/choice_question"
+                    layout="@layout/create_choice_question"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
