@@ -188,7 +188,7 @@ public class CreateQuestionActivity extends BaseActivity {
                     ShowQuestionType();
                     break;
                 case R.id.LayoutNormalQuestion:
-                    cTextQuestionTypeResult.setText("Normal");
+                    cTextQuestionTypeResult.setText("Open-Ended");
                     cLayoutQuestionType2.setVisibility(View.INVISIBLE);
                     cButtonDropdown.setImageResource(R.drawable.ic_dropdown);
                     cLayoutNormalQuestion2.setVisibility(View.VISIBLE);

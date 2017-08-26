@@ -266,7 +266,7 @@ class ListPractice extends ArrayAdapter {
         MyClass mc = new MyClass();
         mc.SetImage(getContext(), ImageViewPicture, vAuthorPicture, vAuthorID);
         TextQuestionAuthor.setText(vQuestionAuthorName);
-        TextQuestion.setText(vQuestion);
+        TextQuestion.setText("\n"+"      "+vQuestion+"\n");
         TextQuestionType.setText(vQuestionType);
         Picasso.with(getContext()).load(vImage).into(ImageViewQuestion);
 //        TextName.setText(vName);
