@@ -48,6 +48,7 @@
             android:name=".controller.PlaceCallActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".controller.start.SignUpActivity" />
+        <activity android:name=".controller.main.PracticeActivity" />
         <activity android:name=".controller.main.AdviseActivity" />
         <activity android:name=".controller.main.SearchActivity" />
         <activity android:name=".controller.main.ProfileActivity" />

@@ -1,97 +1,59 @@
 package com.zoazh.le.ComPract.controller.main;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.R;
-import com.zoazh.le.ComPract.controller.sub.ChatActivity;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
-import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
-import com.zoazh.le.ComPract.model.MyClass;
-import com.zoazh.le.ComPract.model.database.User;
 
-import org.apache.commons.lang3.text.WordUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class AdviseActivity extends BaseActivity {
+public class PracticeActivity extends BaseActivity {
 
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
 
 
-    private ImageButton cImageButtonCreateQuestion;
-
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
+    private ImageView cImageViewPractice;
     private ConstraintLayout cLayoutAdvise;
-    private ImageView cImageViewAdvise;
     private ConstraintLayout cLayoutSearch;
     private ConstraintLayout cLayoutProfile;
-    private TextView cTextAdvise;
-
+    private TextView cTextPractice;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advise);
+        setContentView(R.layout.activity_practice);
 
-
-        cImageButtonCreateQuestion = (ImageButton) findViewById(R.id.ImageButtonCreateQuestion);
 
         //BTM BAR
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
-        cLayoutPractice = (ConstraintLayout) findViewById(R.id.LayoutPractice);
+        cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
+        cImageViewPractice = (ImageView) cBottomBar.findViewById(R.id.ImageViewPractice);
         cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
-        cImageViewAdvise = (ImageView) cBottomBar.findViewById(R.id.ImageViewAdvise);
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
         cLayoutProfile = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutProfile);
-        cTextAdvise = (TextView) cBottomBar.findViewById(R.id.TextAdvise);
+        cTextPractice = (TextView) cBottomBar.findViewById(R.id.TextPractice);
 
-        cTextAdvise.setTextColor(getResources().getInteger(R.color.secondary));
-        cImageViewAdvise.setColorFilter(getResources().getInteger(R.color.secondary));
+        cTextPractice.setTextColor(getResources().getInteger(R.color.secondary));
+        cImageViewPractice.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
-        cImageButtonCreateQuestion.setOnClickListener(clickListener);
-        cLayoutPractice.setOnClickListener(clickListener);
+        cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
-
-
-
 
 
     }
@@ -100,7 +62,7 @@ public class AdviseActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         OnlineTimer(true);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -117,21 +79,18 @@ public class AdviseActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
-                case R.id.ImageButtonCreateQuestion:
-                    startActivity(new Intent(AdviseActivity.this, CreateQuestionActivity.class));
-                    break;
-                case R.id.LayoutPractice:
-                    startActivity(new Intent(AdviseActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                case R.id.LayoutAdvise:
+                    startActivity(new Intent(PracticeActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
                 case R.id.LayoutSearch:
-                    startActivity(new Intent(AdviseActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    startActivity(new Intent(PracticeActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
                 case R.id.LayoutProfile:
-                    startActivity(new Intent(AdviseActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    startActivity(new Intent(PracticeActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;

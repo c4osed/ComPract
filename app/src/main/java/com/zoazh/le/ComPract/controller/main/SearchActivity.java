@@ -70,8 +70,9 @@ public class SearchActivity extends BaseActivity {
 
     private ListView cListView;
 
-    private ConstraintLayout cLayoutAdvise;
     private ConstraintLayout cBottomBar;
+    private ConstraintLayout cLayoutPractice;
+    private ConstraintLayout cLayoutAdvise;
     private ConstraintLayout cLayoutSearch;
     private ImageView cImageViewSearch;
     private ConstraintLayout cLayoutProfile;
@@ -97,6 +98,7 @@ public class SearchActivity extends BaseActivity {
         cButtonSearch = (ImageButton) findViewById(R.id.ImageViewSearch);
         cListView = (ListView) findViewById(R.id.ListViewSearch);
 
+
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
         cLayoutAgeRange = (ConstraintLayout) cLayoutFilter.findViewById(R.id.LayoutNormalQuestion2);
@@ -114,7 +116,7 @@ public class SearchActivity extends BaseActivity {
 
         //BTM BAR
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
-
+        cLayoutPractice = (ConstraintLayout) findViewById(R.id.LayoutPractice);
         cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
         cImageViewSearch = (ImageView) cBottomBar.findViewById(R.id.ImageViewSearch);
@@ -125,6 +127,7 @@ public class SearchActivity extends BaseActivity {
         cImageViewSearch.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cButtonSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
@@ -230,6 +233,11 @@ public class SearchActivity extends BaseActivity {
                     break;
                 case R.id.LayoutStatus:
                     StatusFilter();
+                    break;
+                case R.id.LayoutPractice:
+                    startActivity(new Intent(SearchActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
                 case R.id.LayoutAdvise:
                     startActivity(new Intent(SearchActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));

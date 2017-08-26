@@ -48,6 +48,7 @@ public class ProfileActivity extends BaseActivity {
     Button cButtonSetting;
 
     ConstraintLayout cBottomBar;
+    ConstraintLayout cLayoutPractice;
     ConstraintLayout cLayoutAdvise;
     ConstraintLayout cLayoutSearch;
     ConstraintLayout cLayoutProfile;
@@ -120,6 +121,7 @@ public class ProfileActivity extends BaseActivity {
 
 
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
+        cLayoutPractice = (ConstraintLayout) findViewById(R.id.LayoutPractice);
         cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
         cLayoutProfile = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutProfile);
@@ -136,6 +138,7 @@ public class ProfileActivity extends BaseActivity {
         cButtonSetting.setOnClickListener(clickListener);
         cLayoutFollowing.setOnClickListener(clickListener);
         cLayoutFollower.setOnClickListener(clickListener);
+        cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
     }
@@ -171,6 +174,11 @@ public class ProfileActivity extends BaseActivity {
                     startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
                     break;
 
+                case R.id.LayoutPractice:
+                    startActivity(new Intent(ProfileActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
+                    break;
                 case R.id.LayoutAdvise:
                     startActivity(new Intent(ProfileActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

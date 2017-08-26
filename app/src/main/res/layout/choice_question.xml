@@ -7,11 +7,48 @@
     android:background="@drawable/background_bottom_border"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/ImageViewChoiceQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/TextQuestion"
+        app:srcCompat="@color/background"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceQuestion"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceQuestion" />
+
+    <RadioButton
+        android:id="@+id/RadioChoiceC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  c"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/InputChoiceC"
+        app:layout_constraintLeft_toLeftOf="@+id/RadioChoiceA"
+        app:layout_constraintTop_toTopOf="@+id/InputChoiceC" />
+
+    <RadioButton
+        android:id="@+id/RadioChoiceA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:checked="true"
+        android:text="  a"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/InputChoiceA"
+        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceQuestion"
+        app:layout_constraintTop_toTopOf="@+id/InputChoiceA" />
+
     <TextView
         android:id="@+id/TextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Question"
         android:textColor="@color/black"
@@ -20,58 +57,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/InputNormalQuestion"
-        style="@style/EditText"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:singleLine="false"
-        app:layout_constraintLeft_toLeftOf="@+id/TextQuestion"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextQuestion"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <RadioButton
-        android:id="@+id/RadioChoiceA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="  a"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/InputChoiceA"
-        app:layout_constraintLeft_toLeftOf="@+id/InputNormalQuestion"
-        app:layout_constraintTop_toTopOf="@+id/InputChoiceA" />
-
-    <EditText
-        android:id="@+id/InputChoiceA"
+        android:id="@+id/InputChoiceB"
         style="@style/EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/RadioChoiceA"
-        app:layout_constraintTop_toBottomOf="@+id/InputNormalQuestion"
-        android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/InputNormalQuestion"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceA"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceA"
+        app:layout_constraintTop_toBottomOf="@+id/InputChoiceA" />
+
+    <EditText
+        android:id="@+id/InputChoiceC"
+        style="@style/EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceA"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceA"
+        app:layout_constraintTop_toBottomOf="@+id/InputChoiceB" />
+
+    <EditText
+        android:id="@+id/InputChoiceD"
+        style="@style/EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceC"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceC"
+        app:layout_constraintTop_toBottomOf="@+id/InputChoiceC" />
 
     <RadioButton
         android:id="@+id/RadioChoiceB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
         android:text="  b"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/InputChoiceB"
@@ -79,57 +106,24 @@
         app:layout_constraintTop_toTopOf="@+id/InputChoiceB" />
 
     <EditText
-        android:id="@+id/InputChoiceB"
+        android:id="@+id/InputChoiceQuestion"
         style="@style/EditText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceA"
-        app:layout_constraintRight_toRightOf="@+id/InputChoiceA"
-        app:layout_constraintTop_toBottomOf="@+id/InputChoiceA" />
-
-    <RadioButton
-        android:id="@+id/RadioChoiceC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:text="  c"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/InputChoiceC"
-        app:layout_constraintLeft_toLeftOf="@+id/RadioChoiceA"
-        app:layout_constraintTop_toTopOf="@+id/InputChoiceC" />
-
-    <EditText
-        android:id="@+id/InputChoiceC"
-        style="@style/EditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:inputType="textMultiLine"
+        app:layout_constraintLeft_toLeftOf="@+id/TextQuestion"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceA"
-        app:layout_constraintRight_toRightOf="@+id/InputChoiceA"
-        app:layout_constraintTop_toBottomOf="@+id/InputChoiceB" />
+        app:layout_constraintTop_toBottomOf="@+id/ImageViewChoiceQuestion"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <RadioButton
         android:id="@+id/RadioChoiceD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
         android:text="  d"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/InputChoiceD"
@@ -137,60 +131,56 @@
         app:layout_constraintTop_toTopOf="@+id/InputChoiceD" />
 
     <EditText
-        android:id="@+id/InputChoiceD"
+        android:id="@+id/InputChoiceA"
         style="@style/EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/InputChoiceC"
-        app:layout_constraintRight_toRightOf="@+id/InputChoiceC"
-        app:layout_constraintTop_toBottomOf="@+id/InputChoiceC" />
+        app:layout_constraintLeft_toRightOf="@+id/RadioChoiceA"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/InputChoiceQuestion" />
 
     <TextView
         android:id="@+id/TextQuestionPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="8dp"
         android:text="*Check correct answer."
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ImageButtonUploadImage"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageButtonSendChoiceQuestion"
         app:layout_constraintLeft_toLeftOf="@+id/RadioChoiceD"
-        app:layout_constraintTop_toTopOf="@+id/ImageButtonUploadImage" />
+        app:layout_constraintTop_toTopOf="@+id/ImageButtonSendChoiceQuestion" />
 
     <ImageButton
-        android:id="@+id/ImageButtonUploadImage"
-        style="@style/IconButton"
-        android:layout_width="39dp"
-        android:layout_height="0dp"
-        android:cropToPadding="true"
-        app:srcCompat="@drawable/ic_image"
-        app:layout_constraintRight_toLeftOf="@+id/ImageButtonSendQuestion"
-        android:layout_marginRight="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ImageButtonSendQuestion"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ImageButtonSendQuestion"
-        android:layout_marginBottom="0dp" />
-
-    <ImageButton
-        android:id="@+id/ImageButtonSendQuestion"
+        android:id="@+id/ImageButtonUploadImageChoice"
         style="@style/IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_send_2"
-        android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/InputChoiceD"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/InputChoiceD"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageButtonSendChoiceQuestion"
+        app:layout_constraintRight_toLeftOf="@+id/ImageButtonSendChoiceQuestion"
+        app:layout_constraintTop_toTopOf="@+id/ImageButtonSendChoiceQuestion"
+        app:srcCompat="@drawable/ic_image" />
+
+    <ImageButton
+        android:id="@+id/ImageButtonSendChoiceQuestion"
+        style="@style/IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:layout_constraintVertical_bias="0.503" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/InputChoiceD"
+        app:layout_constraintTop_toBottomOf="@+id/InputChoiceD"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_send_2" />
 
 </android.support.constraint.ConstraintLayout>
