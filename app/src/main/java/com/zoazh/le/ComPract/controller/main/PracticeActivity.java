@@ -205,8 +205,6 @@ public class PracticeActivity extends BaseActivity {
 }
 
 class ListPractice extends ArrayAdapter {
-    private StorageReference cStorageRef = FirebaseStorage.getInstance().getReference();
-    private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
     List<HashMap<String, String>> cListQuestion;
 
@@ -243,33 +241,8 @@ class ListPractice extends ArrayAdapter {
         TextView TextQuestionType = (TextView) row.findViewById(R.id.QuestionType);
         TextView TextQuestion = (TextView) row.findViewById(R.id.TextViewQuestion);
         final ImageView ImageViewQuestion = (ImageView) row.findViewById(R.id.ImageViewQuestion);
-//        TextView TextName = (TextView) row.findViewById(R.id.TextProfile);
-//        TextView TextNative = (TextView) row.findViewById(R.id.TextNative);
-//        TextView TextLearn = (TextView) row.findViewById(R.id.TextLearn);
 
-//        if (vImage == null) {
-//            ImageViewPicture.setImageResource(R.drawable.ic_profile_picture);
-//            //Picasso.with(getContext()).load(R.drawable.ic_profile_picture).into(ImageViewPicture);
-//        } else {
-//            //Toast.makeText(getContext(), image.substring(image.length() - 36), Toast.LENGTH_LONG).show();
-//            final File file = new File(getContext().getCacheDir() + "/" + vImage.substring(vImage.length() - 36));
-//            if (file.exists() && !file.isDirectory()) {
-//                //ImageViewPicture.setImageURI(Uri.fromFile(file));
-//                Picasso.with(getContext()).load(file).transform(new CircleTransform()).into(ImageViewPicture);
-//            } else {
-//                cStorageRef.child("user/" + vEmail + "/profilePicture").getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                        Picasso.with(getContext()).load(file).transform(new CircleTransform()).into(ImageViewPicture);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//            }
-//        }
+
         MyClass mc = new MyClass();
         mc.SetImage(getContext(), ImageViewPicture, vAuthorPicture, vAuthorID);
         TextQuestionAuthor.setText(vQuestionAuthorName);

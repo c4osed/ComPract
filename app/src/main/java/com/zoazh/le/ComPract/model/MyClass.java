@@ -54,7 +54,7 @@ public class MyClass {
         return ageS;
     }
 
-    public void SetImage(final Context ctx, final ImageView img, String pic, String email) {
+    public void SetImage(final Context ctx, final ImageView img, String pic, final String email) {
         if (pic == null) {
             img.setImageResource(R.drawable.ic_profile_picture);
         } else {
@@ -70,7 +70,7 @@ public class MyClass {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(ctx, exception.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(ctx, exception.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
