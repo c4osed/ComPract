@@ -273,6 +273,7 @@ public class CreateQuestionActivity extends BaseActivity {
         setQuestionLangauge.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                cLayoutQuestionType.setVisibility(View.VISIBLE);
                 cTextQuestionLangaugeResult.setText(cQuestionLanguage[cQuestionLanguageSelected]);
 //                if (cButtonEditProfileLearn.getText().equals("Learn")) {
 //                    setLearn();
@@ -304,30 +305,18 @@ public class CreateQuestionActivity extends BaseActivity {
     }
 
     private void SendQuestion() {
-//        cDatabaseRef.child("question").orderByChild("QuestionAuthor").equalTo(cAuth.getCurrentUser().getUid()).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Toast.makeText(getApplicationContext(),dataSnapshot.getValue().toString(),Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-        Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG).show();
 
         String vTextQuestionLanguage = cTextQuestionLangaugeResult.getText().toString();
         String vTextQuestionType = cTextQuestionTypeResult.getText().toString();
         String vQuestionPicture = null;
-        String vInputQuestion;
+        String vInputQuestion = null;
         String vInputChoiceA = null;
         String vInputChoiceB = null;
         String vInputChoiceC = null;
         String vInputChoiceD = null;
         String vAnswer = null;
 
-        final String vKey = cDatabaseRef.child("question").push().getKey();
+        boolean pass = false;
 
         if (vTextQuestionType.equals("Multiple Choice")) {
             vInputQuestion = cInputChoiceQuestion.getText().toString();
@@ -335,55 +324,74 @@ public class CreateQuestionActivity extends BaseActivity {
             vInputChoiceB = cInputChoiceB.getText().toString();
             vInputChoiceC = cInputChoiceC.getText().toString();
             vInputChoiceD = cInputChoiceD.getText().toString();
-            vAnswer = cRadioAnswer;
-            if (cQuestionImage != null) {
-                cImageViewChoiceQuestion.setDrawingCacheEnabled(true);
-                cImageViewChoiceQuestion.buildDrawingCache();
-                Bitmap bitmap = cImageViewChoiceQuestion.getDrawingCache();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("QuestionPicture").child(vKey).putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        cDatabaseRef.child("question").child(vKey).child("QuestionPicture").setValue(taskSnapshot.getDownloadUrl().toString());
-                    }
-                });
+            if (vInputChoiceA.isEmpty() || vInputChoiceB.isEmpty() || vInputChoiceC.isEmpty() || vInputChoiceD.isEmpty()) {
+                pass = true;
             }
         } else {
             vInputQuestion = cInputNormalQuestion.getText().toString();
-            if (cQuestionImage != null) {
-                cImageViewNormalQuestion.setDrawingCacheEnabled(true);
-                cImageViewNormalQuestion.buildDrawingCache();
-                Bitmap bitmap = cImageViewNormalQuestion.getDrawingCache();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("QuestionPicture").child(vKey).putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        cDatabaseRef.child("question").child(vKey).child("QuestionPicture").setValue(taskSnapshot.getDownloadUrl().toString());
-                    }
-                });
-            }
         }
 
-        Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, new Date().getTime(), new Date().getTime() * -1, "Normal");
 
-        cDatabaseRef.child("question").child(vKey).setValue(question);
+        if (vInputQuestion.isEmpty() || pass) {
+            Toast.makeText(getApplicationContext(), "All field are required!!!", Toast.LENGTH_LONG).show();
+        } else {
+            final String vKey = cDatabaseRef.child("question").push().getKey();
+
+            if (vTextQuestionType.equals("Multiple Choice")) {
+                vAnswer = cRadioAnswer;
+                if (cQuestionImage != null) {
+                    cImageViewChoiceQuestion.setDrawingCacheEnabled(true);
+                    cImageViewChoiceQuestion.buildDrawingCache();
+                    Bitmap bitmap = cImageViewChoiceQuestion.getDrawingCache();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+
+                    UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("QuestionPicture").child(vKey).putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            cDatabaseRef.child("question").child(vKey).child("QuestionPicture").setValue(taskSnapshot.getDownloadUrl().toString());
+                        }
+                    });
+                }
+            } else {
+
+                if (cQuestionImage != null) {
+                    cImageViewNormalQuestion.setDrawingCacheEnabled(true);
+                    cImageViewNormalQuestion.buildDrawingCache();
+                    Bitmap bitmap = cImageViewNormalQuestion.getDrawingCache();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+
+                    UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("QuestionPicture").child(vKey).putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            cDatabaseRef.child("question").child(vKey).child("QuestionPicture").setValue(taskSnapshot.getDownloadUrl().toString());
+                        }
+                    });
+                }
+            }
+
+            Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, new Date().getTime(), new Date().getTime() * -1, "Normal");
+
+            cDatabaseRef.child("question").child(vKey).setValue(question);
+
+            Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }
