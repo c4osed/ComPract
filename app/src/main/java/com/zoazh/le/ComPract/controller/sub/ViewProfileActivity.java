@@ -188,7 +188,6 @@ public class ViewProfileActivity extends BaseActivity {
 
             cButtonFollow.setText("Unfollow");
             cTextFollower.setText(follower + 1 + "");
-            Toast.makeText(getApplicationContext(), "Followed.", Toast.LENGTH_LONG).show();
         } else {
             cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).removeValue();
             cDatabaseRef.child("follower").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).removeValue();
@@ -198,7 +197,6 @@ public class ViewProfileActivity extends BaseActivity {
 
             cButtonFollow.setText("Follow");
             cTextFollower.setText(follower - 1 + "");
-            Toast.makeText(getApplicationContext(), "Unfollowed.", Toast.LENGTH_LONG).show();
 
         }
     }

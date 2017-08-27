@@ -44,62 +44,58 @@ public class FollowerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_follower);
         Search();
     }
+
     private void Search() {
-        String vSearch = WordUtils.capitalizeFully(" ".toString().trim());
-        cDatabaseRef.child("user").orderByChild("fullName").startAt(vSearch).endAt(vSearch + "\uf8ff").addValueEventListener(new ValueEventListener() {
+
+        cDatabaseRef.child("follower").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //final ArrayList<HashMap<String, String>> ListUserName = new ArrayList<HashMap<String, String>>();
                 listFollower = (ListView) findViewById(R.id.listFollower);
-                ListAdappter adppter = new ListAdappter(getApplicationContext(), cListUser);
+                final ListFollowerAdappter[] adppter = {new ListFollowerAdappter(getApplicationContext(), cListUser)};
                 cListUser.clear();
-                listFollower.setAdapter(adppter);
+                listFollower.setAdapter(adppter[0]);
 
-                for (DataSnapshot userID : dataSnapshot.getChildren()) {
-                    User user = userID.getValue(User.class);
-                    if (!cAuth.getCurrentUser().getUid().equals(userID.getKey())) {
-                        MyClass mc = new MyClass();
-                        int vAge = Integer.parseInt(mc.GetAge(user.DOB));
+                for (DataSnapshot followerUserID : dataSnapshot.getChildren()) {
+//                    Toast.makeText(getApplicationContext(),followerUserID.getKey(),Toast.LENGTH_LONG).show();
+                    cDatabaseRef.child("user").child(followerUserID.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot userID : dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            MyClass mc = new MyClass();
 
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("UID", userID.getKey());
-                        map.put("name", user.fullName);
-                        map.put("email", user.email);
-                        map.put("studentLevel", user.studentLevel + "");
-                        map.put("advisorLevel", user.advisorLevel + "");
-                        map.put("followingCount", user.followingCount + "");
-                        map.put("followerCount", user.followerCount + "");
-                        map.put("about", user.about);
-                        map.put("DOB", user.DOB);
-                        map.put("gender", user.gender);
-                        map.put("country", user.country);
-                        map.put("native", user.nativeLanguage);
-                        map.put("profilePicture", user.profilePicture);
-                        map.put("age", mc.GetAge(user.DOB));
-                        map.put("learnAbbreviation", user.learnAbbreviation);
-                        map.put("learnFull", user.learnFull);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("UID", dataSnapshot.getKey());
+                            map.put("name", user.fullName);
+                            map.put("email", user.email);
+                            map.put("studentLevel", user.studentLevel + "");
+                            map.put("advisorLevel", user.advisorLevel + "");
+                            map.put("followingCount", user.followingCount + "");
+                            map.put("followerCount", user.followerCount + "");
+                            map.put("about", user.about);
+                            map.put("DOB", user.DOB);
+                            map.put("gender", user.gender);
+                            map.put("country", user.country);
+                            map.put("native", user.nativeLanguage);
+                            map.put("profilePicture", user.profilePicture);
+                            map.put("age", mc.GetAge(user.DOB));
+                            map.put("learnAbbreviation", user.learnAbbreviation);
+                            map.put("learnFull", user.learnFull);
 
-
-//                        cDatabaseRef.child("learn").child(userID.getKey()).orderByKey().addValueEventListener(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                                    map.put("learn", (map.get("learn") != null ? map.get("learn") + ", " : "") + data.getValue().toString());
-//                                    adapter = new MyAdapter(getApplicationContext(), cListUser);
-//                                    cListView.setAdapter(adapter);
-//                                }
+                            cListUser.add(map);
+                            adppter[0] = new ListFollowerAdappter(getApplicationContext(), cListUser);
+                            listFollower.setAdapter(adppter[0]);
 //                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
-//                            }
-//                        });
-                        cListUser.add(map);
-                        adppter = new ListAdappter(getApplicationContext(), cListUser);
-                        listFollower.setAdapter(adppter);
-                    }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
 
             }
@@ -120,10 +116,6 @@ public class FollowerActivity extends AppCompatActivity {
         //});
     }
 }
-
-
-
-
 
 
 class ListFollowerAdappter extends ArrayAdapter {
