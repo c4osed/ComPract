@@ -390,6 +390,8 @@ public class CreateQuestionActivity extends BaseActivity {
             cDatabaseRef.child("question").child(vKey).setValue(question);
 
             Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(getIntent());
         }
 
 

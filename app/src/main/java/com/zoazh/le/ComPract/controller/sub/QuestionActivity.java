@@ -81,7 +81,7 @@ public class QuestionActivity extends BaseActivity {
         MyClass mc = new MyClass();
         mc.SetImage(getApplicationContext(), cImageViewAuthor, map.get("AuthorPicture"), map.get("AuthorID"));
         cTextAuthor.setText(map.get("AuthorName"));
-        cTextQuestionType.setText(map.get("QuestionType"));
+        cTextQuestionType.setText(map.get("QuestionLanguage") + " (" + map.get("QuestionType") + ")");
         cTextQuestion.setText("\t\t\t\t" + map.get("Question"));
         Picasso.with(getApplicationContext()).load(map.get("QuestionPicture")).into(cImageViewQuestion);
 
