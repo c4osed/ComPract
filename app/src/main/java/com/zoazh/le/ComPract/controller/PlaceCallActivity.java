@@ -54,8 +54,7 @@ public class PlaceCallActivity extends BaseActivity {
     @Override
     protected void onServiceConnected() {
         if (!getSinchServiceInterface().isStarted()) {
-            getSinchServiceInterface().startClient(cAuth.getCurrentUser().getEmail());
-
+            getSinchServiceInterface().startClient(cAuth.getCurrentUser().getUid());
         }
         TextView userName = (TextView) findViewById(R.id.TextUserEmail);
         userName.setText(getSinchServiceInterface().getUserName());

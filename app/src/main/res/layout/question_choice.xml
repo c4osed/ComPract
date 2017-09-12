@@ -7,6 +7,8 @@
     android:background="@drawable/background_bottom_border"
     android:orientation="vertical">
 
+
+
     <RadioButton
         android:id="@+id/RadioChoiceA"
         android:layout_width="0dp"
@@ -74,4 +76,6 @@
         app:srcCompat="@drawable/ic_send_2"
         app:layout_constraintVertical_bias="0.0" />
 
+
 </android.support.constraint.ConstraintLayout>
+

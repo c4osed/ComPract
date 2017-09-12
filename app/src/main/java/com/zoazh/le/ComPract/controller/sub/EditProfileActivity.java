@@ -488,7 +488,7 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                         byte[] data = baos.toByteArray();
 
-                                        UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getEmail()).child("profilePicture").putBytes(data);
+                                        UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("profilePicture").putBytes(data);
                                         uploadTask.addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception exception) {
