@@ -62,7 +62,6 @@ public class ChatList extends AppCompatActivity {
                 adapter = new ListChat(getApplicationContext(), cListChat);
                 cListViewChat.setAdapter(adapter);
 
-                Toast.makeText(ChatList.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
 
 //                for (DataSnapshot chatID : dataSnapshot.getChildren()) {
 //                    final Message chat = chatID.getValue(Message.class);
