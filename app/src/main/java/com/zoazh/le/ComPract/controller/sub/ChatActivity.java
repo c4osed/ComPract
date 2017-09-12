@@ -352,7 +352,7 @@ class MessageAdapter extends ArrayAdapter {
 
                 TextName.setText(cName);
                 MyClass mc = new MyClass();
-                mc.SetImage(getContext(), ImageViewProfilePicture, cProfilePicture, cEmail);
+                mc.SetImage(getContext(), ImageViewProfilePicture, cProfilePicture, cUID);
             } else {
                 row = inflater.inflate(R.layout.listview_chat_date_receiver, parent, false);
 
@@ -362,7 +362,7 @@ class MessageAdapter extends ArrayAdapter {
 
                 TextMessageDate.setText(cDate);
                 MyClass mc = new MyClass();
-                mc.SetImage(getContext(), ImageViewProfilePicture, cProfilePicture, cEmail);
+                mc.SetImage(getContext(), ImageViewProfilePicture, cProfilePicture, cUID);
                 TextName.setText(cName);
             }
         }

@@ -112,7 +112,7 @@ public class CallScreenActivity extends BaseActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
-                    mc.SetImage(CallScreenActivity.this, cImageViewCallingProfilePicture, user.profilePicture, user.email);
+                    mc.SetImage(CallScreenActivity.this, cImageViewCallingProfilePicture, user.profilePicture, dataSnapshot.getKey());
                     mCallerName.setText(user.fullName);
                 }
 
