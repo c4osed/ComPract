@@ -51,6 +51,7 @@ public class QuestionActivity extends BaseActivity {
     private ConstraintLayout cLayoutNormalQuestion;
     private ConstraintLayout cLayoutChoiceQuestion;
 
+    private String cRadioAnswer;
     private RadioButton cRadioChoiceA;
     private RadioButton cRadioChoiceB;
     private RadioButton cRadioChoiceC;
@@ -130,14 +131,40 @@ public class QuestionActivity extends BaseActivity {
                 case R.id.LayoutSearch:
                     startActivity(new Intent(QuestionActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
+                    //overridePendingTransition(R.anim.move_in_left, R.animห.move_out_left);
                     break;
                 case R.id.LayoutProfile:
                     startActivity(new Intent(QuestionActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
+                case R.id.RadioChoiceA:
+                    cRadioAnswer = "a";
+                    cRadioChoiceB.setChecked(false);
+                    cRadioChoiceC.setChecked(false);
+                    cRadioChoiceD.setChecked(false);
+                    break;
+                case R.id.RadioChoiceB:
+                    cRadioAnswer = "b";
+                    cRadioChoiceA.setChecked(false);
+                    cRadioChoiceC.setChecked(false);
+                    cRadioChoiceD.setChecked(false);
+                    break;
+                case R.id.RadioChoiceC:
+                    cRadioAnswer = "c";
+                    cRadioChoiceA.setChecked(false);
+                    cRadioChoiceB.setChecked(false);
+                    cRadioChoiceD.setChecked(false);
+                    break;
+                case R.id.RadioChoiceD:
+                    cRadioAnswer = "d";
+                    cRadioChoiceA.setChecked(false);
+                    cRadioChoiceB.setChecked(false);
+                    cRadioChoiceC.setChecked(false);
+                    break;
             }
+
+
         }
     };
 
