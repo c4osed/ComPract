@@ -128,7 +128,7 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                 if (dataSnapshot.getValue() != null) {
                     User user = dataSnapshot.getValue(User.class);
                     MyClass mc = new MyClass();
-                    mc.SetImage(EditProfileActivity.this, cButtonEditProfileProfilePicture, user.profilePicture, dataSnapshot.getKey());
+                    mc.SetImage(EditProfileActivity.this, cButtonEditProfileProfilePicture, user.profilePicture, cAuth.getCurrentUser().getUid());
                     cInputEditProfileFirstName.setText(user.firstName);
                     cInputEditProfileLastName.setText(user.lastName);
                     cInputEditProfileAbout.setText(user.about);
@@ -258,10 +258,10 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         //cButtonEditProfileDOB.setText(sdf.format(myCalendar.getTime()));
-        if(new Date().before(myCalendar.getTime())){
+        if (new Date().before(myCalendar.getTime())) {
             Toast.makeText(EditProfileActivity.this, "Date of birth is incorrect!!!", Toast.LENGTH_LONG).show();
             cButtonEditProfileDOB.setText("");
-        }else{
+        } else {
             cButtonEditProfileDOB.setText(sdf.format(myCalendar.getTime()));
         }
     }
@@ -450,6 +450,8 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                         if (!vCountry.equals("Country")) {
                             if (!vNative.equals("Native")) {
                                 if (!vLearn.equals("Learn")) {
+                                    cProgress.setMessage("Loading...");
+                                    cProgress.show();
                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("firstName").setValue(vFirstName);
                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("lastName").setValue(vLastName);
                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("about").setValue(vAbout);
@@ -464,7 +466,6 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("learnAbbreviation").setValue(vLearnAbbreviation);
 
                                     if (!setup) {
-                                        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("about").setValue("");
                                         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("advisorEXP").setValue(0);
                                         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("advisorLevel").setValue(1);
                                         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("answerCount").setValue(0);
@@ -498,10 +499,13 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                                             @Override
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                 cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("profilePicture").setValue(taskSnapshot.getDownloadUrl().toString());
+                                                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                                             }
                                         });
+                                    } else {
+                                        startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                                     }
-                                    startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                                    cProgress.dismiss();
                                 } else {
 
                                     Toast.makeText(EditProfileActivity.this, "Learn field is required!!!", Toast.LENGTH_LONG).show();

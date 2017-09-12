@@ -70,7 +70,7 @@ public class MyClass {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-//                        Toast.makeText(ctx, exception.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ctx, path, Toast.LENGTH_LONG).show();
                     }
                 });
             }

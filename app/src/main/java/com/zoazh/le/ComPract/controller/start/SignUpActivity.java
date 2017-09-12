@@ -203,10 +203,10 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
         myCalendar.set(Calendar.MONTH, month);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        if(new Date().before(myCalendar.getTime())){
+        if (new Date().before(myCalendar.getTime())) {
             Toast.makeText(SignUpActivity.this, "Date of birth is incorrect!!!", Toast.LENGTH_LONG).show();
             cButtonRegisterDOB.setText("");
-        }else{
+        } else {
             cButtonRegisterDOB.setText(sdf.format(myCalendar.getTime()));
         }
 
@@ -415,7 +415,7 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
                                                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                                             byte[] data = baos.toByteArray();
 
-                                                            UploadTask uploadTask = cStorageRef.child("user").child(vEmail).child("profilePicture").putBytes(data);
+                                                            UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("profilePicture").putBytes(data);
                                                             uploadTask.addOnFailureListener(new OnFailureListener() {
                                                                 @Override
                                                                 public void onFailure(@NonNull Exception exception) {
@@ -481,7 +481,7 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
                                                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                                                         byte[] data = baos.toByteArray();
 
-                                                                        UploadTask uploadTask = cStorageRef.child("user").child(vEmail).child("profilePicture").putBytes(data);
+                                                                        UploadTask uploadTask = cStorageRef.child("user").child(cAuth.getCurrentUser().getUid()).child("profilePicture").putBytes(data);
                                                                         uploadTask.addOnFailureListener(new OnFailureListener() {
                                                                             @Override
                                                                             public void onFailure(@NonNull Exception exception) {

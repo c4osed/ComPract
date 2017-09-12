@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
+import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
@@ -50,6 +51,8 @@ public class PracticeActivity extends BaseActivity {
     private ProgressDialog cProgress;
 
 
+    private ImageButton cButtonChat;
+
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
     private ImageView cImageViewPractice;
@@ -70,6 +73,8 @@ public class PracticeActivity extends BaseActivity {
 
         cListView = (ListView) findViewById(R.id.ListViewPractice);
 
+        cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
+
         //BTM BAR
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
@@ -83,6 +88,7 @@ public class PracticeActivity extends BaseActivity {
         cImageViewPractice.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cButtonChat.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
@@ -111,6 +117,9 @@ public class PracticeActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
+                case R.id.ImageButtonChat:
+                    startActivity(new Intent(getApplicationContext(), ChatList.class));
+                    break;
                 case R.id.LayoutAdvise:
                     startActivity(new Intent(PracticeActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
