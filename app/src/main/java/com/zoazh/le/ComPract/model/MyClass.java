@@ -54,7 +54,7 @@ public class MyClass {
         return ageS;
     }
 
-    public void SetImage(final Context ctx, final ImageView img, String pic, final String email) {
+    public void SetImage(final Context ctx, final ImageView img, String pic, final String path) {
         if (pic == null) {
             img.setImageResource(R.drawable.ic_profile_picture);
         } else {
@@ -62,7 +62,7 @@ public class MyClass {
             if (file.exists() && !file.isDirectory()) {
                 Picasso.with(ctx).load(file).transform(new CircleTransform()).into(img);
             } else {
-                cStorageRef.child("user/" + email + "/profilePicture").getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                cStorageRef.child("user/" + path + "/profilePicture").getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         Picasso.with(ctx).load(file).transform(new CircleTransform()).into(img);

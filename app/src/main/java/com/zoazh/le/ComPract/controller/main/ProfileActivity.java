@@ -110,7 +110,7 @@ public class ProfileActivity extends BaseActivity {
                 }
                 cAnswerResult.setText(user.answerCount + "");
                 cQuestionResult.setText(user.questionCount + "");
-                mc.SetImage(ProfileActivity.this, cImageViewProfilePicture, user.profilePicture, user.email);
+                mc.SetImage(ProfileActivity.this, cImageViewProfilePicture, user.profilePicture, dataSnapshot.getKey());
             }
 
             @Override
