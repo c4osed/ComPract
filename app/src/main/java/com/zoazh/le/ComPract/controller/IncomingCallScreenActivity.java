@@ -73,7 +73,7 @@ public class IncomingCallScreenActivity extends BaseActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
                     remoteUser.setText(user.fullName);
-                    mc.SetImage(IncomingCallScreenActivity.this,cImageViewIncomeProfilePicture,user.profilePicture,user.email);
+                    mc.SetImage(IncomingCallScreenActivity.this,cImageViewIncomeProfilePicture,user.profilePicture,dataSnapshot.getKey());
                 }
 
                 @Override

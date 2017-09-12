@@ -80,7 +80,7 @@ public class ViewProfileActivity extends BaseActivity {
 
         MyClass mc = new MyClass();
 
-        mc.SetImage(getApplicationContext(), cImageProfilePicture, map.get("profilePicture"), map.get("email"));
+        mc.SetImage(getApplicationContext(), cImageProfilePicture, map.get("profilePicture"), map.get("UID"));
 
         cTextName.setText(map.get("name"));
         cTextStudyLevel.setText(map.get("studentLevel"));

@@ -128,7 +128,7 @@ public class EditProfileActivity extends BaseActivity implements DatePickerDialo
                 if (dataSnapshot.getValue() != null) {
                     User user = dataSnapshot.getValue(User.class);
                     MyClass mc = new MyClass();
-                    mc.SetImage(EditProfileActivity.this, cButtonEditProfileProfilePicture, user.profilePicture, user.email);
+                    mc.SetImage(EditProfileActivity.this, cButtonEditProfileProfilePicture, user.profilePicture, dataSnapshot.getKey());
                     cInputEditProfileFirstName.setText(user.firstName);
                     cInputEditProfileLastName.setText(user.lastName);
                     cInputEditProfileAbout.setText(user.about);

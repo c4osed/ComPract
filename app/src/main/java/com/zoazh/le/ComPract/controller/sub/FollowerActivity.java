@@ -153,7 +153,7 @@ class ListFollowerAdappter extends ArrayAdapter {
 
 
         MyClass mc = new MyClass();
-        mc.SetImage(getContext(), ImageViewPicture, vImage, vEmail);
+        mc.SetImage(getContext(), ImageViewPicture, vImage, vUID);
 
         TextName.setText(vName);
         TextNative.setText("Native: " + vNative);
