@@ -77,6 +77,11 @@ public class QuestionActivity extends BaseActivity {
         cRadioChoiceB = (RadioButton) findViewById(R.id.RadioChoiceB);
         cRadioChoiceC = (RadioButton) findViewById(R.id.RadioChoiceC);
         cRadioChoiceD = (RadioButton) findViewById(R.id.RadioChoiceD);
+        
+        cRadioChoiceA.setOnClickListener(clickListener);
+        cRadioChoiceB.setOnClickListener(clickListener);
+        cRadioChoiceC.setOnClickListener(clickListener);
+        cRadioChoiceD.setOnClickListener(clickListener);
 
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         MyClass mc = new MyClass();
