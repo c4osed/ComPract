@@ -12,10 +12,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0">
 
 
@@ -43,13 +43,13 @@
                 android:id="@+id/ButtonEditProfileProfilePicture"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_circle"
+                android:scaleType="centerCrop"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@drawable/ic_profile_picture"
-                android:scaleType="centerCrop"
-                android:background="@drawable/background_circle"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/TextEditProfile" />
+                app:layout_constraintTop_toBottomOf="@+id/TextEditProfile"
+                app:srcCompat="@drawable/ic_profile_picture" />
 
             <ImageView
                 android:id="@+id/ImageViewEditPicture"
@@ -70,16 +70,16 @@
                 style="@style/EditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="24dp"
                 android:ems="10"
                 android:hint="First Name"
                 android:inputType="textPersonName"
-                android:layout_marginRight="32dp"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginLeft="32dp"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileProfilePicture"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileProfilePicture" />
 
             <EditText
                 android:id="@+id/InputEditProfileLastName"
@@ -122,28 +122,28 @@
                 style="@style/Dropdown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Gender"
-                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileDOB"
-                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB"
-                app:layout_constraintRight_toLeftOf="@+id/Line1"
-                android:textAllCaps="false"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
+                android:text="Gender"
+                android:textAllCaps="false"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginRight="10dp" />
+                app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileDOB"
+                app:layout_constraintRight_toLeftOf="@+id/Line1"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB" />
 
             <Button
                 android:id="@+id/ButtonEditProfileCountry"
                 style="@style/Dropdown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:text="Country"
-                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB"
+                android:textAllCaps="false"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/Line1"
                 app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileDOB"
-                android:textAllCaps="false"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileDOB" />
 
             <Button
                 android:id="@+id/ButtonEditProfileNative"
@@ -151,10 +151,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Native"
+                android:textAllCaps="false"
                 app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileGender"
                 app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileGender"
-                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileGender"
-                android:textAllCaps="false" />
+                app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileGender" />
 
             <Button
                 android:id="@+id/ButtonEditProfileLearn"
@@ -162,10 +162,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Learn"
+                android:textAllCaps="false"
                 app:layout_constraintBaseline_toBaselineOf="@+id/ButtonEditProfileNative"
-                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileCountry"
                 app:layout_constraintLeft_toLeftOf="@+id/ButtonEditProfileCountry"
-                android:textAllCaps="false" />
+                app:layout_constraintRight_toRightOf="@+id/ButtonEditProfileCountry" />
 
             <Button
                 android:id="@+id/ButtonEditProfile"
@@ -183,13 +183,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/ButtonEditProfileNative" />
 
             <android.support.constraint.Guideline
+                android:id="@+id/Line1"
                 android:layout_width="wrap_content"
                 android:layout_height="801dp"
-                android:id="@+id/Line1"
                 android:orientation="vertical"
-                tools:layout_editor_absoluteY="0dp"
+                app:layout_constraintGuide_percent="0.5"
                 tools:layout_editor_absoluteX="192dp"
-                app:layout_constraintGuide_percent="0.5" />
+                tools:layout_editor_absoluteY="0dp" />
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

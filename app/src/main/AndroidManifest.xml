@@ -59,7 +59,8 @@
         <activity android:name=".controller.sub.EditProfileActivity" />
         <activity android:name=".controller.sub.FollowingActivity" />
         <activity android:name=".controller.sub.FollowerActivity" />
-        <activity android:name=".controller.sub.ChatList"></activity>
+        <activity android:name=".controller.sub.ChatList" />
+        <activity android:name=".controller.sub.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -11,8 +11,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.sinch.android.rtc.SinchError;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
+import com.zoazh.le.ComPract.controller.sub.ResetPasswordActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.SinchService;
 
@@ -57,11 +61,10 @@ public class LoginActivity extends BaseActivity implements SinchService.StartFai
     private Button cButtonSignUp;
     private Button cButtonLoginFacebook;
     private TextView cTextForgotPassword;
-
     private CallbackManager mCallbackManager;
-
-
     private ProgressDialog mSpinner;
+    Animation animation;
+    ImageView img;
 
 
     @Override
@@ -78,6 +81,10 @@ public class LoginActivity extends BaseActivity implements SinchService.StartFai
         };
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
+        img = (ImageView) findViewById(R.id.ImageViewLogo);
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in2);
+        img.startAnimation(animation);
+
 
         cInputEmail = (EditText) findViewById(R.id.InputEmail);
         cInputPassword = (EditText) findViewById(R.id.InputPassword);
@@ -252,6 +259,8 @@ public class LoginActivity extends BaseActivity implements SinchService.StartFai
     }
 
     private void forgotPassword() {
+        Intent ResetPasswordIntent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(ResetPasswordIntent);
     }
 
     private void openPlaceCallActivity() {
