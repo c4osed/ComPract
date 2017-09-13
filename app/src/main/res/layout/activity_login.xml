@@ -157,7 +157,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_compract"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginTop="25dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
