@@ -47,6 +47,10 @@
         <activity
             android:name=".controller.PlaceCallActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.sub.ResetPasswordActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity android:name=".controller.start.SignUpActivity" />
         <activity android:name=".controller.main.PracticeActivity" />
         <activity android:name=".controller.main.AdviseActivity" />
@@ -60,7 +64,7 @@
         <activity android:name=".controller.sub.FollowingActivity" />
         <activity android:name=".controller.sub.FollowerActivity" />
         <activity android:name=".controller.sub.ChatList" />
-        <activity android:name=".controller.sub.ResetPasswordActivity"></activity>
+
     </application>
 
 </manifest>
