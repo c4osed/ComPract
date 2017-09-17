@@ -21,6 +21,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <service android:name=".model.SinchService" />
 
         <meta-data
@@ -49,8 +50,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.sub.ResetPasswordActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".controller.start.SignUpActivity" />
         <activity android:name=".controller.main.PracticeActivity" />
         <activity android:name=".controller.main.AdviseActivity" />
@@ -64,7 +64,9 @@
         <activity android:name=".controller.sub.FollowingActivity" />
         <activity android:name=".controller.sub.FollowerActivity" />
         <activity android:name=".controller.sub.ChatList" />
-
+        <activity android:name=".controller.sub.SettingActivity" />
+        <activity android:name=".controller.sub.AccountActivity" />
+        <activity android:name=".controller.sub.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>

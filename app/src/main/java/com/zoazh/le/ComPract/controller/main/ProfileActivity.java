@@ -2,6 +2,7 @@ package com.zoazh.le.ComPract.controller.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.ResultReceiver;
 import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,14 +18,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.zoazh.le.ComPract.R;
+import com.zoazh.le.ComPract.controller.sub.AccountActivity;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowerActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowingActivity;
+import com.zoazh.le.ComPract.controller.sub.SettingActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 import com.zoazh.le.ComPract.model.database.User;
 
+
+
 public class ProfileActivity extends BaseActivity {
+
 
     FirebaseAuth cAuth = FirebaseAuth.getInstance();
 
@@ -59,6 +65,7 @@ public class ProfileActivity extends BaseActivity {
 
     String clistLearn;
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -67,10 +74,13 @@ public class ProfileActivity extends BaseActivity {
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
 
         cImageViewProfilePicture = (ImageView) findViewById(R.id.ImageViewProfilePicture);
         cStudyLevelResult = (TextView) findViewById(R.id.TextStudentLevelResult);
@@ -120,7 +130,7 @@ public class ProfileActivity extends BaseActivity {
         });
 
 
-        cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
+    cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) findViewById(R.id.LayoutPractice);
         cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
@@ -171,7 +181,7 @@ public class ProfileActivity extends BaseActivity {
                     Logout();
                     break;
                 case R.id.ButtonSetting:
-                    startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+                    startActivity(new Intent(ProfileActivity.this, SettingActivity.class));
                     break;
 
                 case R.id.LayoutPractice:
