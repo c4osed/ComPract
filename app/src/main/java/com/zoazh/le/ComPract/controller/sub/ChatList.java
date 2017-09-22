@@ -30,9 +30,11 @@ import com.zoazh.le.ComPract.model.database.Message;
 import com.zoazh.le.ComPract.model.database.Question;
 import com.zoazh.le.ComPract.model.database.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatList extends AppCompatActivity {
 
@@ -62,33 +64,51 @@ public class ChatList extends AppCompatActivity {
                 adapter = new ListChat(getApplicationContext(), cListChat);
                 cListViewChat.setAdapter(adapter);
 
+                for (final DataSnapshot chatID : dataSnapshot.getChildren()) {
+                    cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(chatID.getKey()).orderByChild("messageTimeDESC").limitToFirst(1).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+                            for (DataSnapshot data2 : dataSnapshot2.getChildren()) {
+                                final Message chat = data2.getValue(Message.class);
+//                                Toast.makeText(getApplicationContext(), chat.messageSender, Toast.LENGTH_LONG).show();
+                                cDatabaseRef.child("user").child(chatID.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot3) {
+                                        User user = dataSnapshot3.getValue(User.class);
+                                        if (user != null) {
+                                            HashMap<String, String> map = new HashMap<String, String>();
+                                            map.put("UID", dataSnapshot3.getKey());
+                                            map.put("name", user.fullName);
+                                            map.put("profilePicture", user.profilePicture);
+                                            map.put("lastMessage", chat.messageText);
+                                            map.put("lastTime", chat.messageTimeASC + "");
+//                            map.put("AuthorPicture", user.profilePicture);
+//                            map.put("AuthorName", user.fullName);
 
-//                for (DataSnapshot chatID : dataSnapshot.getChildren()) {
-//                    final Message chat = chatID.getValue(Message.class);
-//
-//                    cDatabaseRef.child("user").child(chat.).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-////                            User user = dataSnapshot.getValue(User.class);
-//                            HashMap<String, String> map = new HashMap<String, String>();
-//                            map.put("UID", dataSnapshot.get);
-////                            map.put("AuthorPicture", user.profilePicture);
-////                            map.put("AuthorName", user.fullName);
-//
-//                            cListChat.add(map);
-//
-//                            adapter = new ListChat(getApplicationContext(), cListChat);
-//                            cListViewChat.setAdapter(adapter);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//
-//
-//                }
+                                            cListChat.add(map);
+
+                                            adapter = new ListChat(getApplicationContext(), cListChat);
+                                            cListViewChat.setAdapter(adapter);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
 
             }
 
@@ -105,6 +125,7 @@ public class ChatList extends AppCompatActivity {
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(ChatList.this, ChatActivity.class).putExtra("map", cListChat.get(position)));
 //                startActivity(new Intent(getApplicationContext(), QuestionActivity.class).putExtra("map", cListQuestion.get(position)));
             }
         });
@@ -127,19 +148,26 @@ class ListChat extends ArrayAdapter {
         HashMap<String, String> map = cListChat.get(position);
 
         String vUID = map.get("UID");
-//        String vName = map.get("name");
-//        String vProfilePicture = map.get("profilePicture");
+        String vName = map.get("name");
+        String vProfilePicture = map.get("profilePicture");
+        String vLastMessage = map.get("lastMessage");
+        String vLastTime = map.get("lastTime");
 
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.listview_practice, parent, false);
+        View row = inflater.inflate(R.layout.listview_chat, parent, false);
 
         ImageView ImageViewPicture = (ImageView) row.findViewById(R.id.ImageViewPicture);
-        TextView TextQuestionAuthor = (TextView) row.findViewById(R.id.TextProfile);
+        TextView TextName = (TextView) row.findViewById(R.id.TextViewNameChatList);
+        TextView TextLastMessage = (TextView) row.findViewById(R.id.TextMessage);
+        TextView TextTime = (TextView) row.findViewById(R.id.TextViewTimeChat);
 
 
         MyClass mc = new MyClass();
-//        mc.SetImage(getContext(), ImageViewPicture, vProfilePicture, vUID);
+        TextName.setText(vName);
+        mc.SetImage(getContext(), ImageViewPicture, vProfilePicture, vUID);
+        TextLastMessage.setText(vLastMessage);
+        TextTime.setText(new SimpleDateFormat("HH:mm", Locale.US).format(Long.parseLong(vLastTime)));
 //        TextQuestionAuthor.setText(vName);
 
         return row;

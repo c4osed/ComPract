@@ -21,26 +21,25 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
-        android:id="@+id/TextProfile"
+        android:id="@+id/TextViewNameChatList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/ImageViewPicture"
         android:text="Name"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/Line3"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/TextViewTimeChat"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/TextMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/TextProfile"
+        android:layout_below="@id/TextViewNameChatList"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
@@ -49,9 +48,11 @@
         android:textColor="@color/grey"
         android:textSize="15sp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/TextProfile"
-        app:layout_constraintRight_toRightOf="@+id/TextProfile"
-        app:layout_constraintTop_toBottomOf="@+id/TextProfile" />
+        app:layout_constraintLeft_toLeftOf="@+id/TextViewNameChatList"
+        app:layout_constraintRight_toRightOf="@+id/TextViewNameChatList"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewNameChatList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -59,6 +60,16 @@
         android:id="@+id/Line3"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="115dp" />
+
+    <TextView
+        android:id="@+id/TextViewTimeChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

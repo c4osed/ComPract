@@ -94,7 +94,7 @@ public class ChatActivity extends BaseActivity {
 
                 }
             });
-            h.postDelayed(r,60000);
+            h.postDelayed(r, 60000);
         }
     };
 
@@ -186,10 +186,10 @@ public class ChatActivity extends BaseActivity {
                     HashMap<String, String> map2 = new HashMap<String, String>();
                     map2.put("messageSender", message.messageSender);
                     map2.put("messageText", message.messageText);
-                    map2.put("messageTime", message.messageTime);
+                    map2.put("messageTime", message.messageTimeASC + "");
                     map2.put("messageRead", message.messageRead);
                     cListMessage.add(map2);
-                    messageAdapter = new MessageAdapter(getApplicationContext(), cListMessage, cAuth.getCurrentUser().getUid(), cName.substring(0,cName.indexOf(" ")), cEmail, cProfilePicture);
+                    messageAdapter = new MessageAdapter(getApplicationContext(), cListMessage, cAuth.getCurrentUser().getUid(), cName.substring(0, cName.indexOf(" ")), cEmail, cProfilePicture);
                     cListViewMessage.setAdapter(messageAdapter);
                 }
                 //scrollMyListViewToBottom();
@@ -204,6 +204,7 @@ public class ChatActivity extends BaseActivity {
 
         r.run();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -272,13 +273,16 @@ public class ChatActivity extends BaseActivity {
     private void sendMessage() {
         String messageText = cInputMessage.getText().toString();
         if (!messageText.isEmpty()) {
-            String messageTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
+            //String messageTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
 
-            Message message = new Message(cAuth.getCurrentUser().getUid(), messageText, messageTime, "");
+            Message message = new Message(cAuth.getCurrentUser().getUid(), messageText, new Date().getTime(), new Date().getTime() * -1, "");
 
             cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).push().setValue(message);
+//            cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).child("recentMessage").setValue(messageText);
+//            cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).child("recentTime").setValue(new Date().getTime());
             cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).push().setValue(message);
-
+//            cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).child("recentMessage").setValue(messageText);
+//            cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).child("recentTime").setValue(new Date().getTime());
             cInputMessage.setText("");
         }
         //scrollMyListViewToBottom();
@@ -324,11 +328,13 @@ class MessageAdapter extends ArrayAdapter {
 
 
         if (position == 0) {
-            cDate = vTime.substring(0, 10);
+//            cDate = vTime.substring(0, 10);
+            cDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Long.parseLong(vTime));
         } else {
             String messageTimePre = cListMessage.get(position - 1).get("messageTime");
-            if (!messageTimePre.substring(0, 10).equals(vTime.substring(0, 10))) {
-                cDate = vTime.substring(0, 10);
+            if (!new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Long.parseLong(messageTimePre)).equals(new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Long.parseLong(vTime)))) {
+//                cDate = vTime.substring(0, 10);
+                cDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Long.parseLong(vTime));
             } else {
                 cDate = "";
 
@@ -373,7 +379,8 @@ class MessageAdapter extends ArrayAdapter {
         TextView TextMessageRead = (TextView) row.findViewById(R.id.TextMessageRead);
 
         cTextMessageText.setText(vText);
-        TextMessageTime.setText(new SimpleDateFormat("HH:mm", Locale.US).format(new Date(vTime)));
+//        TextMessageTime.setText(vTime);
+        TextMessageTime.setText(new SimpleDateFormat("HH:mm", Locale.US).format(Long.parseLong(vTime)));
         TextMessageRead.setText(vRead);
 
         cTextMessageText.setOnClickListener(new View.OnClickListener() {

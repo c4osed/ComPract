@@ -13,17 +13,19 @@ public class Message {
 
     public String messageSender;
     public String messageText;
-    public String messageTime;
+    public long messageTimeASC;
+    public long messageTimeDESC;
     public String messageRead;
 
     public Message() {
 
     }
 
-    public Message(String messageSender, String messageText, String messageTime, String messageRead) {
+    public Message(String messageSender, String messageText, long messageTimeASC, long messageTimeDESC, String messageRead) {
         this.messageSender = messageSender;
         this.messageText = messageText;
-        this.messageTime = messageTime;
+        this.messageTimeASC = messageTimeASC;
+        this.messageTimeDESC = messageTimeDESC;
         this.messageRead = messageRead;
     }
 
@@ -34,7 +36,8 @@ public class Message {
         HashMap<String, Object> result = new HashMap<>();
         result.put("messageSender", messageSender);
         result.put("messageText", messageText);
-        result.put("messageTime", messageTime);
+        result.put("messageTimeASC", messageTimeASC);
+        result.put("messageTimeDESC", messageTimeDESC);
         result.put("messageRead", messageRead);
 
         return result;
