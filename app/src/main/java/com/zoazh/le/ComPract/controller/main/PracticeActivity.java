@@ -173,19 +173,23 @@ public class PracticeActivity extends BaseActivity {
                 cListQuestion.clear();
                 adapter = new ListPractice(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
-
-                for (DataSnapshot questionID : dataSnapshot.getChildren()) {
+                for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
                     String questionLanguage = question.QuestionLanguage.toString();
                     if(!Arrays.asList(learnLanguage).contains(questionLanguage)){
                         continue; //show only learnLanguage
                     }
 
+                    String user = question.QuestionAuthor;
+                    if (cAuth.getCurrentUser().getUid().equals(user))
+                        continue;
+
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
                             HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("QuestionID", questionID.getKey());
                             map.put("AuthorID", question.QuestionAuthor);
                             map.put("AuthorPicture", user.profilePicture);
                             map.put("AuthorName", user.fullName);
@@ -286,4 +290,3 @@ class ListPractice extends ArrayAdapter {
         return row;
     }
 }
-
