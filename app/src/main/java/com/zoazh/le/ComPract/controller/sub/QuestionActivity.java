@@ -65,6 +65,7 @@ public class QuestionActivity extends BaseActivity {
     HashMap<String, String> map;
 
     String cQuestionID;
+    String cQuestionAuthorID;
 
 
     @Override
@@ -104,6 +105,7 @@ public class QuestionActivity extends BaseActivity {
         cTextQuestionType.setText(map.get("QuestionLanguage") + " (" + map.get("QuestionType") + ")");
         cTextQuestion.setText("\t\t\t\t" + map.get("Question"));
         cQuestionID = map.get("QuestionID");
+        cQuestionAuthorID = map.get("AuthorID");
         Picasso.with(getApplicationContext()).load(map.get("QuestionPicture")).into(cImageViewQuestion);
 
         if (map.get("QuestionType").equals("Multiple Choice")) {
@@ -198,13 +200,13 @@ public class QuestionActivity extends BaseActivity {
 
     private void sendAnswer() {
         if (cInputAnswerQuestion.getText() != null) {
-            cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
-            cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime()* -1);
+            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
+            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime()* -1);
 
             if ((""+map.get("QuestionType")).equals("Multiple Choice"))
-                cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer1").setValue(cRadioAnswer);
+                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cRadioAnswer);
             else
-                cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer2").setValue(cInputAnswerQuestion.getText()+"");
+                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cInputAnswerQuestion.getText()+"");
 
         } else
             Toast.makeText(QuestionActivity.this, "Please Answer The Question First", Toast.LENGTH_LONG).show();
