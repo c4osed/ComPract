@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.R;
+import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -51,6 +52,7 @@ public class SearchActivity extends BaseActivity {
     ListSearch adapter;
 
     private EditText cInputSearch;
+    private ImageView cImageButtonChat;
     private ImageButton cButtonSearch;
     private ImageButton cButtonFilter;
 
@@ -97,7 +99,7 @@ public class SearchActivity extends BaseActivity {
         cButtonFilter = (ImageButton) findViewById(R.id.ImageButtonFilter);
         cButtonSearch = (ImageButton) findViewById(R.id.ImageViewSearch);
         cListView = (ListView) findViewById(R.id.ListViewSearch);
-
+        cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
 
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
@@ -127,6 +129,7 @@ public class SearchActivity extends BaseActivity {
         cImageViewSearch.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cImageButtonChat.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cButtonSearch.setOnClickListener(clickListener);
@@ -216,6 +219,9 @@ public class SearchActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
+                case  R.id.ImageButtonChat:
+                    startActivity(new Intent(SearchActivity.this, ChatList.class));
+                    break;
                 case R.id.ImageViewSearch:
                     Search();
                     break;

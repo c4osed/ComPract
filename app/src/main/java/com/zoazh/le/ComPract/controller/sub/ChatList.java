@@ -45,6 +45,12 @@ public class ChatList extends AppCompatActivity {
     private List<HashMap<String, String>> cListChat = new ArrayList<HashMap<String, String>>();
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        ListChat();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);

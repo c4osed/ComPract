@@ -89,6 +89,7 @@ public class AccountActivity extends BaseActivity  {
 //                                                }
 //                                            });
                                     //do delete
+
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

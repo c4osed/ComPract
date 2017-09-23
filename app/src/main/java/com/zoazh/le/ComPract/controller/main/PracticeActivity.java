@@ -50,7 +50,7 @@ public class PracticeActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
 
-
+    private  ImageView cImageButtonChat;
     private ImageButton cButtonChat;
 
     private ConstraintLayout cBottomBar;
@@ -76,6 +76,7 @@ public class PracticeActivity extends BaseActivity {
         cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
 
         //BTM BAR
+        cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
         cImageViewPractice = (ImageView) cBottomBar.findViewById(R.id.ImageViewPractice);
@@ -88,6 +89,7 @@ public class PracticeActivity extends BaseActivity {
         cImageViewPractice.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cImageButtonChat.setOnClickListener(clickListener);
         cButtonChat.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);

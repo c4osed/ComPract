@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.AccountActivity;
+import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowerActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowingActivity;
@@ -35,6 +36,7 @@ public class ProfileActivity extends BaseActivity {
     FirebaseAuth cAuth = FirebaseAuth.getInstance();
 
     ImageView cImageViewProfilePicture;
+    ImageView cImageButtonChat;
 
     ConstraintLayout cLayoutAbout;
     ConstraintLayout cLayoutNative;
@@ -81,7 +83,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
 
 
-
+        cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cImageViewProfilePicture = (ImageView) findViewById(R.id.ImageViewProfilePicture);
         cStudyLevelResult = (TextView) findViewById(R.id.TextStudentLevelResult);
         cAdviseLevelResult = (TextView) findViewById(R.id.TextAdvisorLevelResult);
@@ -141,6 +143,7 @@ public class ProfileActivity extends BaseActivity {
         cTextProfile.setTextColor(getResources().getInteger(R.color.secondary));
         cImageViewProfile.setColorFilter(getResources().getInteger(R.color.secondary));
 
+        cImageButtonChat.setOnClickListener(clickListener);
         cImageViewProfile.setOnClickListener(clickListener);
         cLayoutAbout.setOnClickListener(clickListener);
         cLayoutLearn.setOnClickListener(clickListener);
@@ -169,6 +172,9 @@ public class ProfileActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.ImageButtonChat:
+                    startActivity(new Intent(ProfileActivity.this, ChatList.class));
+                    break;
                 case R.id.ImageViewProfile:
                     break;
                 case R.id.LayoutAbout:

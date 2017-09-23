@@ -33,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatActivity;
+import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
@@ -51,7 +52,7 @@ public class AdviseActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
 
-
+    private  ImageView cImageButtonChat;
     private ImageButton cImageButtonCreateQuestion;
 
     private ConstraintLayout cBottomBar;
@@ -69,7 +70,7 @@ public class AdviseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advise);
 
-
+        cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cImageButtonCreateQuestion = (ImageButton) findViewById(R.id.ImageButtonCreateQuestion);
 
         //BTM BAR
@@ -85,6 +86,7 @@ public class AdviseActivity extends BaseActivity {
         cImageViewAdvise.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cImageButtonChat.setOnClickListener(clickListener);
         cImageButtonCreateQuestion.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
@@ -117,6 +119,9 @@ public class AdviseActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
+                case R.id.ImageButtonChat:
+                    startActivity(new Intent(AdviseActivity.this, ChatList.class));
+                    break;
                 case R.id.ImageButtonCreateQuestion:
                     startActivity(new Intent(AdviseActivity.this, CreateQuestionActivity.class));
                     break;
