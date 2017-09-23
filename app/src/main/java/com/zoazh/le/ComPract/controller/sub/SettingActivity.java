@@ -26,6 +26,7 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), AccountActivity.class));
                     break;
                 case R.id.LayoutPrivacy:
+                    startActivity(new Intent(getApplicationContext(), PrivacyActivity.class));
                     break;
             }
         }

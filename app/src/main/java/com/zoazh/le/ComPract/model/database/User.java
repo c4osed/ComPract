@@ -28,6 +28,7 @@ public class User {
     public String profilePicture;
     public String about;
     public String onlineTime;
+    public String search;
     public int followingCount;
     public int followerCount;
     public int answerCount;
@@ -44,7 +45,7 @@ public class User {
 
 
     public User(String fullName, String firstName, String lastName, String email, String DOB, String gender, String country, String nativeLanguage, String learnFull, String learnAbbreviation, String profilePicture, String about,
-                String onlineTime, int followingCount, int followerCount, int answerCount, int questionCount, int advisorLevel, int advisorEXP, int studentLevel, int studentEXP) {
+                String onlineTime, int followingCount, int followerCount, int answerCount, int questionCount, int advisorLevel, int advisorEXP, int studentLevel, int studentEXP, String search) {
 
         this.fullName = fullName;
         this.firstName = firstName;
@@ -67,6 +68,7 @@ public class User {
         this.advisorEXP = advisorEXP;
         this.studentLevel = studentLevel;
         this.studentEXP = studentEXP;
+        this.search = search;
     }
 
 
@@ -95,6 +97,7 @@ public class User {
         result.put("advisorEXP", advisorEXP);
         result.put("studentLevel", studentLevel);
         result.put("studentEXP", studentEXP);
+        result.put("search", search);
 
         return result;
     }

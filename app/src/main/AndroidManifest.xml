@@ -21,7 +21,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <service android:name=".model.SinchService" />
 
         <meta-data
@@ -66,7 +65,8 @@
         <activity android:name=".controller.sub.ChatList" />
         <activity android:name=".controller.sub.SettingActivity" />
         <activity android:name=".controller.sub.AccountActivity" />
-        <activity android:name=".controller.sub.ChangePasswordActivity"></activity>
+        <activity android:name=".controller.sub.ChangePasswordActivity" />
+        <activity android:name=".controller.sub.PrivacyActivity"></activity>
     </application>
 
 </manifest>

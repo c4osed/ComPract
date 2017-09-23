@@ -436,6 +436,9 @@ public class SearchActivity extends BaseActivity {
                 for (DataSnapshot userID : dataSnapshot.getChildren()) {
                     User user = userID.getValue(User.class);
                     if (!cAuth.getCurrentUser().getUid().equals(userID.getKey())) {
+                        if(!user.search.toString().matches("yes")){
+                            continue;
+                        }
 
                         MyClass mc = new MyClass();
                         int vAge = Integer.parseInt(mc.GetAge(user.DOB));
