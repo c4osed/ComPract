@@ -41,6 +41,7 @@ import com.zoazh.le.ComPract.model.database.User;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class PracticeActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
 
+    private String[] learnLanguage;
     private  ImageView cImageButtonChat;
     private ImageButton cButtonChat;
 
@@ -151,16 +153,33 @@ public class PracticeActivity extends BaseActivity {
     }
 
     private void ListPractice() {
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FirebaseAuth cAuth = FirebaseAuth.getInstance();
+                DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
+                User user = dataSnapshot.getValue(User.class);
+                learnLanguage = user.learnFull.toString().split(",");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        cDatabaseRef.child("question").orderByChild("DESCQuestionTime").addValueEventListener(new ValueEventListener() {
+            }
+        });
+            cDatabaseRef.child("question").orderByChild("DESCQuestionTime").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 cListQuestion.clear();
                 adapter = new ListPractice(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
+
                 for (DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
+                    String questionLanguage = question.QuestionLanguage.toString();
+                    if(!Arrays.asList(learnLanguage).contains(questionLanguage)){
+                        continue; //show only learnLanguage
+                    }
 
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -267,3 +286,4 @@ class ListPractice extends ArrayAdapter {
         return row;
     }
 }
+
