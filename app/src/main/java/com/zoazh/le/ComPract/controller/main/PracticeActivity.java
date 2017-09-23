@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +24,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
-import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
-import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 import com.zoazh.le.ComPract.model.database.Question;
 import com.zoazh.le.ComPract.model.database.User;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -159,7 +152,7 @@ public class PracticeActivity extends BaseActivity {
                 cListQuestion.clear();
                 adapter = new ListPractice(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
-                for (DataSnapshot questionID : dataSnapshot.getChildren()) {
+                for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
 
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -167,6 +160,7 @@ public class PracticeActivity extends BaseActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
                             HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("QuestionID", questionID.getKey());
                             map.put("AuthorID", question.QuestionAuthor);
                             map.put("AuthorPicture", user.profilePicture);
                             map.put("AuthorName", user.fullName);

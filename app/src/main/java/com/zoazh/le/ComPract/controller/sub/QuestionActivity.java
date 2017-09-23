@@ -22,6 +22,7 @@ import com.zoazh.le.ComPract.controller.main.SearchActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class QuestionActivity extends BaseActivity {
@@ -51,13 +52,19 @@ public class QuestionActivity extends BaseActivity {
     private ConstraintLayout cLayoutNormalQuestion;
     private ConstraintLayout cLayoutChoiceQuestion;
 
+    private TextView cInputAnswerQuestion;
     private String cRadioAnswer;
     private RadioButton cRadioChoiceA;
     private RadioButton cRadioChoiceB;
     private RadioButton cRadioChoiceC;
     private RadioButton cRadioChoiceD;
 
+    private ImageView cImageButtonSendAnswerNormal;
+    private ImageView cImageButtonSendAnswerChoice;
+
     HashMap<String, String> map;
+
+    String cQuestionID;
 
 
     @Override
@@ -73,15 +80,22 @@ public class QuestionActivity extends BaseActivity {
         cImageViewQuestion = (ImageView) findViewById(R.id.ImageViewQuestion);
         cLayoutNormalQuestion = (ConstraintLayout) findViewById(R.id.LayoutNormalQuestion);
         cLayoutChoiceQuestion = (ConstraintLayout) findViewById(R.id.LayoutChoiceQuestion);
+        cInputAnswerQuestion = (TextView) findViewById(R.id.InputAnswerQuestion);
         cRadioChoiceA = (RadioButton) findViewById(R.id.RadioChoiceA);
         cRadioChoiceB = (RadioButton) findViewById(R.id.RadioChoiceB);
         cRadioChoiceC = (RadioButton) findViewById(R.id.RadioChoiceC);
         cRadioChoiceD = (RadioButton) findViewById(R.id.RadioChoiceD);
-        
+
+        cImageButtonSendAnswerNormal = (ImageView) findViewById(R.id.ImageButtonSendAnswerNormal);
+        cImageButtonSendAnswerChoice = (ImageView) findViewById(R.id.ImageButtonSendAnswerChoice);
+
         cRadioChoiceA.setOnClickListener(clickListener);
         cRadioChoiceB.setOnClickListener(clickListener);
         cRadioChoiceC.setOnClickListener(clickListener);
         cRadioChoiceD.setOnClickListener(clickListener);
+
+        cImageButtonSendAnswerNormal.setOnClickListener(clickListener);
+        cImageButtonSendAnswerChoice.setOnClickListener(clickListener);
 
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         MyClass mc = new MyClass();
@@ -89,6 +103,7 @@ public class QuestionActivity extends BaseActivity {
         cTextAuthor.setText(map.get("AuthorName"));
         cTextQuestionType.setText(map.get("QuestionLanguage") + " (" + map.get("QuestionType") + ")");
         cTextQuestion.setText("\t\t\t\t" + map.get("Question"));
+        cQuestionID = map.get("QuestionID");
         Picasso.with(getApplicationContext()).load(map.get("QuestionPicture")).into(cImageViewQuestion);
 
         if (map.get("QuestionType").equals("Multiple Choice")) {
@@ -100,6 +115,7 @@ public class QuestionActivity extends BaseActivity {
         } else {
             cLayoutNormalQuestion.setVisibility(View.VISIBLE);
         }
+        cRadioChoiceA.setChecked(false);
 
 
     }
@@ -167,11 +183,36 @@ public class QuestionActivity extends BaseActivity {
                     cRadioChoiceB.setChecked(false);
                     cRadioChoiceC.setChecked(false);
                     break;
+                case R.id.ImageButtonSendAnswerNormal:
+                    sendAnswer();
+                    break;
+                case R.id.ImageButtonSendAnswerChoice:
+                    sendAnswer();
+                    break;
+
             }
 
 
         }
     };
+
+    private void sendAnswer() {
+        if (cInputAnswerQuestion.getText() != null) {
+            cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
+            cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime()* -1);
+
+            if ((""+map.get("QuestionType")).equals("Multiple Choice"))
+                cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer1").setValue(cRadioAnswer);
+            else
+                cDatabaseRef.child("answer").child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer2").setValue(cInputAnswerQuestion.getText()+"");
+
+        } else
+            Toast.makeText(QuestionActivity.this, "Please Answer The Question First", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(QuestionActivity.this, "The Answer has been sent!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(QuestionActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+
+    }
 
 
     private void Loading() {
@@ -181,5 +222,6 @@ public class QuestionActivity extends BaseActivity {
         cProgress.setCancelable(false);
         cProgress.show();
     }
+
 
 }
