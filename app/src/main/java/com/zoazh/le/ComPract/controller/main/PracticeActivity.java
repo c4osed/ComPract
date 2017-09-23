@@ -2,11 +2,13 @@ package com.zoazh.le.ComPract.controller.main;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,8 @@ public class PracticeActivity extends BaseActivity {
     private ProgressDialog cProgress;
 
     private String[] learnLanguage;
+    private String[] fillterLanguage;
+    private  String check;
     private  ImageView cImageButtonChat;
     private ImageButton cButtonChat;
 
@@ -62,6 +66,7 @@ public class PracticeActivity extends BaseActivity {
     private ConstraintLayout cLayoutSearch;
     private ConstraintLayout cLayoutProfile;
     private TextView cTextPractice;
+    private ImageView cFilterimage;
 
     ListPractice adapter;
     private ListView cListView;
@@ -86,17 +91,33 @@ public class PracticeActivity extends BaseActivity {
         cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
         cLayoutProfile = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutProfile);
         cTextPractice = (TextView) cBottomBar.findViewById(R.id.TextPractice);
+        cFilterimage = (ImageView) findViewById(R.id.filterimage);
 
         cTextPractice.setTextColor(getResources().getInteger(R.color.secondary));
         cImageViewPractice.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
+        cFilterimage.setOnClickListener(clickListener);
         cImageButtonChat.setOnClickListener(clickListener);
         cButtonChat.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
 
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FirebaseAuth cAuth = FirebaseAuth.getInstance();
+                DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
+                User user = dataSnapshot.getValue(User.class);
+                fillterLanguage = user.learnFull.toString().split(",");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        check = "1";
         ListPractice();
     }
 
@@ -139,6 +160,9 @@ public class PracticeActivity extends BaseActivity {
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
+                case R.id.filterimage:
+                    listLearn();
+                    break;
             }
         }
     };
@@ -173,11 +197,23 @@ public class PracticeActivity extends BaseActivity {
                 cListQuestion.clear();
                 adapter = new ListPractice(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
+
                 for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
                     String questionLanguage = question.QuestionLanguage.toString();
-                    if(!Arrays.asList(learnLanguage).contains(questionLanguage)){
-                        continue; //show only learnLanguage
+
+                    if(check.matches("1")){
+                        if(!Arrays.asList(learnLanguage).contains(questionLanguage)) {
+                            continue; //show only learnLanguage
+                        }
+                    }else{
+                        if(!fillterLanguage[0].matches(questionLanguage)){
+                            continue;
+                        }
+
+                        if(!Arrays.asList(learnLanguage).contains(questionLanguage)) {
+                            continue; //show only learnLanguage
+                        }
                     }
 
                     String user = question.QuestionAuthor;
@@ -235,6 +271,77 @@ public class PracticeActivity extends BaseActivity {
                 startActivity(new Intent(PracticeActivity.this, QuestionActivity.class).putExtra("map", cListQuestion.get(position)));
             }
         });
+    }
+    private void listLearn() {
+        AlertDialog.Builder listLearn = new AlertDialog.Builder(PracticeActivity.this);
+        listLearn.setItems(learnLanguage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        fillterLanguage[0] = learnLanguage[0];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 1:
+                        fillterLanguage[0] = learnLanguage[1];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 2:
+                        fillterLanguage[0] = learnLanguage[2];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 3:
+                        fillterLanguage[0] = learnLanguage[3];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 4:
+                        fillterLanguage[0] = learnLanguage[4];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 5:
+                        fillterLanguage[0] = learnLanguage[5];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 6:
+                        fillterLanguage[0] = learnLanguage[6];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 7:
+                        fillterLanguage[0] = learnLanguage[7];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 8:
+                        fillterLanguage[0] = learnLanguage[8];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 9:
+                        fillterLanguage[0] = learnLanguage[9];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 10:
+                        fillterLanguage[0] = learnLanguage[10];
+                        check = "2";
+                        ListPractice();
+                        break;
+                    case 11:
+                        fillterLanguage[0] = learnLanguage[11];
+                        check = "2";
+                        ListPractice();
+                        break;
+                }
+            }
+        });
+        listLearn.show();
     }
 }
 
