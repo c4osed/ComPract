@@ -89,6 +89,8 @@ public class PracticeActivity extends BaseActivity {
         cLayoutProfile.setOnClickListener(clickListener);
 
         ListPractice();
+
+        List ExistingQID = new ArrayList();
     }
 
     @Override
@@ -152,9 +154,13 @@ public class PracticeActivity extends BaseActivity {
                 cListQuestion.clear();
                 adapter = new ListPractice(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
+
                 for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
 
+                    String user = question.QuestionAuthor;
+                    if (cAuth.getCurrentUser().getUid().equals(user))
+                            continue;
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -172,6 +178,7 @@ public class PracticeActivity extends BaseActivity {
                             map.put("ChoiceB", question.ChoiceB);
                             map.put("ChoiceC", question.ChoiceC);
                             map.put("ChoiceD", question.ChoiceD);
+
 
                             cListQuestion.add(map);
 
