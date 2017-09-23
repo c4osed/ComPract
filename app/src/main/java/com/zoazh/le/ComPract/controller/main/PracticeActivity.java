@@ -155,6 +155,10 @@ public class PracticeActivity extends BaseActivity {
                 for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
                     final Question question = questionID.getValue(Question.class);
 
+                    String user = question.QuestionAuthor;
+                    if (cAuth.getCurrentUser().getUid().equals(user))
+                        continue;
+
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
