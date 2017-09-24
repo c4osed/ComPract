@@ -152,8 +152,8 @@ public class QuestionDoneActivity extends BaseActivity {
         } else {
 //            cLayoutChoiceQuestion.removeAllViews();
             cLayoutNormalQuestion.setVisibility(View.VISIBLE);
-            cTextViewAnswer.setText(map.get("Answer"));
-            cTextViewComment.setText(map.get("Comment"));
+            cTextViewAnswer.setText("Your answer :    "+map.get("Answer"));
+            cTextViewComment.setText("Comment :   "+map.get("Comment"));
             cScore = Integer.parseInt(map.get("Score"));
             if (cScore == 1) {
                 cRadioAnswerBad.setChecked(true);
