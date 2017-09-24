@@ -33,9 +33,12 @@ import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.CircleTransform;
 import com.zoazh.le.ComPract.model.database.Question;
+import com.zoazh.le.ComPract.model.database.User;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +86,7 @@ public class CreateQuestionActivity extends BaseActivity {
 
     private static final int SELECT_QUESTION_PICTURE = 1;
     private Uri cQuestionImage = null;
+    private String[] listLanguage;
 
 
     @Override
@@ -146,17 +150,32 @@ public class CreateQuestionActivity extends BaseActivity {
         cImageButtonSendChoiceQuestion.setOnClickListener(clickListener);
 //        cLayoutProfile.setOnClickListener(clickListener);
 
-        cDatabaseRef.child("language").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+//        cDatabaseRef.child("language").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot data : dataSnapshot.getChildren()) {
+//                    cListLanguage.add(data.getKey().toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    cListLanguage.add(data.getKey().toString());
-                }
+                FirebaseAuth cAuth = FirebaseAuth.getInstance();
+                DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
+                User user = dataSnapshot.getValue(User.class);
+                listLanguage = user.nativeLanguage.toString().split(",");
+                cListLanguage = Arrays.asList(listLanguage);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
 
