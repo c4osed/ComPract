@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -226,29 +227,41 @@ public class PracticeActivity extends BaseActivity {
                     String user = question.QuestionAuthor;
                     if (cAuth.getCurrentUser().getUid().equals(user))
                         continue;
-
                     cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            map.put("QuestionID", questionID.getKey());
-                            map.put("AuthorID", question.QuestionAuthor);
-                            map.put("AuthorPicture", user.profilePicture);
-                            map.put("AuthorName", user.fullName);
-                            map.put("QuestionLanguage", question.QuestionLanguage);
-                            map.put("QuestionType", question.QuestionType);
-                            map.put("Question", question.Question);
-                            map.put("QuestionPicture", question.QuestionPicture);
-                            map.put("ChoiceA", question.ChoiceA);
-                            map.put("ChoiceB", question.ChoiceB);
-                            map.put("ChoiceC", question.ChoiceC);
-                            map.put("ChoiceD", question.ChoiceD);
+                            final User user = dataSnapshot.getValue(User.class);
+                            final HashMap<String, String> map = new HashMap<String, String>();
+                            cDatabaseRef.child("answer").child(question.QuestionAuthor).child(questionID.getKey()).child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() == null) {
+                                        map.put("QuestionID", questionID.getKey());
+                                        map.put("AuthorID", question.QuestionAuthor);
+                                        map.put("AuthorPicture", user.profilePicture);
+                                        map.put("AuthorName", user.fullName);
+                                        map.put("QuestionLanguage", question.QuestionLanguage);
+                                        map.put("QuestionType", question.QuestionType);
+                                        map.put("Question", question.Question);
+                                        map.put("QuestionPicture", question.QuestionPicture);
+                                        map.put("ChoiceA", question.ChoiceA);
+                                        map.put("ChoiceB", question.ChoiceB);
+                                        map.put("ChoiceC", question.ChoiceC);
+                                        map.put("ChoiceD", question.ChoiceD);
 
-                            cListQuestion.add(map);
+                                        cListQuestion.add(map);
 
-                            adapter = new ListPractice(getApplicationContext(), cListQuestion);
-                            cListView.setAdapter(adapter);
+                                        adapter = new ListPractice(getApplicationContext(), cListQuestion);
+                                        cListView.setAdapter(adapter);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                         }
 
                         @Override
