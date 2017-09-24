@@ -147,7 +147,7 @@ public class CommentActivity extends BaseActivity {
         }
 
         if (cComment != null) {
-            cTextViewComment.setText(cComment);
+            cTextViewComment.setText("Your comment :   "+cComment);
         }
 
     }
@@ -202,7 +202,7 @@ public class CommentActivity extends BaseActivity {
     private void SendComment() {
         cDatabaseRef.child("answer").child(cAuth.getCurrentUser().getUid()).child(cQuestionID).child(cAnswerID).child("Comment").setValue(cInputComment.getText().toString());
         cDatabaseRef.child("answer").child(cAuth.getCurrentUser().getUid()).child(cQuestionID).child(cAnswerID).child("Score").setValue(cScore);
-        cTextViewComment.setText(cInputComment.getText());
+        cTextViewComment.setText("Your comment :   "+cInputComment.getText());
     }
 
 
