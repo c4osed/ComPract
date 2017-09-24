@@ -72,6 +72,11 @@ public class PracticeActivity extends BaseActivity {
     private ListView cListView;
     private List<HashMap<String, String>> cListQuestion = new ArrayList<HashMap<String, String>>();
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ListPractice();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
