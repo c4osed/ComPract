@@ -1,4 +1,4 @@
-package com.zoazh.le.ComPract.controller.main;
+package com.zoazh.le.ComPract.controller.sub;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -38,6 +38,7 @@ import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
+import com.zoazh.le.ComPract.model.database.Answer;
 import com.zoazh.le.ComPract.model.database.Question;
 import com.zoazh.le.ComPract.model.database.User;
 
@@ -48,7 +49,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class PracticeActivity extends BaseActivity {
+public class PracticeDoneActivity extends BaseActivity {
 
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
@@ -58,63 +59,38 @@ public class PracticeActivity extends BaseActivity {
     private String[] fillterLanguage;
     private String check;
     private ImageView cImageButtonChat;
-    private ImageButton cButtonChat;
 
-    private ConstraintLayout cBottomBar;
-    private ConstraintLayout cLayoutPractice;
-    private ImageView cImageViewPractice;
-    private ConstraintLayout cLayoutAdvise;
-    private ConstraintLayout cLayoutSearch;
-    private ConstraintLayout cLayoutProfile;
-    private TextView cTextPractice;
     private ImageView cFilterimage;
 
-    ListPractice adapter;
+    ListPracticeDone adapter;
     private ListView cListView;
     private List<HashMap<String, String>> cListQuestion = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        ListPractice();
+        ListPracticeDone();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_practice);
+        setContentView(R.layout.activity_practice_done);
 
-        cListView = (ListView) findViewById(R.id.ListViewPractice);
+        cListView = (ListView) findViewById(R.id.ListViewPracticeDone);
 
-        cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
+        cImageButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
 
-        //BTM BAR
-        cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
-        cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
-        cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
-        cImageViewPractice = (ImageView) cBottomBar.findViewById(R.id.ImageViewPractice);
-        cLayoutAdvise = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutAdvise);
-        cLayoutSearch = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutSearch);
-        cLayoutProfile = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutProfile);
-        cTextPractice = (TextView) cBottomBar.findViewById(R.id.TextPractice);
         cFilterimage = (ImageView) findViewById(R.id.filterimage);
 
-        cTextPractice.setTextColor(getResources().getInteger(R.color.secondary));
-        cImageViewPractice.setColorFilter(getResources().getInteger(R.color.secondary));
 
         //OnClick
         cFilterimage.setOnClickListener(clickListener);
         cImageButtonChat.setOnClickListener(clickListener);
-        cButtonChat.setOnClickListener(clickListener);
-        cLayoutAdvise.setOnClickListener(clickListener);
-        cLayoutSearch.setOnClickListener(clickListener);
-        cLayoutProfile.setOnClickListener(clickListener);
 
         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FirebaseAuth cAuth = FirebaseAuth.getInstance();
-                DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
                 User user = dataSnapshot.getValue(User.class);
                 fillterLanguage = user.learnFull.toString().split(",");
             }
@@ -125,7 +101,7 @@ public class PracticeActivity extends BaseActivity {
             }
         });
         check = "1";
-        ListPractice();
+        ListPracticeDone();
     }
 
     @Override
@@ -152,21 +128,6 @@ public class PracticeActivity extends BaseActivity {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(getApplicationContext(), ChatList.class));
                     break;
-                case R.id.LayoutAdvise:
-                    startActivity(new Intent(PracticeActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
-                    break;
-                case R.id.LayoutSearch:
-                    startActivity(new Intent(PracticeActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
-                    break;
-                case R.id.LayoutProfile:
-                    startActivity(new Intent(PracticeActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-                    //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
-                    break;
                 case R.id.filterimage:
                     listLearn();
                     break;
@@ -183,12 +144,10 @@ public class PracticeActivity extends BaseActivity {
         cProgress.show();
     }
 
-    private void ListPractice() {
+    private void ListPracticeDone() {
         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FirebaseAuth cAuth = FirebaseAuth.getInstance();
-                DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
                 User user = dataSnapshot.getValue(User.class);
                 learnLanguage = user.learnFull.toString().split(",");
             }
@@ -203,7 +162,7 @@ public class PracticeActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 cListQuestion.clear();
-                adapter = new ListPractice(getApplicationContext(), cListQuestion);
+                adapter = new ListPracticeDone(getApplicationContext(), cListQuestion);
                 cListView.setAdapter(adapter);
 
                 for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
@@ -234,8 +193,9 @@ public class PracticeActivity extends BaseActivity {
                             final HashMap<String, String> map = new HashMap<String, String>();
                             cDatabaseRef.child("answer").child(question.QuestionAuthor).child(questionID.getKey()).child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.getValue() == null) {
+                                public void onDataChange(DataSnapshot dataSnapshot2) {
+                                    if (dataSnapshot2.getValue() != null) {
+                                        Answer answer = dataSnapshot2.getValue(Answer.class);
                                         map.put("QuestionID", questionID.getKey());
                                         map.put("AuthorID", question.QuestionAuthor);
                                         map.put("AuthorPicture", user.profilePicture);
@@ -248,11 +208,15 @@ public class PracticeActivity extends BaseActivity {
                                         map.put("ChoiceB", question.ChoiceB);
                                         map.put("ChoiceC", question.ChoiceC);
                                         map.put("ChoiceD", question.ChoiceD);
-                                        map.put("Answer", question.Answer);
+                                        map.put("Answer", answer.Answer);
+                                        map.put("Comment", answer.Comment);
+                                        map.put("Score", answer.Score + "");
+                                        map.put("AnswerTime", answer.ASCAnswerTime + "");
+                                        map.put("AnswerCorrect", answer.Correct);
 
                                         cListQuestion.add(map);
 
-                                        adapter = new ListPractice(getApplicationContext(), cListQuestion);
+                                        adapter = new ListPracticeDone(getApplicationContext(), cListQuestion);
                                         cListView.setAdapter(adapter);
                                     }
                                 }
@@ -289,13 +253,13 @@ public class PracticeActivity extends BaseActivity {
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(PracticeActivity.this, QuestionActivity.class).putExtra("map", cListQuestion.get(position)));
+                startActivity(new Intent(PracticeDoneActivity.this, QuestionDoneActivity.class).putExtra("map", cListQuestion.get(position)));
             }
         });
     }
 
     private void listLearn() {
-        AlertDialog.Builder listLearn = new AlertDialog.Builder(PracticeActivity.this);
+        AlertDialog.Builder listLearn = new AlertDialog.Builder(PracticeDoneActivity.this);
         listLearn.setItems(learnLanguage, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -303,62 +267,62 @@ public class PracticeActivity extends BaseActivity {
                     case 0:
                         fillterLanguage[0] = learnLanguage[0];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 1:
                         fillterLanguage[0] = learnLanguage[1];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 2:
                         fillterLanguage[0] = learnLanguage[2];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 3:
                         fillterLanguage[0] = learnLanguage[3];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 4:
                         fillterLanguage[0] = learnLanguage[4];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 5:
                         fillterLanguage[0] = learnLanguage[5];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 6:
                         fillterLanguage[0] = learnLanguage[6];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 7:
                         fillterLanguage[0] = learnLanguage[7];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 8:
                         fillterLanguage[0] = learnLanguage[8];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 9:
                         fillterLanguage[0] = learnLanguage[9];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 10:
                         fillterLanguage[0] = learnLanguage[10];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                     case 11:
                         fillterLanguage[0] = learnLanguage[11];
                         check = "2";
-                        ListPractice();
+                        ListPracticeDone();
                         break;
                 }
             }
@@ -367,11 +331,11 @@ public class PracticeActivity extends BaseActivity {
     }
 }
 
-class ListPractice extends ArrayAdapter {
+class ListPracticeDone extends ArrayAdapter {
 
     List<HashMap<String, String>> cListQuestion;
 
-    public ListPractice(Context context, List<HashMap<String, String>> listUser) {
+    public ListPracticeDone(Context context, List<HashMap<String, String>> listUser) {
         super(context, R.layout.listview_practice, R.id.TextQuestion, listUser);
         this.cListQuestion = listUser;
     }
