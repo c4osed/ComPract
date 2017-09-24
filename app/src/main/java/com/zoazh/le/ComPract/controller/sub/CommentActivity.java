@@ -66,12 +66,14 @@ public class CommentActivity extends BaseActivity {
 
     private TextView cTextViewName;
     private TextView cTextViewTime;
+    private TextView cTextViewAnswer;
     private TextView cTextViewComment;
     private EditText cInputComment;
     private RadioButton cRadioBad;
     private RadioButton cRadioGood;
     private RadioButton cRadioPerfect;
     private ImageView cImageViewSendComment;
+    private ImageView cImageViewPicture;
 
     HashMap<String, String> map;
 
@@ -93,6 +95,10 @@ public class CommentActivity extends BaseActivity {
         cRadioGood = (RadioButton) findViewById(R.id.RadioGood);
         cRadioPerfect = (RadioButton) findViewById(R.id.RadioPerfect);
         cImageViewSendComment = (ImageView) findViewById(R.id.ImageButtonSendComment);
+        cImageViewPicture = (ImageView) findViewById(R.id.ImageViewPicture);
+        cTextViewName = (TextView) findViewById(R.id.TextViewName);
+        cTextViewAnswer = (TextView) findViewById(R.id.TextViewAnswer);
+        cTextViewTime = (TextView) findViewById(R.id.TextViewTime);
 
         //OnClick
         cImageButtonChat.setOnClickListener(clickListener);
@@ -107,6 +113,25 @@ public class CommentActivity extends BaseActivity {
         cAnswerID = map.get("AnswerUID");
         cComment = map.get("Comment");
         cScore = Integer.parseInt(map.get("Score"));
+
+        cTextViewAnswer.setText(map.get("Answer"));
+        cTextViewTime.setText(new SimpleDateFormat("HH:mm", Locale.US).format(Long.parseLong(map.get("AnswerTime"))));
+
+        cDatabaseRef.child("user").child(cAnswerID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                MyClass mc = new MyClass();
+                cTextViewName.setText(user.fullName+"");
+                mc.SetImage(CommentActivity.this, cImageViewPicture, user.profilePicture, dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         if (cScore != 0) {
             cRadioBad.setClickable(false);
@@ -156,7 +181,6 @@ public class CommentActivity extends BaseActivity {
                     SendComment();
                     break;
                 case R.id.RadioBad:
-                    Toast.makeText(getApplicationContext(), "ss", Toast.LENGTH_LONG).show();
                     cScore = 1;
                     cRadioGood.setChecked(false);
                     cRadioPerfect.setChecked(false);

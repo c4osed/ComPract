@@ -251,7 +251,7 @@ class ListAnswer extends ArrayAdapter {
         ImageViewPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "ss", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "ss", Toast.LENGTH_LONG).show();
             }
         });
 //        TextQuestion.setText("\t\t\t\t" + vQuestion + "\n");
