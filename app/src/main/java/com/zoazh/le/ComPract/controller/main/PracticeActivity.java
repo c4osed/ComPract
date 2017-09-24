@@ -55,8 +55,8 @@ public class PracticeActivity extends BaseActivity {
 
     private String[] learnLanguage;
     private String[] fillterLanguage;
-    private  String check;
-    private  ImageView cImageButtonChat;
+    private String check;
+    private ImageView cImageButtonChat;
     private ImageButton cButtonChat;
 
     private ConstraintLayout cBottomBar;
@@ -117,6 +117,7 @@ public class PracticeActivity extends BaseActivity {
                 User user = dataSnapshot.getValue(User.class);
                 fillterLanguage = user.learnFull.toString().split(",");
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -190,12 +191,13 @@ public class PracticeActivity extends BaseActivity {
                 User user = dataSnapshot.getValue(User.class);
                 learnLanguage = user.learnFull.toString().split(",");
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-            cDatabaseRef.child("question").orderByChild("DESCQuestionTime").addValueEventListener(new ValueEventListener() {
+        cDatabaseRef.child("question").orderByChild("DESCQuestionTime").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -207,16 +209,16 @@ public class PracticeActivity extends BaseActivity {
                     final Question question = questionID.getValue(Question.class);
                     String questionLanguage = question.QuestionLanguage.toString();
 
-                    if(check.matches("1")){
-                        if(!Arrays.asList(learnLanguage).contains(questionLanguage)) {
+                    if (check.matches("1")) {
+                        if (!Arrays.asList(learnLanguage).contains(questionLanguage)) {
                             continue; //show only learnLanguage
                         }
-                    }else{
-                        if(!fillterLanguage[0].matches(questionLanguage)){
+                    } else {
+                        if (!fillterLanguage[0].matches(questionLanguage)) {
                             continue;
                         }
 
-                        if(!Arrays.asList(learnLanguage).contains(questionLanguage)) {
+                        if (!Arrays.asList(learnLanguage).contains(questionLanguage)) {
                             continue; //show only learnLanguage
                         }
                     }
@@ -277,12 +279,13 @@ public class PracticeActivity extends BaseActivity {
             }
         });
     }
+
     private void listLearn() {
         AlertDialog.Builder listLearn = new AlertDialog.Builder(PracticeActivity.this);
         listLearn.setItems(learnLanguage, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case 0:
                         fillterLanguage[0] = learnLanguage[0];
                         check = "2";

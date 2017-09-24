@@ -405,7 +405,7 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
                                                             vLearnFull = (vLearnFull == null ? "" : vLearnFull + ",") + learn;
                                                             vLearnAbbreviation = (vLearnAbbreviation == null ? "" : vLearnAbbreviation + ",") + cMapLearn.get(learn);
                                                         }
-                                                        User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0,"yes");
+                                                        User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0, "yes");
                                                         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).setValue(user);
                                                         if (cProfilePicture != null) {
                                                             cButtonRegisterProfilePicture.setDrawingCacheEnabled(true);
@@ -471,8 +471,11 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
 //                                        }
 //                                    });
 //                                }
-                                                                    User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0,"yes");
+                                                                    User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0, "yes");
                                                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).setValue(user);
+                                                                    for (String Learn : cListLearn) {
+                                                                        cDatabaseRef.child("learn").child(cAuth.getCurrentUser().getUid()).child(Learn.toLowerCase()).setValue(cMapLearn.get(Learn).toLowerCase());
+                                                                    }
                                                                     if (cProfilePicture != null) {
                                                                         cButtonRegisterProfilePicture.setDrawingCacheEnabled(true);
                                                                         cButtonRegisterProfilePicture.buildDrawingCache();
@@ -492,6 +495,8 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
                                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                                                 cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("profilePicture").setValue(taskSnapshot.getDownloadUrl().toString());
 
+                                                                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                                                                Toast.makeText(SignUpActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                                                                             }
                                                                         });
 //                                    cStorageRef.child("user").child(vEmail).child("profilePicture").putFile(cProfilePicture).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -505,14 +510,13 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
 //                                            Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 //                                        }
 //                                    });
+                                                                    } else {
+
+                                                                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                                                        Toast.makeText(SignUpActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                                                                     }
 
-                                                                    for (String Learn : cListLearn) {
-                                                                        cDatabaseRef.child("learn").child(cAuth.getCurrentUser().getUid()).child(Learn.toLowerCase()).setValue(cMapLearn.get(Learn).toLowerCase());
-                                                                    }
 
-                                                                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                                                    Toast.makeText(SignUpActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                                                                 } else {
                                                                     Toast.makeText(SignUpActivity.this, task.getException().getMessage() + "!!!", Toast.LENGTH_LONG).show();
                                                                 }

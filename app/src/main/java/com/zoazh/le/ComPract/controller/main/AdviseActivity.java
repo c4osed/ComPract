@@ -31,18 +31,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
+import com.zoazh.le.ComPract.controller.sub.AnswerActivity;
 import com.zoazh.le.ComPract.controller.sub.ChatActivity;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
+import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
+import com.zoazh.le.ComPract.model.database.Question;
 import com.zoazh.le.ComPract.model.database.User;
 
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +57,7 @@ public class AdviseActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
 
-    private  ImageView cImageButtonChat;
+    private ImageView cImageButtonChat;
     private ImageButton cImageButtonCreateQuestion;
 
     private ConstraintLayout cBottomBar;
@@ -63,7 +68,9 @@ public class AdviseActivity extends BaseActivity {
     private ConstraintLayout cLayoutProfile;
     private TextView cTextAdvise;
 
-
+    ListAdvise adapter;
+    private ListView cListView;
+    private List<HashMap<String, String>> cListQuestion = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,16 +100,78 @@ public class AdviseActivity extends BaseActivity {
         cLayoutProfile.setOnClickListener(clickListener);
 
 
+        cListView = (ListView) findViewById(R.id.ListViewAdvise);
+
+        ListPractice();
+    }
+
+    private void ListPractice() {
+
+        cDatabaseRef.child("question").orderByChild("QuestionAuthor").equalTo(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                cListQuestion.clear();
+                adapter = new ListAdvise(getApplicationContext(), cListQuestion);
+                cListView.setAdapter(adapter);
+
+                for (final DataSnapshot questionID : dataSnapshot.getChildren()) {
+                    final Question question = questionID.getValue(Question.class);
+
+                    cDatabaseRef.child("user").child(question.QuestionAuthor).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("QuestionID", questionID.getKey());
+                            map.put("AuthorID", question.QuestionAuthor);
+                            map.put("AuthorPicture", user.profilePicture);
+                            map.put("AuthorName", user.fullName);
+                            map.put("QuestionLanguage", question.QuestionLanguage);
+                            map.put("QuestionType", question.QuestionType);
+                            map.put("Question", question.Question);
+                            map.put("QuestionPicture", question.QuestionPicture);
+
+                            cListQuestion.add(map);
+
+                            adapter = new ListAdvise(getApplicationContext(), cListQuestion);
+                            cListView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
+                }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+        cListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(AdviseActivity.this, AnswerActivity.class).putExtra("map", cListQuestion.get(position)));
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         OnlineTimer(true);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -153,4 +222,57 @@ public class AdviseActivity extends BaseActivity {
         cProgress.show();
     }
 
+}
+
+class ListAdvise extends ArrayAdapter {
+
+    List<HashMap<String, String>> cListQuestion;
+
+    public ListAdvise(Context context, List<HashMap<String, String>> listUser) {
+        super(context, R.layout.listview_practice, R.id.TextQuestion, listUser);
+        this.cListQuestion = listUser;
+    }
+
+    @NonNull
+    @Override
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        HashMap<String, String> map = cListQuestion.get(position);
+
+        String vAuthorID = map.get("AuthorID");
+        String vAuthorPicture = map.get("AuthorPicture");
+        String vQuestionAuthorName = map.get("AuthorName");
+        String vQuestionLanguage = map.get("QuestionLanguage");
+        String vQuestionType = map.get("QuestionType");
+        String vQuestion = map.get("Question");
+        String vImage = map.get("QuestionPicture");
+//        final String vUID = map.get("UID");
+//        final String vEmail = map.get("email");
+//        String vCountry = map.get("country");
+//        String vNative = map.get("native");
+//        String vLearn = map.get("learnAbbreviation");
+
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = inflater.inflate(R.layout.listview_practice, parent, false);
+
+        ImageView ImageViewPicture = (ImageView) row.findViewById(R.id.ImageViewPicture);
+        TextView TextQuestionAuthor = (TextView) row.findViewById(R.id.TextQuestionAuthor);
+        TextView TextQuestionType = (TextView) row.findViewById(R.id.QuestionType);
+        TextView TextQuestion = (TextView) row.findViewById(R.id.TextViewQuestion);
+        final ImageView ImageViewQuestion = (ImageView) row.findViewById(R.id.ImageViewQuestion);
+
+
+        MyClass mc = new MyClass();
+        mc.SetImage(getContext(), ImageViewPicture, vAuthorPicture, vAuthorID);
+        TextQuestionAuthor.setText(vQuestionAuthorName);
+        TextQuestion.setText("\t\t\t\t" + vQuestion + "\n");
+        TextQuestionType.setText(vQuestionLanguage + " (" + vQuestionType + ")");
+        Picasso.with(getContext()).load(vImage).into(ImageViewQuestion);
+//        TextName.setText(vName);
+//        TextNative.setText("Native: " + vNative);
+//        TextLearn.setText("Learning: " + vLearn.replaceAll(",", ", "));
+
+        return row;
+    }
 }
