@@ -170,7 +170,7 @@ public class CreateQuestionActivity extends BaseActivity {
                 FirebaseAuth cAuth = FirebaseAuth.getInstance();
                 DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
                 User user = dataSnapshot.getValue(User.class);
-                listLanguage = user.learnFull.toString().split(",");
+                listLanguage = user.nativeLanguage.toString().split(",");
                 cListLanguage = Arrays.asList(listLanguage);
             }
             @Override
