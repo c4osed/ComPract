@@ -14,6 +14,7 @@ public class Answer {
     public String Answer;
     public int Score;
     public String Comment;
+    public String Correct;
     public long ASCAnswerTime;
     public long DESCAnswerTime;
 
@@ -21,10 +22,11 @@ public class Answer {
 
     }
 
-    public Answer(String answer, int score, String comment, long answerTimeASC, long answerTimeDESC) {
+    public Answer(String answer, int score, String comment, String correct, long answerTimeASC, long answerTimeDESC) {
         this.Answer = answer;
         this.Score = score;
         this.Comment = comment;
+        this.Correct = correct;
         this.ASCAnswerTime = answerTimeASC;
         this.DESCAnswerTime = answerTimeDESC;
     }
@@ -37,6 +39,7 @@ public class Answer {
         result.put("answer", Answer);
         result.put("score", Score);
         result.put("comment", Comment);
+        result.put("correct", Correct);
         result.put("answerTimeASC", ASCAnswerTime);
         result.put("answerTimeDESC", DESCAnswerTime);
 

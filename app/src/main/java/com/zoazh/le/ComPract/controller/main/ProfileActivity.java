@@ -23,6 +23,7 @@ import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowerActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowingActivity;
+import com.zoazh.le.ComPract.controller.sub.PracticeDoneActivity;
 import com.zoazh.le.ComPract.controller.sub.SettingActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -41,6 +42,7 @@ public class ProfileActivity extends BaseActivity {
     ConstraintLayout cLayoutAbout;
     ConstraintLayout cLayoutNative;
     ConstraintLayout cLayoutLearn;
+    ConstraintLayout cLayoutAnswer;
 
     TextView cStudyLevelResult;
     TextView cAdviseLevelResult;
@@ -94,10 +96,11 @@ public class ProfileActivity extends BaseActivity {
         cLearnResult = (TextView) findViewById(R.id.TextLearnResult);
         cAnswerResult = (TextView) findViewById(R.id.TextAnswerResult);
         cQuestionResult = (TextView) findViewById(R.id.TextQuestionResult);
-        cLayoutAbout = (ConstraintLayout) findViewById(R.id.LayoutAbout);
-        cLayoutLearn = (ConstraintLayout) findViewById(R.id.LayoutLearn);
         cLayoutFollowing = (ConstraintLayout) findViewById(R.id.LayoutFollowing);
         cLayoutFollower = (ConstraintLayout) findViewById(R.id.LayoutFollower);
+        cLayoutAbout = (ConstraintLayout) findViewById(R.id.LayoutAbout);
+        cLayoutLearn = (ConstraintLayout) findViewById(R.id.LayoutLearn);
+        cLayoutAnswer = (ConstraintLayout) findViewById(R.id.LayoutAnswer);
         cButtonAbout = (Button) findViewById(R.id.ButtonAbout);
         cButtonSetting = (Button) findViewById(R.id.ButtonSetting);
 
@@ -146,11 +149,12 @@ public class ProfileActivity extends BaseActivity {
         cImageButtonChat.setOnClickListener(clickListener);
         cImageViewProfile.setOnClickListener(clickListener);
         cLayoutAbout.setOnClickListener(clickListener);
-        cLayoutLearn.setOnClickListener(clickListener);
         cButtonAbout.setOnClickListener(clickListener);
         cButtonSetting.setOnClickListener(clickListener);
         cLayoutFollowing.setOnClickListener(clickListener);
         cLayoutFollower.setOnClickListener(clickListener);
+        cLayoutLearn.setOnClickListener(clickListener);
+        cLayoutAnswer.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
@@ -182,6 +186,9 @@ public class ProfileActivity extends BaseActivity {
                     break;
                 case R.id.LayoutLearn:
                     listLearn();
+                    break;
+                case R.id.LayoutAnswer:
+                    startActivity(new Intent(ProfileActivity.this, PracticeDoneActivity.class));
                     break;
                 case R.id.ButtonAbout:
                     Logout();

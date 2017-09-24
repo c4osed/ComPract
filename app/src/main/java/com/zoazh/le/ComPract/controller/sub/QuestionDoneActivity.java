@@ -26,7 +26,7 @@ import com.zoazh.le.ComPract.model.MyClass;
 import java.util.Date;
 import java.util.HashMap;
 
-public class QuestionActivity extends BaseActivity {
+public class QuestionDoneActivity extends BaseActivity {
 
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
@@ -53,26 +53,32 @@ public class QuestionActivity extends BaseActivity {
     private ConstraintLayout cLayoutNormalQuestion;
     private ConstraintLayout cLayoutChoiceQuestion;
 
-    private TextView cInputAnswerQuestion;
-    private String cRadioAnswer;
+    private TextView cTextViewAnswer;
+    private TextView cTextViewComment;
+    private RadioButton cRadioAnswerBad;
+    private RadioButton cRadioAnswerGood;
+    private RadioButton cRadioAnswerPerfect;
+
+
     private RadioButton cRadioChoiceA;
     private RadioButton cRadioChoiceB;
     private RadioButton cRadioChoiceC;
     private RadioButton cRadioChoiceD;
 
-    private ImageView cImageButtonSendAnswerNormal;
-    private ImageView cImageButtonSendAnswerChoice;
 
     HashMap<String, String> map;
 
     String cQuestionID;
     String cQuestionAuthorID;
+    private int cScore;
+    private String cRadioAnswer;
+    private String cRadioCorrect;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+        setContentView(R.layout.activity_question_done);
 
 
         cImageViewAuthor = (ImageView) findViewById(R.id.ImageViewAuthor);
@@ -82,22 +88,24 @@ public class QuestionActivity extends BaseActivity {
         cImageViewQuestion = (ImageView) findViewById(R.id.ImageViewQuestion);
         cLayoutNormalQuestion = (ConstraintLayout) findViewById(R.id.LayoutNormalQuestion);
         cLayoutChoiceQuestion = (ConstraintLayout) findViewById(R.id.LayoutChoiceQuestion);
-        cInputAnswerQuestion = (EditText) findViewById(R.id.InputAnswerQuestion);
+
+        cTextViewAnswer = (TextView) findViewById(R.id.TextViewAnswerUser);
+        cTextViewComment = (TextView) findViewById(R.id.TextViewComment);
+        cRadioAnswerBad = (RadioButton) findViewById(R.id.RadioAnswerBad);
+        cRadioAnswerGood = (RadioButton) findViewById(R.id.RadioAnswerGood);
+        cRadioAnswerPerfect = (RadioButton) findViewById(R.id.RadioAnswerPerfect);
+
         cRadioChoiceA = (RadioButton) findViewById(R.id.RadioChoiceA);
         cRadioChoiceB = (RadioButton) findViewById(R.id.RadioChoiceB);
         cRadioChoiceC = (RadioButton) findViewById(R.id.RadioChoiceC);
         cRadioChoiceD = (RadioButton) findViewById(R.id.RadioChoiceD);
 
-        cImageButtonSendAnswerNormal = (ImageView) findViewById(R.id.ImageButtonSendAnswerNormal);
-        cImageButtonSendAnswerChoice = (ImageView) findViewById(R.id.ImageButtonSendAnswerChoice);
 
         cRadioChoiceA.setOnClickListener(clickListener);
         cRadioChoiceB.setOnClickListener(clickListener);
         cRadioChoiceC.setOnClickListener(clickListener);
         cRadioChoiceD.setOnClickListener(clickListener);
 
-        cImageButtonSendAnswerNormal.setOnClickListener(clickListener);
-        cImageButtonSendAnswerChoice.setOnClickListener(clickListener);
 
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         MyClass mc = new MyClass();
@@ -111,12 +119,49 @@ public class QuestionActivity extends BaseActivity {
 
         if (map.get("QuestionType").equals("Multiple Choice")) {
             cLayoutChoiceQuestion.setVisibility(View.VISIBLE);
+            cRadioChoiceA.setClickable(false);
+            cRadioChoiceB.setClickable(false);
+            cRadioChoiceC.setClickable(false);
+            cRadioChoiceD.setClickable(false);
             cRadioChoiceA.setText("  a )  " + map.get("ChoiceA"));
             cRadioChoiceB.setText("  b )  " + map.get("ChoiceB"));
             cRadioChoiceC.setText("  c )  " + map.get("ChoiceC"));
             cRadioChoiceD.setText("  d )  " + map.get("ChoiceD"));
+            cRadioAnswer = map.get("Answer");
+            cRadioCorrect = map.get("AnswerCorrect");
+
+            if (cRadioAnswer.equals("a")) {
+                cRadioChoiceA.setChecked(true);
+            } else if (cRadioAnswer.equals("b")) {
+                cRadioChoiceB.setChecked(true);
+            } else if (cRadioAnswer.equals("c")) {
+                cRadioChoiceC.setChecked(true);
+            } else if (cRadioAnswer.equals("d")) {
+                cRadioChoiceD.setChecked(true);
+            }
+
+            if (cRadioCorrect.equals("a")) {
+                cRadioChoiceA.setTextColor(getResources().getInteger(R.color.green));
+            } else if (cRadioCorrect.equals("b")) {
+                cRadioChoiceB.setTextColor(getResources().getInteger(R.color.green));
+            } else if (cRadioCorrect.equals("c")) {
+                cRadioChoiceC.setTextColor(getResources().getInteger(R.color.green));
+            } else if (cRadioCorrect.equals("d")) {
+                cRadioChoiceD.setTextColor(getResources().getInteger(R.color.green));
+            }
         } else {
+//            cLayoutChoiceQuestion.removeAllViews();
             cLayoutNormalQuestion.setVisibility(View.VISIBLE);
+            cTextViewAnswer.setText(map.get("Answer"));
+            cTextViewComment.setText(map.get("Comment"));
+            cScore = Integer.parseInt(map.get("Score"));
+            if (cScore == 1) {
+                cRadioAnswerBad.setChecked(true);
+            } else if (cScore == 2) {
+                cRadioAnswerGood.setChecked(true);
+            } else if (cScore == 3) {
+                cRadioAnswerPerfect.setChecked(true);
+            }
         }
         cRadioChoiceA.setChecked(false);
 
@@ -145,20 +190,20 @@ public class QuestionActivity extends BaseActivity {
 //            }
             switch (v.getId()) {
                 case R.id.ImageButtonCreateQuestion:
-                    startActivity(new Intent(QuestionActivity.this, CreateQuestionActivity.class));
+                    startActivity(new Intent(QuestionDoneActivity.this, CreateQuestionActivity.class));
                     break;
                 case R.id.LayoutPractice:
-                    startActivity(new Intent(QuestionActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    startActivity(new Intent(QuestionDoneActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
                 case R.id.LayoutSearch:
-                    startActivity(new Intent(QuestionActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    startActivity(new Intent(QuestionDoneActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.animห.move_out_left);
                     break;
                 case R.id.LayoutProfile:
-                    startActivity(new Intent(QuestionActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    startActivity(new Intent(QuestionDoneActivity.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     //.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     //overridePendingTransition(R.anim.move_in_left, R.anim.move_out_left);
                     break;
@@ -187,10 +232,10 @@ public class QuestionActivity extends BaseActivity {
                     cRadioChoiceC.setChecked(false);
                     break;
                 case R.id.ImageButtonSendAnswerNormal:
-                    sendAnswer();
+//                    sendAnswer();
                     break;
                 case R.id.ImageButtonSendAnswerChoice:
-                    sendAnswer();
+//                    sendAnswer();
                     break;
 
             }
@@ -199,25 +244,23 @@ public class QuestionActivity extends BaseActivity {
         }
     };
 
-    private void sendAnswer() {
-        if (cInputAnswerQuestion.getText() != null) {
-            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
-            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime() * -1);
-
-            if (("" + map.get("QuestionType")).equals("Multiple Choice")) {
-                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cRadioAnswer);
-                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Correct").setValue(map.get("Answer"));
-            } else {
-                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cInputAnswerQuestion.getText() + "");
-
-            }
-        } else {
-            Toast.makeText(QuestionActivity.this, "Please Answer The Question First", Toast.LENGTH_LONG).show();
-        }
-        Toast.makeText(QuestionActivity.this, "The Answer has been sent!", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(QuestionActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-
-    }
+//    private void sendAnswer() {
+//        if (cInputAnswerQuestion.getText() != null) {
+//            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
+//            cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime()* -1);
+//
+//            if ((""+map.get("QuestionType")).equals("Multiple Choice"))
+//                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cRadioAnswer);
+//            else
+//                cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cInputAnswerQuestion.getText()+"");
+//
+//        } else
+//            Toast.makeText(QuestionDoneActivity.this, "Please Answer The Question First", Toast.LENGTH_LONG).show();
+//
+//        Toast.makeText(QuestionDoneActivity.this, "The Answer has been sent!", Toast.LENGTH_LONG).show();
+//        startActivity(new Intent(QuestionDoneActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+//
+//    }
 
 
     private void Loading() {
