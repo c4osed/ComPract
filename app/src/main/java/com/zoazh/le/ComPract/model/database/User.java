@@ -27,7 +27,7 @@ public class User {
     public String learnAbbreviation;
     public String profilePicture;
     public String about;
-    public String onlineTime;
+    public long onlineTime;
     public String search;
     public int followingCount;
     public int followerCount;
@@ -45,7 +45,7 @@ public class User {
 
 
     public User(String fullName, String firstName, String lastName, String email, String DOB, String gender, String country, String nativeLanguage, String learnFull, String learnAbbreviation, String profilePicture, String about,
-                String onlineTime, int followingCount, int followerCount, int answerCount, int questionCount, int advisorLevel, int advisorEXP, int studentLevel, int studentEXP, String search) {
+                long onlineTime, int followingCount, int followerCount, int answerCount, int questionCount, int advisorLevel, int advisorEXP, int studentLevel, int studentEXP, String search) {
 
         this.fullName = fullName;
         this.firstName = firstName;

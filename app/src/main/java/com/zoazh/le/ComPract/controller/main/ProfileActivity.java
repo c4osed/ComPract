@@ -23,6 +23,7 @@ import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowerActivity;
 import com.zoazh.le.ComPract.controller.sub.FollowingActivity;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.PracticeDoneActivity;
 import com.zoazh.le.ComPract.controller.sub.SettingActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
@@ -38,6 +39,7 @@ public class ProfileActivity extends BaseActivity {
 
     ImageView cImageViewProfilePicture;
     ImageView cImageButtonChat;
+    ImageButton cImageButtonNotification;
 
     ConstraintLayout cLayoutAbout;
     ConstraintLayout cLayoutNative;
@@ -86,6 +88,7 @@ public class ProfileActivity extends BaseActivity {
 
 
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
         cImageViewProfilePicture = (ImageView) findViewById(R.id.ImageViewProfilePicture);
         cStudyLevelResult = (TextView) findViewById(R.id.TextStudentLevelResult);
         cAdviseLevelResult = (TextView) findViewById(R.id.TextAdvisorLevelResult);
@@ -147,6 +150,7 @@ public class ProfileActivity extends BaseActivity {
         cImageViewProfile.setColorFilter(getResources().getInteger(R.color.secondary));
 
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cImageViewProfile.setOnClickListener(clickListener);
         cLayoutAbout.setOnClickListener(clickListener);
         cButtonAbout.setOnClickListener(clickListener);
@@ -178,6 +182,9 @@ public class ProfileActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(ProfileActivity.this, ChatList.class));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(ProfileActivity.this, NotificationsActivity.class));
                     break;
                 case R.id.ImageViewProfile:
                     break;

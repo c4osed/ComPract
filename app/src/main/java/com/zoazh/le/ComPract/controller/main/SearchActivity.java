@@ -40,6 +40,7 @@ import com.zoazh.le.ComPract.model.database.User;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +90,7 @@ public class SearchActivity extends BaseActivity {
     private int cLearnSelected = 0;
     private int cStatusSelected = 0;
 
+    private long userOnlineTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,20 @@ public class SearchActivity extends BaseActivity {
         cLayoutNative.setOnClickListener(clickListener);
         cLayoutLearn.setOnClickListener(clickListener);
         cLayoutStatus.setOnClickListener(clickListener);
+
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                userOnlineTime = user.onlineTime;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         cInputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -202,7 +218,7 @@ public class SearchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         OnlineTimer(true);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -219,7 +235,7 @@ public class SearchActivity extends BaseActivity {
 //                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 //            }
             switch (v.getId()) {
-                case  R.id.ImageButtonChat:
+                case R.id.ImageButtonChat:
                     startActivity(new Intent(SearchActivity.this, ChatList.class));
                     break;
                 case R.id.ImageViewSearch:
@@ -426,6 +442,7 @@ public class SearchActivity extends BaseActivity {
         final String vLearn = cTextLearnResult.getText().toString();
         final String vStatus = cTextStatusResult.getText().toString();
 
+
         cDatabaseRef.child("user").orderByChild("fullName").startAt(vSearch).endAt(vSearch + "\uf8ff").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -436,7 +453,7 @@ public class SearchActivity extends BaseActivity {
                 for (DataSnapshot userID : dataSnapshot.getChildren()) {
                     User user = userID.getValue(User.class);
                     if (!cAuth.getCurrentUser().getUid().equals(userID.getKey())) {
-                        if(!user.search.toString().matches("yes")){
+                        if (!user.search.toString().matches("yes")) {
                             continue;
                         }
 
@@ -457,11 +474,11 @@ public class SearchActivity extends BaseActivity {
                         }
                         if (!vStatus.equalsIgnoreCase("any")) {
                             if (vStatus.equalsIgnoreCase("online")) {
-                                if (!mc.CheckStatus(user.onlineTime)) {
+                                if (!mc.CheckStatus(userOnlineTime, user.onlineTime)) {
                                     continue;
                                 }
                             } else if (vStatus.equalsIgnoreCase("offline")) {
-                                if(mc.CheckStatus(user.onlineTime)){
+                                if (mc.CheckStatus(user.onlineTime, user.onlineTime)) {
                                     continue;
                                 }
                             }

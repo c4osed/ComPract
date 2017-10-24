@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.sinch.android.rtc.SinchError;
 import com.zoazh.le.ComPract.R;
@@ -16,6 +17,9 @@ import com.zoazh.le.ComPract.controller.main.SearchActivity;
 import com.zoazh.le.ComPract.controller.sub.EditProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.SinchService;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends BaseActivity implements SinchService.StartFailedListener {
 
@@ -43,6 +47,8 @@ public class MainActivity extends BaseActivity implements SinchService.StartFail
                                     //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(MainActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                 }
+
+
                             } else {
                                 //Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_LONG).show();
                                 //startActivity(new Intent(MainActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

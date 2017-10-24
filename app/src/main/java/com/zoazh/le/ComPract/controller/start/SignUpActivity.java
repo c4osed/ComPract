@@ -30,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -405,7 +406,7 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
                                                             vLearnFull = (vLearnFull == null ? "" : vLearnFull + ",") + learn;
                                                             vLearnAbbreviation = (vLearnAbbreviation == null ? "" : vLearnAbbreviation + ",") + cMapLearn.get(learn);
                                                         }
-                                                        User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0, "yes");
+                                                        User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", 0, 0, 0, 0, 0, 1, 0, 1, 0, "yes");
                                                         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).setValue(user);
                                                         if (cProfilePicture != null) {
                                                             cButtonRegisterProfilePicture.setDrawingCacheEnabled(true);
@@ -471,7 +472,7 @@ public class SignUpActivity extends BaseActivity implements DatePickerDialog.OnD
 //                                        }
 //                                    });
 //                                }
-                                                                    User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", "", 0, 0, 0, 0, 1, 0, 1, 0, "yes");
+                                                                    User user = new User(vFirstName + " " + vLastName, vFirstName, vLastName, vEmail, vDOB, vGender, vCountry, vNative, vLearnFull, vLearnAbbreviation, null, "", 0, 0, 0, 0, 0, 1, 0, 1, 0, "yes");
                                                                     cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).setValue(user);
                                                                     for (String Learn : cListLearn) {
                                                                         cDatabaseRef.child("learn").child(cAuth.getCurrentUser().getUid()).child(Learn.toLowerCase()).setValue(cMapLearn.get(Learn).toLowerCase());

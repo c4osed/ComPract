@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -25,7 +28,9 @@ import java.util.Locale;
 
 public class MyClass {
 
+    FirebaseAuth cAuth = FirebaseAuth.getInstance();
     StorageReference cStorageRef = FirebaseStorage.getInstance().getReference();
+    DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
     public String GetAge(String DOB) {
 
@@ -77,17 +82,34 @@ public class MyClass {
         }
     }
 
-    public boolean CheckStatus(String onlineTime) {
-        if (!onlineTime.isEmpty()) {
-            String nowTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
-            String date1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date(System.currentTimeMillis() + 1 * 60 * 1000));
-            String date2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date(System.currentTimeMillis() + 2 * 60 * 1000));
+//    public boolean CheckStatus(String onlineTime) {
+//        if (!onlineTime.isEmpty()) {
+//            String nowTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
+//            String date1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date(System.currentTimeMillis() + 1 * 60 * 1000));
+//            String date2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date(System.currentTimeMillis() + 2 * 60 * 1000));
+//            String dateArray[] = {nowTime, date1, date2};
+//            if (Arrays.asList(dateArray).contains(onlineTime)) {
+//                return true;
+//            }
+//            return false;
+//        } else {
+//            return false;
+//        }
+//
+//    }
+
+
+    public boolean CheckStatus(long userOnlineTime, long onlineTime) {
+        try {
+            String nowTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(userOnlineTime);
+            String date1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(userOnlineTime + 1 * 60 * 1000);
+            String date2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(userOnlineTime + 2 * 60 * 1000);
             String dateArray[] = {nowTime, date1, date2};
             if (Arrays.asList(dateArray).contains(onlineTime)) {
                 return true;
             }
             return false;
-        } else {
+        } catch (Exception ex) {
             return false;
         }
 

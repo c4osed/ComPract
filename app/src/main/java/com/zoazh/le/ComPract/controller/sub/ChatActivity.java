@@ -72,6 +72,8 @@ public class ChatActivity extends BaseActivity {
     List<HashMap<String, String>> cListMessage = new ArrayList<HashMap<String, String>>();
     MessageAdapter messageAdapter;
 
+    private long userOnlineTime;
+
     final Handler h = new Handler();
     Runnable r = new Runnable() {
         @Override
@@ -81,7 +83,7 @@ public class ChatActivity extends BaseActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
-                    if (mc.CheckStatus(user.onlineTime)) {
+                    if (mc.CheckStatus(userOnlineTime, user.onlineTime)) {
                         cImageViewStatus.setColorFilter(getResources().getInteger(R.color.green));
                     } else {
                         cImageViewStatus.setColorFilter(getResources().getInteger(R.color.grey));
@@ -131,6 +133,19 @@ public class ChatActivity extends BaseActivity {
             @Override
             public boolean onLongClick(View v) {
                 return false;
+            }
+        });
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                userOnlineTime = user.onlineTime;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

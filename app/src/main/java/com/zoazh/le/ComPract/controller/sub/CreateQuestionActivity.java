@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.CircleTransform;
+import com.zoazh.le.ComPract.model.database.Mission;
 import com.zoazh.le.ComPract.model.database.Question;
 import com.zoazh.le.ComPract.model.database.User;
 
@@ -173,6 +175,7 @@ public class CreateQuestionActivity extends BaseActivity {
                 listLanguage = user.nativeLanguage.toString().split(",");
                 cListLanguage = Arrays.asList(listLanguage);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -409,10 +412,57 @@ public class CreateQuestionActivity extends BaseActivity {
             cDatabaseRef.child("question").child(vKey).setValue(question);
 
             Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG).show();
+
+            cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Mission mission = dataSnapshot.getValue(Mission.class);
+                    try {
+                        if (!mission.missionQuestion) {
+                            DoneMission();
+                        }
+                    } catch (Exception ex) {
+                        DoneMission();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             finish();
             startActivity(getIntent());
         }
 
 
+    }
+
+    private void DoneMission() {
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                int advisorEXP = user.advisorEXP + 20;
+
+                Toast.makeText(getApplicationContext(), "+20 EXP - You have done mission!!!", Toast.LENGTH_LONG).show();
+
+                if (advisorEXP >= 100) {
+                    advisorEXP -= 100;
+                    cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("advisorLevel").setValue(user.advisorLevel + 1);
+                    Toast.makeText(getApplicationContext(), "Level Up !!!", Toast.LENGTH_LONG).show();
+                }
+
+                cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("advisorEXP").setValue(advisorEXP);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).child("missionQuestion").setValue(true);
+        cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).child("missionTime").setValue(ServerValue.TIMESTAMP);
     }
 }

@@ -11,8 +11,12 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.controller.start.MainActivity;
@@ -39,7 +43,37 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
     private Runnable r = new Runnable() {
         @Override
         public void run() {
-            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("onlineTime").setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date()));
+//            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("onlineTime").setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date()));
+
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("onlineTime").setValue(ServerValue.TIMESTAMP);
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("onlineTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final String currentTime = new SimpleDateFormat("dd/MM/yyyy").format(dataSnapshot.getValue());
+                    cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).child("missionTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            try {
+                                if (!new SimpleDateFormat("dd/MM/yyyy").format(dataSnapshot.getValue()).equals(currentTime)) {
+                                    cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).removeValue();
+                                }
+                            } catch (Exception ex) {
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
             mHandler.postDelayed(r,30000);
         }
     };

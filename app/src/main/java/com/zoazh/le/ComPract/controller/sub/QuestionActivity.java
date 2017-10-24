@@ -13,8 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.main.PracticeActivity;
@@ -22,8 +26,11 @@ import com.zoazh.le.ComPract.controller.main.ProfileActivity;
 import com.zoazh.le.ComPract.controller.main.SearchActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
+import com.zoazh.le.ComPract.model.database.Mission;
+import com.zoazh.le.ComPract.model.database.User;
 
 import java.util.Date;
+import java.util.EventListener;
 import java.util.HashMap;
 
 public class QuestionActivity extends BaseActivity {
@@ -215,10 +222,83 @@ public class QuestionActivity extends BaseActivity {
             Toast.makeText(QuestionActivity.this, "Please Answer The Question First", Toast.LENGTH_LONG).show();
         }
         Toast.makeText(QuestionActivity.this, "The Answer has been sent!", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(QuestionActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Mission mission = dataSnapshot.getValue(Mission.class);
+                try {
+                    if (!mission.missionAnswer) {
+                        DoneMission();
+                    }
+                } catch (Exception ex) {
+                    DoneMission();
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        startActivity(new Intent(QuestionActivity.this, PracticeActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        finish();
     }
 
+    private void DoneMission() {
+
+//        ValueEventListener listen = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                int studentEXP = user.studentEXP + 20;
+//
+//                Toast.makeText(getApplicationContext(),"+20 EXP - You have done mission!!!",Toast.LENGTH_LONG).show();
+//
+//                if (studentEXP >= 100) {
+//                    studentEXP -= 100;
+//                    cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("studentLevel").setValue(user.studentLevel + 1);
+//                    Toast.makeText(getApplicationContext(),"Level Up !!!",Toast.LENGTH_LONG).show();
+//                }
+//
+//                cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("studentEXP").setValue(studentEXP);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//
+//        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(listen);
+//        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).removeEventListener(listen);
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                int studentEXP = user.studentEXP + 20;
+
+                Toast.makeText(getApplicationContext(), "+20 EXP - You have done mission!!!", Toast.LENGTH_LONG).show();
+
+                if (studentEXP >= 100) {
+                    studentEXP -= 100;
+                    cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("studentLevel").setValue(user.studentLevel + 1);
+                    Toast.makeText(getApplicationContext(), "Level Up !!!", Toast.LENGTH_LONG).show();
+                }
+
+                cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("studentEXP").setValue(studentEXP);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).child("missionAnswer").setValue(true);
+        cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).child("missionTime").setValue(ServerValue.TIMESTAMP);
+    }
 
     private void Loading() {
         cProgress = new ProgressDialog(this);
