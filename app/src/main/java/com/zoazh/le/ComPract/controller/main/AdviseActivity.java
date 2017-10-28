@@ -131,6 +131,7 @@ public class AdviseActivity extends BaseActivity {
                             map.put("QuestionType", question.QuestionType);
                             map.put("Question", question.Question);
                             map.put("QuestionPicture", question.QuestionPicture);
+                            map.put("AnswerCount", question.AnswerCount+"");
 
                             cListQuestion.add(map);
 
@@ -246,6 +247,7 @@ class ListAdvise extends ArrayAdapter {
         String vQuestionType = map.get("QuestionType");
         String vQuestion = map.get("Question");
         String vImage = map.get("QuestionPicture");
+        String vCount = map.get("AnswerCount");
 //        final String vUID = map.get("UID");
 //        final String vEmail = map.get("email");
 //        String vCountry = map.get("country");
@@ -254,18 +256,22 @@ class ListAdvise extends ArrayAdapter {
 
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.listview_practice, parent, false);
+        View row = inflater.inflate(R.layout.listview_practice_advise, parent, false);
 
+        ImageView ImgCount = (ImageView) row.findViewById(R.id.imageView9);
         ImageView ImageViewPicture = (ImageView) row.findViewById(R.id.ImageViewPicture);
         TextView TextQuestionAuthor = (TextView) row.findViewById(R.id.TextQuestionAuthor);
         TextView TextQuestionType = (TextView) row.findViewById(R.id.QuestionType);
         TextView TextQuestion = (TextView) row.findViewById(R.id.TextViewQuestion);
+        TextView TextCount = (TextView) row.findViewById(R.id.TextCountAns);
         final ImageView ImageViewQuestion = (ImageView) row.findViewById(R.id.ImageViewQuestion);
 
 
         MyClass mc = new MyClass();
+        ImgCount.setImageResource(R.drawable.ic_comments);
         mc.SetImage(getContext(), ImageViewPicture, vAuthorPicture, vAuthorID);
         TextQuestionAuthor.setText(vQuestionAuthorName);
+        TextCount.setText(vCount);
         TextQuestion.setText("\t\t\t\t" + vQuestion + "\n");
         TextQuestionType.setText(vQuestionLanguage + " (" + vQuestionType + ")");
         Picasso.with(getContext()).load(vImage).into(ImageViewQuestion);

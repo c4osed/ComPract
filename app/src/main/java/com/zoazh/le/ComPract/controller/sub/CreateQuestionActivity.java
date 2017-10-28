@@ -50,6 +50,7 @@ public class CreateQuestionActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private StorageReference cStorageRef = FirebaseStorage.getInstance().getReference();
     private ProgressDialog cProgress;
+    private int userQuestionCount;
 
     private ConstraintLayout cLayoutQuestionLanguage;
     private TextView cTextQuestionLangaugeResult;
@@ -174,6 +175,18 @@ public class CreateQuestionActivity extends BaseActivity {
                 User user = dataSnapshot.getValue(User.class);
                 listLanguage = user.nativeLanguage.toString().split(",");
                 cListLanguage = Arrays.asList(listLanguage);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("questionCount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userQuestionCount = Integer.parseInt(dataSnapshot.getValue().toString());
             }
 
             @Override
@@ -407,10 +420,10 @@ public class CreateQuestionActivity extends BaseActivity {
                 }
             }
 
-            Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, new Date().getTime(), new Date().getTime() * -1, "Normal");
+            Question question = new Question(cAuth.getCurrentUser().getUid(), vTextQuestionLanguage, vTextQuestionType, vQuestionPicture, vInputQuestion, vInputChoiceA, vInputChoiceB, vInputChoiceC, vInputChoiceD, vAnswer, new Date().getTime(), new Date().getTime() * -1, "Normal",0);
 
             cDatabaseRef.child("question").child(vKey).setValue(question);
-
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("questionCount").setValue(userQuestionCount+1);
             Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG).show();
 
             cDatabaseRef.child("mission").child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

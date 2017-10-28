@@ -244,10 +244,10 @@ public class SearchActivity extends BaseActivity {
                 case R.id.ImageButtonFilter:
                     ShowFilter();
                     break;
-                case R.id.LayoutChoiceQuestion:
+                case R.id.LayoutCountry:
                     CountryFilter();
                     break;
-                case R.id.LayoutQuestion:
+                case R.id.LayoutNative:
                     NativeFilter();
                     break;
                 case R.id.LayoutLearn:

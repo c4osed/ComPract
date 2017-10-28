@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,13 +39,19 @@ public class FollowerActivity extends AppCompatActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private List<HashMap<String, String>> cListUser = new ArrayList<HashMap<String, String>>();
+    private ConstraintLayout cMainFollower;
+    private TextView cTextFollow;
+    private int count = 0;
     ListView listFollower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower);
+        cMainFollower = (ConstraintLayout) findViewById(R.id.mainFollower);
+        cTextFollow = (TextView) findViewById(R.id.textFollower);
         Search();
+
     }
 
     private void Search() {
@@ -97,8 +104,15 @@ public class FollowerActivity extends AppCompatActivity {
 
                         }
                     });
+                    count = count+1;
 
                 }
+                if(count==0){
+                    cTextFollow.setVisibility(View.VISIBLE);
+                }else {
+                    cMainFollower.setVisibility(View.VISIBLE);
+                }
+
                 listFollower.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

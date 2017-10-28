@@ -31,12 +31,12 @@ public class User {
     public String search;
     public int followingCount;
     public int followerCount;
-    public int answerCount;
-    public int questionCount;
     public int advisorLevel;
     public int advisorEXP;
     public int studentLevel;
     public int studentEXP;
+    public int answerCount;
+    public int questionCount;
 
 
     public User() {

@@ -53,6 +53,8 @@ public class PracticeActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private TextView cTextNoQuestion;
+    private int count = 0;
 
     private String[] learnLanguage;
     private String[] fillterLanguage;
@@ -89,6 +91,7 @@ public class PracticeActivity extends BaseActivity {
         cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
 
         //BTM BAR
+        cTextNoQuestion = (TextView) findViewById(R.id.textNoQuestion);
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
@@ -270,8 +273,12 @@ public class PracticeActivity extends BaseActivity {
 
                         }
                     });
-
-
+                    count = count+1;
+                }
+                if(count==0){
+                    cTextNoQuestion.setVisibility(View.VISIBLE);
+                }else {
+                    cListView.setVisibility(View.VISIBLE);
                 }
 
             }
