@@ -34,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
@@ -61,6 +62,7 @@ public class PracticeActivity extends BaseActivity {
     private String check;
     private ImageView cImageButtonChat;
     private ImageButton cButtonChat;
+    private ImageButton cImageButtonNotification;
 
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
@@ -89,6 +91,7 @@ public class PracticeActivity extends BaseActivity {
         cListView = (ListView) findViewById(R.id.ListViewPractice);
 
         cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
 
         //BTM BAR
         cTextNoQuestion = (TextView) findViewById(R.id.textNoQuestion);
@@ -108,6 +111,7 @@ public class PracticeActivity extends BaseActivity {
         //OnClick
         cFilterimage.setOnClickListener(clickListener);
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cButtonChat.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
@@ -154,6 +158,9 @@ public class PracticeActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(getApplicationContext(), ChatList.class));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(getApplicationContext(), NotificationsActivity.class));
                     break;
                 case R.id.LayoutAdvise:
                     startActivity(new Intent(PracticeActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));

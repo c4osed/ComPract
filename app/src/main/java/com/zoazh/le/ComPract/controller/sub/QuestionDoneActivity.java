@@ -31,6 +31,7 @@ public class QuestionDoneActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private ImageButton cImageButtonSendAnswerChoice;
 
 
     private ImageButton cImageButtonCreateQuestion;
@@ -86,6 +87,8 @@ public class QuestionDoneActivity extends BaseActivity {
         cImageViewQuestion = (ImageView) findViewById(R.id.ImageViewQuestion);
         cLayoutNormalQuestion = (ConstraintLayout) findViewById(R.id.LayoutNormalQuestion);
         cLayoutChoiceQuestion = (ConstraintLayout) findViewById(R.id.LayoutChoiceQuestion);
+        cImageButtonSendAnswerChoice = (ImageButton) findViewById(R.id.ImageButtonSendAnswerChoice);
+        cImageButtonSendAnswerChoice.setVisibility(View.INVISIBLE);
 
         cTextViewAnswer = (TextView) findViewById(R.id.TextViewAnswerUser);
         cTextViewComment = (TextView) findViewById(R.id.TextViewComment);

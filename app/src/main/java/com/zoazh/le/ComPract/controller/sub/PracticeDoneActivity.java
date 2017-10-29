@@ -54,6 +54,8 @@ public class PracticeDoneActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private TextView ctextNotdidQuest;
+    private int count = 0;
 
     private String[] learnLanguage;
     private String[] fillterLanguage;
@@ -80,6 +82,8 @@ public class PracticeDoneActivity extends BaseActivity {
         cListView = (ListView) findViewById(R.id.ListViewPracticeDone);
 
         cImageButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
+
+        ctextNotdidQuest = (TextView) findViewById(R.id.textNotdidQuest);
 
         cFilterimage = (ImageView) findViewById(R.id.filterimage);
 
@@ -234,10 +238,14 @@ public class PracticeDoneActivity extends BaseActivity {
 
                         }
                     });
-
+                    count = count+1;
 
                 }
-
+                if(count==0){
+                    ctextNotdidQuest.setVisibility(View.VISIBLE);
+                }else {
+                    cListView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

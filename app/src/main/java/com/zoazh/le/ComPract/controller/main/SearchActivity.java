@@ -33,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -56,6 +57,7 @@ public class SearchActivity extends BaseActivity {
     private ImageView cImageButtonChat;
     private ImageButton cButtonSearch;
     private ImageButton cButtonFilter;
+    private ImageButton cImageButtonNotification;
 
     private ConstraintLayout cLayoutFilter;
     private ConstraintLayout cLayoutAgeRange;
@@ -102,6 +104,7 @@ public class SearchActivity extends BaseActivity {
         cButtonSearch = (ImageButton) findViewById(R.id.ImageViewSearch);
         cListView = (ListView) findViewById(R.id.ListViewSearch);
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
 
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
@@ -132,6 +135,7 @@ public class SearchActivity extends BaseActivity {
 
         //OnClick
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cButtonSearch.setOnClickListener(clickListener);
@@ -237,6 +241,9 @@ public class SearchActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(SearchActivity.this, ChatList.class));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(SearchActivity.this, NotificationsActivity.class));
                     break;
                 case R.id.ImageViewSearch:
                     Search();

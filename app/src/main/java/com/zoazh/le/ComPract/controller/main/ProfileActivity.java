@@ -201,7 +201,7 @@ public class ProfileActivity extends BaseActivity {
                     startActivity(new Intent(ProfileActivity.this, PracticeDoneActivity.class));
                     break;
                 case R.id.LayoutQuestion:
-                    startActivity(new Intent(ProfileActivity.this, PracticeDoneActivity.class));
+                    startActivity(new Intent(ProfileActivity.this, AdviseActivity.class));
                     break;
                 case R.id.ButtonAbout:
                     Logout();

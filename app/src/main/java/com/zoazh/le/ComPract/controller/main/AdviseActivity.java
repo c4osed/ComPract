@@ -37,6 +37,7 @@ import com.zoazh.le.ComPract.controller.sub.AnswerActivity;
 import com.zoazh.le.ComPract.controller.sub.ChatActivity;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
@@ -56,9 +57,12 @@ public class AdviseActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private TextView ctextNoCreatQuestion;
+    private int count = 0;
 
     private ImageView cImageButtonChat;
     private ImageButton cImageButtonCreateQuestion;
+    private ImageButton cImageButtonNotification;
 
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
@@ -79,6 +83,8 @@ public class AdviseActivity extends BaseActivity {
 
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cImageButtonCreateQuestion = (ImageButton) findViewById(R.id.ImageButtonCreateQuestion);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
+        ctextNoCreatQuestion = (TextView) findViewById(R.id.textNoCreatQuestion);
 
         //BTM BAR
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
@@ -94,6 +100,7 @@ public class AdviseActivity extends BaseActivity {
 
         //OnClick
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cImageButtonCreateQuestion.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
@@ -145,9 +152,13 @@ public class AdviseActivity extends BaseActivity {
                         }
                     });
 
-
+                    count = count+1;
                 }
-
+                if(count==0){
+                    ctextNoCreatQuestion.setVisibility(View.VISIBLE);
+                }else {
+                    cListView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -191,6 +202,9 @@ public class AdviseActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(AdviseActivity.this, ChatList.class));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(AdviseActivity.this, NotificationsActivity.class));
                     break;
                 case R.id.ImageButtonCreateQuestion:
                     startActivity(new Intent(AdviseActivity.this, CreateQuestionActivity.class));
