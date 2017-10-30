@@ -88,6 +88,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
 
 
+
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
         cImageViewProfilePicture = (ImageView) findViewById(R.id.ImageViewProfilePicture);
