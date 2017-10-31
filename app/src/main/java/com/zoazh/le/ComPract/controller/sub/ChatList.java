@@ -47,7 +47,13 @@ public class ChatList extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        cListViewChat.setAdapter(null);
         ListChat();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     @Override
@@ -56,7 +62,7 @@ public class ChatList extends AppCompatActivity {
         setContentView(R.layout.activity_chat_list);
 
         cListViewChat = (ListView) findViewById(R.id.ListViewChat);
-
+        cListViewChat.setAdapter(null);
         ListChat();
     }
 

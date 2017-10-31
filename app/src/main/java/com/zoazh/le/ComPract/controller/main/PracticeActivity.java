@@ -55,7 +55,6 @@ public class PracticeActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
     private TextView cTextNoQuestion;
-    private int count = 0;
 
     private String[] learnLanguage;
     private String[] fillterLanguage;
@@ -80,7 +79,6 @@ public class PracticeActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        ListPractice();
     }
 
     @Override
@@ -89,12 +87,19 @@ public class PracticeActivity extends BaseActivity {
         setContentView(R.layout.activity_practice);
 
         cListView = (ListView) findViewById(R.id.ListViewPractice);
+        cListView.setAdapter(null);
 
         cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
         cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
 
-        //BTM BAR
-        cTextNoQuestion = (TextView) findViewById(R.id.textNoQuestion);
+
+//        cTextNoQuestion = (TextView) findViewById(R.id.textNoQuestion);
+//        if(cListView.getVisibility()==View.VISIBLE){
+//            cTextNoQuestion.setVisibility(View.INVISIBLE);
+//        }else {
+//            cTextNoQuestion.setVisibility(View.VISIBLE);
+//        }
+
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
@@ -116,6 +121,8 @@ public class PracticeActivity extends BaseActivity {
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
+
+
 
         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -264,6 +271,8 @@ public class PracticeActivity extends BaseActivity {
 
                                         adapter = new ListPractice(getApplicationContext(), cListQuestion);
                                         cListView.setAdapter(adapter);
+
+                                        cListView.setVisibility(View.VISIBLE);
                                     }
                                 }
 
@@ -280,14 +289,8 @@ public class PracticeActivity extends BaseActivity {
 
                         }
                     });
-                    count = count+1;
+//                    cTextNoQuestion.setVisibility(View.VISIBLE);
                 }
-                if(count==0){
-                    cTextNoQuestion.setVisibility(View.VISIBLE);
-                }else {
-                    cListView.setVisibility(View.VISIBLE);
-                }
-
             }
 
             @Override

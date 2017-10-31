@@ -26,19 +26,10 @@ public class MainActivity extends BaseActivity implements SinchService.StartFail
 
     private FirebaseAuth.AuthStateListener cAuthListener;
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
-    public static String emailTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-        // setting tag for current user
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        emailTag = user.getEmail();
-        OneSignal.sendTag("User_ID", emailTag);
 
         cAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

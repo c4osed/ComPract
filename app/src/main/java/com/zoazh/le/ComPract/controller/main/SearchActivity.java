@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OneSignal;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
@@ -52,6 +54,7 @@ public class SearchActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
     ListSearch adapter;
+    public static String emailTag;
 
     private EditText cInputSearch;
     private ImageView cImageButtonChat;
@@ -97,6 +100,14 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+        // setting tag for current user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        emailTag = user.getEmail();
+        OneSignal.sendTag("User_ID", emailTag);
         setContentView(R.layout.activity_search);
 
         cInputSearch = (EditText) findViewById(R.id.InputSearch);
@@ -240,7 +251,7 @@ public class SearchActivity extends BaseActivity {
 //            }
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
-                    startActivity(new Intent(SearchActivity.this, ChatList.class));
+                    startActivity(new Intent(SearchActivity.this, ChatList.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                     break;
                 case R.id.ImageButtonNotification:
                     startActivity(new Intent(SearchActivity.this, NotificationsActivity.class));

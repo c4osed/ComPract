@@ -64,6 +64,8 @@ public class ChatActivity extends BaseActivity {
     private ImageView cImageViewStatus;
     private TextView cTextName;
     private ImageButton cImageButtonCall;
+    private String messageText;
+    private String send_email;
 
     private ListView cListViewMessage;
 
@@ -148,6 +150,19 @@ public class ChatActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 userOnlineTime = user.onlineTime;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("user").child(cUID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                send_email = user.email;
             }
 
             @Override
@@ -284,6 +299,7 @@ public class ChatActivity extends BaseActivity {
                     callButtonClicked();
                     break;
                 case R.id.ImageButtonSend:
+                    messageText = cInputMessage.getText().toString();
                     sendMessage();
                     sendNotification();
                     break;
@@ -302,8 +318,6 @@ public class ChatActivity extends BaseActivity {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                             .permitAll().build();
                     StrictMode.setThreadPolicy(policy);
-                    String send_email = map.get("email");
-                    String messageText = cInputMessage.getText().toString();
 
                     //This is a Simple Logic to Send Notification different Device Programmatically....
 
@@ -327,7 +341,9 @@ public class ChatActivity extends BaseActivity {
                                 + "\"filters\": [{\"field\": \"tag\", \"key\": \"User_ID\", \"relation\": \"=\", \"value\": \"" + send_email + "\"}],"
 
                                 + "\"data\": {\"foo\": \"bar\"},"
-                                + "\"contents\": {\"en\": \"English Message\"}"
+                                + "\"android_group\": \"1\", "
+                                + "\"headings\": {\"en\": \""+cName+"\"},"
+                                + "\"contents\": {\"en\": \""+messageText+"\"}"
                                 + "}";
 
 
@@ -363,7 +379,6 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void sendMessage() {
-        String messageText = cInputMessage.getText().toString();
         if (!messageText.isEmpty()) {
             //String messageTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
 
