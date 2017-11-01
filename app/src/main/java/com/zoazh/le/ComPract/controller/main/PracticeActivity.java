@@ -44,6 +44,10 @@ import com.zoazh.le.ComPract.model.database.User;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

@@ -3,6 +3,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
+        applicationId "com.zoazh.le.ComPract"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
@@ -10,7 +11,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        manifestPlaceholders = [onesignal_app_id: "dc13e1c7-1719-42ff-abfe-98a7d66065f7",
+        manifestPlaceholders = [onesignal_app_id               : "dc13e1c7-1719-42ff-abfe-98a7d66065f7",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
     }
@@ -35,6 +36,13 @@ dependencies {
     compile files('libs/sinch-android-rtc-3.9.14-javadoc.jar')
     compile(name: 'sinch-android-rtc-3.9.14', ext: 'aar')
     compile files('libs/commons-lang3-3.5.jar')
+    def gmsVersion = '10.2.0'
+    compile("com.google.android.gms:play-services-gcm:${gmsVersion}") {
+        force = true
+    }
+    compile("com.google.android.gms:play-services-location:${gmsVersion}") {
+        force = true
+    }
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile 'com.google.firebase:firebase-database:10.2.0'
@@ -48,13 +56,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.onesignal:OneSignal:[3.6.2, 3.99.99]'
-    def gmsVersion = '10.2.0'
-    compile("com.google.android.gms:play-services-gcm:${gmsVersion}") {
-        force = true
-    }
-    compile("com.google.android.gms:play-services-location:${gmsVersion}") {
-        force = true
-    }
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

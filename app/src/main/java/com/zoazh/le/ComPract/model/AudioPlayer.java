@@ -14,6 +14,8 @@ import com.zoazh.le.ComPract.R;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static com.zoazh.le.ComPract.controller.main.SearchActivity.ringtone;
+
 public class AudioPlayer {
 
     static final String LOG_TAG = AudioPlayer.class.getSimpleName();
@@ -40,9 +42,32 @@ public class AudioPlayer {
                 mPlayer.setAudioStreamType(AudioManager.STREAM_RING);
 
                 try {
-                    mPlayer.setDataSource(mContext,
-                            Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.ring2));
-                    mPlayer.prepare();
+                    if(ringtone.equalsIgnoreCase("drum")){
+                        mPlayer.setDataSource(mContext,
+                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.drumbeat));
+                        mPlayer.prepare();
+                    }
+                    if(ringtone.equalsIgnoreCase("electronic"))  {
+                        mPlayer.setDataSource(mContext,
+                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.electronic));
+                        mPlayer.prepare();
+                    }
+                    if(ringtone.equalsIgnoreCase("dance"))  {
+                        mPlayer.setDataSource(mContext,
+                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.dance));
+                        mPlayer.prepare();
+                    }
+                    if(ringtone.equalsIgnoreCase("ring"))  {
+                        mPlayer.setDataSource(mContext,
+                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.ring2));
+                        mPlayer.prepare();
+                    }
+                    if(ringtone.equalsIgnoreCase("blizzard"))  {
+                        mPlayer.setDataSource(mContext,
+                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.blizzard));
+                        mPlayer.prepare();
+                    }
+
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Could not setup media player for ringtone");
                     mPlayer = null;

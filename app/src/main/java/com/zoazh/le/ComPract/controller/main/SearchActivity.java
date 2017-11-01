@@ -43,6 +43,11 @@ import com.zoazh.le.ComPract.model.database.User;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +60,7 @@ public class SearchActivity extends BaseActivity {
     private ProgressDialog cProgress;
     ListSearch adapter;
     public static String emailTag;
+    public static String ringtone = null;
 
     private EditText cInputSearch;
     private ImageView cImageButtonChat;
@@ -104,6 +110,7 @@ public class SearchActivity extends BaseActivity {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+        readFile();
         // setting tag for current user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         emailTag = user.getEmail();
@@ -240,6 +247,32 @@ public class SearchActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         OnlineTimer(false);
+    }
+
+    public void readFile(){
+        BufferedReader reader=null;
+        try {
+            FileInputStream fis = openFileInput("setting.txt");
+            reader = new BufferedReader(new InputStreamReader(fis));
+            StringBuffer stringBuffer=new StringBuffer();
+            String tempStr="";
+            while ((tempStr=reader.readLine())!=null){
+                stringBuffer.append(tempStr);
+            }
+            ringtone = stringBuffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(reader!=null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

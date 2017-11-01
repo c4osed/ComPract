@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -74,7 +74,8 @@
         <activity android:name=".controller.sub.SettingActivity" />
         <activity android:name=".controller.sub.AccountActivity" />
         <activity android:name=".controller.sub.ChangePasswordActivity" />
-        <activity android:name=".controller.sub.PrivacyActivity"></activity>
+        <activity android:name=".controller.sub.PrivacyActivity" />
+        <activity android:name=".controller.sub.NotificationSettingActivity"></activity>
     </application>
 
 </manifest>

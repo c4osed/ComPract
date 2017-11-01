@@ -178,7 +178,13 @@ class ListChat extends ArrayAdapter {
         MyClass mc = new MyClass();
         TextName.setText(vName);
         mc.SetImage(getContext(), ImageViewPicture, vProfilePicture, vUID);
-        TextLastMessage.setText(vLastMessage);
+
+        if(vLastMessage.replaceAll("[\n\r]", "").length()>25){
+            TextLastMessage.setText(vLastMessage.replaceAll("[\n]", " ").substring(0,25)+"....");
+        }else {
+            TextLastMessage.setText(vLastMessage.replaceAll("[\n]", " "));
+        }
+
         TextTime.setText(new SimpleDateFormat("HH:mm", Locale.US).format(Long.parseLong(vLastTime)));
 //        TextQuestionAuthor.setText(vName);
 
