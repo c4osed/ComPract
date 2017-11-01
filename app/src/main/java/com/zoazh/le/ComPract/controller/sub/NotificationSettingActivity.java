@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import static com.zoazh.le.ComPract.controller.main.SearchActivity.ringtone;
 
+import com.onesignal.OneSignal;
 import com.zoazh.le.ComPract.R;
 
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ public class NotificationSettingActivity extends AppCompatActivity {
     private ConstraintLayout cLayoutRingtone;
     private TextView ctextRing;
     private int ringSelect;
+    private Switch cswitchNoti;
     private MediaPlayer ringCurrent ;
     private MediaPlayer ring01;
     private MediaPlayer ring02;
@@ -47,14 +49,37 @@ public class NotificationSettingActivity extends AppCompatActivity {
 
         cLayoutRingtone = (ConstraintLayout) findViewById(R.id.LayoutRingtone);
         ctextRing = (TextView) findViewById(R.id.textRing);
+        cswitchNoti = (Switch) findViewById(R.id.switchNoti);
 
         cLayoutRingtone.setOnClickListener(clickListener);
+        cswitchNoti.setOnClickListener(clickListenerSwitch);
 
         ringCurrent = MediaPlayer.create(NotificationSettingActivity.this,R.raw.ring2);
+
+        String subStatus = OneSignal.getPermissionSubscriptionState()+"";
+        Boolean subscribe;
+        subscribe = subStatus.contains("false}");
+
+        if (subscribe==true){
+            cswitchNoti.setChecked(false);
+        }else {
+            cswitchNoti.setChecked(true);
+        }
 
         readFile();
 
     }
+
+    private View.OnClickListener clickListenerSwitch = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(cswitchNoti.isChecked()){
+                OneSignal.setSubscription(true);
+            }else {
+                OneSignal.setSubscription(false);
+            }
+        }
+    };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override

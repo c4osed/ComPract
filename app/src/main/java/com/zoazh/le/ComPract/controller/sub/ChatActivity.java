@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OneSignal;
 import com.sinch.android.rtc.MissingPermissionException;
 import com.sinch.android.rtc.calling.Call;
 import com.zoazh.le.ComPract.R;
@@ -110,9 +111,17 @@ public class ChatActivity extends BaseActivity {
     };
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        OneSignal.setInFocusDisplaying(2);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        OneSignal.setInFocusDisplaying(0);
 
         cImageViewStatus = (ImageView) findViewById(R.id.ImageViewStatus);
         cTextName = (TextView) findViewById(R.id.TextProfile);

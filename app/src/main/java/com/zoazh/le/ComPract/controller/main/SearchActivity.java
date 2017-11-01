@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
@@ -60,7 +61,7 @@ public class SearchActivity extends BaseActivity {
     private ProgressDialog cProgress;
     ListSearch adapter;
     public static String emailTag;
-    public static String ringtone = null;
+    public static String ringtone = "Ring";
 
     private EditText cInputSearch;
     private ImageView cImageButtonChat;
@@ -111,10 +112,12 @@ public class SearchActivity extends BaseActivity {
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
         readFile();
+
         // setting tag for current user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         emailTag = user.getEmail();
         OneSignal.sendTag("User_ID", emailTag);
+
         setContentView(R.layout.activity_search);
 
         cInputSearch = (EditText) findViewById(R.id.InputSearch);

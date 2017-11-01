@@ -42,31 +42,31 @@ public class AudioPlayer {
                 mPlayer.setAudioStreamType(AudioManager.STREAM_RING);
 
                 try {
-                    if(ringtone.equalsIgnoreCase("drum")){
-                        mPlayer.setDataSource(mContext,
-                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.drumbeat));
-                        mPlayer.prepare();
-                    }
-                    if(ringtone.equalsIgnoreCase("electronic"))  {
-                        mPlayer.setDataSource(mContext,
-                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.electronic));
-                        mPlayer.prepare();
-                    }
-                    if(ringtone.equalsIgnoreCase("dance"))  {
-                        mPlayer.setDataSource(mContext,
-                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.dance));
-                        mPlayer.prepare();
-                    }
-                    if(ringtone.equalsIgnoreCase("ring"))  {
-                        mPlayer.setDataSource(mContext,
-                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.ring2));
-                        mPlayer.prepare();
-                    }
-                    if(ringtone.equalsIgnoreCase("blizzard"))  {
-                        mPlayer.setDataSource(mContext,
-                                Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.blizzard));
-                        mPlayer.prepare();
-                    }
+                        if(ringtone.equalsIgnoreCase("drum")){
+                            mPlayer.setDataSource(mContext,
+                                    Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.drumbeat));
+                            mPlayer.prepare();
+                        }
+                        if(ringtone.equalsIgnoreCase("electronic"))  {
+                            mPlayer.setDataSource(mContext,
+                                    Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.electronic));
+                            mPlayer.prepare();
+                        }
+                        if(ringtone.equalsIgnoreCase("dance"))  {
+                            mPlayer.setDataSource(mContext,
+                                    Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.dance));
+                            mPlayer.prepare();
+                        }
+                        if(ringtone.equalsIgnoreCase("ring"))  {
+                            mPlayer.setDataSource(mContext,
+                                    Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.ring2));
+                            mPlayer.prepare();
+                        }
+                        if(ringtone.equalsIgnoreCase("blizzard"))  {
+                            mPlayer.setDataSource(mContext,
+                                    Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.blizzard));
+                            mPlayer.prepare();
+                        }
 
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Could not setup media player for ringtone");
