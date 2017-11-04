@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OSPermissionSubscriptionState;
+import com.onesignal.OneSignal;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
@@ -40,6 +44,11 @@ import com.zoazh.le.ComPract.model.database.User;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,11 +60,14 @@ public class SearchActivity extends BaseActivity {
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
     ListSearch adapter;
+    public static String emailTag;
+    public static String ringtone = "Ring";
 
     private EditText cInputSearch;
     private ImageView cImageButtonChat;
     private ImageButton cButtonSearch;
     private ImageButton cButtonFilter;
+    private ImageButton cImageButtonNotification;
 
     private ConstraintLayout cLayoutFilter;
     private ConstraintLayout cLayoutAgeRange;
@@ -95,6 +107,17 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+        readFile();
+
+        // setting tag for current user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        emailTag = user.getEmail();
+        OneSignal.sendTag("User_ID", emailTag);
+
         setContentView(R.layout.activity_search);
 
         cInputSearch = (EditText) findViewById(R.id.InputSearch);
@@ -102,6 +125,7 @@ public class SearchActivity extends BaseActivity {
         cButtonSearch = (ImageButton) findViewById(R.id.ImageViewSearch);
         cListView = (ListView) findViewById(R.id.ListViewSearch);
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
 
         //Filter
         cLayoutFilter = (ConstraintLayout) findViewById(R.id.LayoutFilter);
@@ -132,6 +156,7 @@ public class SearchActivity extends BaseActivity {
 
         //OnClick
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cButtonSearch.setOnClickListener(clickListener);
@@ -227,6 +252,32 @@ public class SearchActivity extends BaseActivity {
         OnlineTimer(false);
     }
 
+    public void readFile(){
+        BufferedReader reader=null;
+        try {
+            FileInputStream fis = openFileInput("setting.txt");
+            reader = new BufferedReader(new InputStreamReader(fis));
+            StringBuffer stringBuffer=new StringBuffer();
+            String tempStr="";
+            while ((tempStr=reader.readLine())!=null){
+                stringBuffer.append(tempStr);
+            }
+            ringtone = stringBuffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(reader!=null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -236,7 +287,10 @@ public class SearchActivity extends BaseActivity {
 //            }
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
-                    startActivity(new Intent(SearchActivity.this, ChatList.class));
+                    startActivity(new Intent(SearchActivity.this, ChatList.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(SearchActivity.this, NotificationsActivity.class));
                     break;
                 case R.id.ImageViewSearch:
                     Search();
@@ -244,10 +298,10 @@ public class SearchActivity extends BaseActivity {
                 case R.id.ImageButtonFilter:
                     ShowFilter();
                     break;
-                case R.id.LayoutChoiceQuestion:
+                case R.id.LayoutCountry:
                     CountryFilter();
                     break;
-                case R.id.LayoutQuestion:
+                case R.id.LayoutNative:
                     NativeFilter();
                     break;
                 case R.id.LayoutLearn:

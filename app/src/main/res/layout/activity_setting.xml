@@ -195,7 +195,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="8dp"
-                    android:text="Notification"
+                    android:text="Notification And Sound"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

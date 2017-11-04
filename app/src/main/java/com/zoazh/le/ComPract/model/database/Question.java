@@ -25,13 +25,14 @@ public class Question {
     public long ASCQuestionTime;
     public long DESCQuestionTime;
     public String QuestionStatus;
+    public  int AnswerCount;
 
 
     public Question() {
 
     }
 
-    public Question(String questionAuthor, String questionLanguage, String questionType, String questionPicture, String question, String choiceA, String choiceB, String choiceC, String choiceD, String answer, long ascQuestion, long descTime, String questionStatus) {
+    public Question(String questionAuthor, String questionLanguage, String questionType, String questionPicture, String question, String choiceA, String choiceB, String choiceC, String choiceD, String answer, long ascQuestion, long descTime, String questionStatus,int answerCount) {
         QuestionAuthor = questionAuthor;
         QuestionLanguage = questionLanguage;
         QuestionType = questionType;
@@ -45,6 +46,7 @@ public class Question {
         ASCQuestionTime = ascQuestion;
         DESCQuestionTime = descTime;
         QuestionStatus = questionStatus;
+        AnswerCount = answerCount;
     }
 
     @Exclude
@@ -64,6 +66,8 @@ public class Question {
         result.put("ASCQuestionTime", ASCQuestionTime);
         result.put("DESCQuestionTime", DESCQuestionTime);
         result.put("QuestionStatus", QuestionStatus);
+        result.put("AnswerCount", AnswerCount);
+
 
         return result;
     }

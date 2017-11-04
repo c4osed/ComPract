@@ -45,6 +45,7 @@ public class ProfileActivity extends BaseActivity {
     ConstraintLayout cLayoutNative;
     ConstraintLayout cLayoutLearn;
     ConstraintLayout cLayoutAnswer;
+    ConstraintLayout cLayoutQuestion;
 
     TextView cStudyLevelResult;
     TextView cAdviseLevelResult;
@@ -87,6 +88,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
 
 
+
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
         cImageViewProfilePicture = (ImageView) findViewById(R.id.ImageViewProfilePicture);
@@ -104,6 +106,7 @@ public class ProfileActivity extends BaseActivity {
         cLayoutAbout = (ConstraintLayout) findViewById(R.id.LayoutAbout);
         cLayoutLearn = (ConstraintLayout) findViewById(R.id.LayoutLearn);
         cLayoutAnswer = (ConstraintLayout) findViewById(R.id.LayoutAnswer);
+        cLayoutQuestion = (ConstraintLayout) findViewById(R.id.LayoutQuestion);
         cButtonAbout = (Button) findViewById(R.id.ButtonAbout);
         cButtonSetting = (Button) findViewById(R.id.ButtonSetting);
 
@@ -162,6 +165,7 @@ public class ProfileActivity extends BaseActivity {
         cLayoutPractice.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
+        cLayoutQuestion.setOnClickListener(clickListener);
     }
 
     @Override
@@ -196,6 +200,9 @@ public class ProfileActivity extends BaseActivity {
                     break;
                 case R.id.LayoutAnswer:
                     startActivity(new Intent(ProfileActivity.this, PracticeDoneActivity.class));
+                    break;
+                case R.id.LayoutQuestion:
+                    startActivity(new Intent(ProfileActivity.this, AdviseActivity.class));
                     break;
                 case R.id.ButtonAbout:
                     Logout();

@@ -35,7 +35,6 @@
         android:text="AnswerName"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/Line3"
         app:layout_constraintRight_toRightOf="parent"

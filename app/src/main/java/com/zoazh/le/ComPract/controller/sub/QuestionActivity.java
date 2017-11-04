@@ -38,6 +38,8 @@ public class QuestionActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private int answerCount;
+    private int userAnswerCount;
 
 
     private ImageButton cImageButtonCreateQuestion;
@@ -127,6 +129,30 @@ public class QuestionActivity extends BaseActivity {
         }
         cRadioChoiceA.setChecked(false);
 
+        cDatabaseRef.child("question").child(cQuestionID).child("AnswerCount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                answerCount = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("answerCount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userAnswerCount = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
@@ -208,9 +234,10 @@ public class QuestionActivity extends BaseActivity {
 
     private void sendAnswer() {
         if (cInputAnswerQuestion.getText() != null) {
+            cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).child("answerCount").setValue(userAnswerCount+1);
             cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("ASCAnswerTime").setValue(new Date().getTime());
             cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("DESCAnswerTime").setValue(new Date().getTime() * -1);
-
+            cDatabaseRef.child("question").child(cQuestionID).child("AnswerCount").setValue(answerCount+1);
             if (("" + map.get("QuestionType")).equals("Multiple Choice")) {
                 cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Answer").setValue(cRadioAnswer);
                 cDatabaseRef.child("answer").child(cQuestionAuthorID).child(cQuestionID).child(cAuth.getCurrentUser().getUid()).child("Correct").setValue(map.get("Answer"));

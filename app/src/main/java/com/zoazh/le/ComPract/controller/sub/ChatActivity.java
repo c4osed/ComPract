@@ -5,8 +5,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -28,22 +30,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.onesignal.OneSignal;
 import com.sinch.android.rtc.MissingPermissionException;
 import com.sinch.android.rtc.calling.Call;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.CallScreenActivity;
+import com.zoazh.le.ComPract.controller.start.MainActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
 import com.zoazh.le.ComPract.model.MyClass;
 import com.zoazh.le.ComPract.model.SinchService;
 import com.zoazh.le.ComPract.model.database.Message;
 import com.zoazh.le.ComPract.model.database.User;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 public class ChatActivity extends BaseActivity {
 
@@ -57,6 +65,8 @@ public class ChatActivity extends BaseActivity {
     private ImageView cImageViewStatus;
     private TextView cTextName;
     private ImageButton cImageButtonCall;
+    private String messageText;
+    private String send_email;
 
     private ListView cListViewMessage;
 
@@ -101,9 +111,17 @@ public class ChatActivity extends BaseActivity {
     };
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        OneSignal.setInFocusDisplaying(2);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        OneSignal.setInFocusDisplaying(0);
 
         cImageViewStatus = (ImageView) findViewById(R.id.ImageViewStatus);
         cTextName = (TextView) findViewById(R.id.TextProfile);
@@ -141,6 +159,19 @@ public class ChatActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 userOnlineTime = user.onlineTime;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("user").child(cUID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                send_email = user.email;
             }
 
             @Override
@@ -277,16 +308,86 @@ public class ChatActivity extends BaseActivity {
                     callButtonClicked();
                     break;
                 case R.id.ImageButtonSend:
+                    messageText = cInputMessage.getText().toString();
                     sendMessage();
+                    sendNotification();
                     break;
 
             }
         }
     };
 
+    private void sendNotification()
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                if (SDK_INT > 8) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                            .permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
+                    //This is a Simple Logic to Send Notification different Device Programmatically....
+
+
+                    try {
+                        String jsonResponse;
+
+                        URL url = new URL("https://onesignal.com/api/v1/notifications");
+                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                        con.setUseCaches(false);
+                        con.setDoOutput(true);
+                        con.setDoInput(true);
+
+                        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                        con.setRequestProperty("Authorization", "Basic NTAzYmM5MTEtYmRhYS00NTE4LTk3Y2YtZDJhMGUwMTU3NWUz");
+                        con.setRequestMethod("POST");
+
+                        String strJsonBody = "{"
+                                + "\"app_id\": \"dc13e1c7-1719-42ff-abfe-98a7d66065f7\","
+
+                                + "\"filters\": [{\"field\": \"tag\", \"key\": \"User_ID\", \"relation\": \"=\", \"value\": \"" + send_email + "\"}],"
+
+                                + "\"data\": {\"foo\": \"bar\"},"
+                                + "\"android_group\": \"1\", "
+                                + "\"headings\": {\"en\": \""+cName+"\"},"
+                                + "\"contents\": {\"en\": \""+messageText+"\"}"
+                                + "}";
+
+
+                        System.out.println("strJsonBody:\n" + strJsonBody);
+
+                        byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+                        con.setFixedLengthStreamingMode(sendBytes.length);
+
+                        OutputStream outputStream = con.getOutputStream();
+                        outputStream.write(sendBytes);
+
+                        int httpResponse = con.getResponseCode();
+                        System.out.println("httpResponse: " + httpResponse);
+
+                        if (httpResponse >= HttpURLConnection.HTTP_OK
+                                && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                            Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                            scanner.close();
+                        } else {
+                            Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                            scanner.close();
+                        }
+                        System.out.println("jsonResponse:\n" + jsonResponse);
+
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 
     private void sendMessage() {
-        String messageText = cInputMessage.getText().toString();
         if (!messageText.isEmpty()) {
             //String messageTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
 

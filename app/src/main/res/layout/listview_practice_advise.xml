@@ -8,6 +8,30 @@
 
 
     <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="26dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toTopOf="@+id/TextQuestionAuthor"
+        app:srcCompat="@drawable/ic_comments"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/TextQuestionAuthor"
+        app:layout_constraintBottom_toBottomOf="@+id/TextQuestionAuthor"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/TextCountAns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TextQuestionAuthor"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintRight_toLeftOf="@+id/imageView9"
+        android:layout_marginRight="8dp" />
+
+    <ImageView
         android:id="@+id/ImageViewPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"

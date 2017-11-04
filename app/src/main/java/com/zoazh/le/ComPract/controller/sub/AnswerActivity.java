@@ -59,9 +59,12 @@ public class AnswerActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private int count = 0;
+
 
     private ImageView cImageButtonChat;
     private ImageButton cImageButtonCreateQuestion;
+    private TextView cTextNoanswer;
 
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
@@ -85,6 +88,7 @@ public class AnswerActivity extends BaseActivity {
         setContentView(R.layout.activity_answer);
 
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
+        cTextNoanswer = (TextView) findViewById(R.id.TextNoanswer);
 
 
         //OnClick
@@ -113,6 +117,7 @@ public class AnswerActivity extends BaseActivity {
                 cListAnswer.clear();
                 adapter = new ListAnswer(getApplicationContext(), cListAnswer);
                 cListView.setAdapter(adapter);
+                count = 0;
 
                 for (final DataSnapshot answerID : dataSnapshot.getChildren()) {
                     final Answer answer = answerID.getValue(Answer.class);
@@ -141,12 +146,17 @@ public class AnswerActivity extends BaseActivity {
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
+
                     });
-
-
+                    count = count+1;
                 }
-
+            if(count==0){
+                cTextNoanswer.setVisibility(View.VISIBLE);
+            }else {
+                cListView.setVisibility(View.VISIBLE);
             }
+            }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -165,6 +175,8 @@ public class AnswerActivity extends BaseActivity {
             }
         });
     }
+
+
 
     @Override
     protected void onResume() {

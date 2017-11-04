@@ -31,6 +31,7 @@ public class QuestionDoneActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private ImageButton cImageButtonSendAnswerChoice;
 
 
     private ImageButton cImageButtonCreateQuestion;
@@ -55,9 +56,7 @@ public class QuestionDoneActivity extends BaseActivity {
 
     private TextView cTextViewAnswer;
     private TextView cTextViewComment;
-    private RadioButton cRadioAnswerBad;
-    private RadioButton cRadioAnswerGood;
-    private RadioButton cRadioAnswerPerfect;
+    private  TextView cTextViewScore;
 
 
     private RadioButton cRadioChoiceA;
@@ -88,12 +87,13 @@ public class QuestionDoneActivity extends BaseActivity {
         cImageViewQuestion = (ImageView) findViewById(R.id.ImageViewQuestion);
         cLayoutNormalQuestion = (ConstraintLayout) findViewById(R.id.LayoutNormalQuestion);
         cLayoutChoiceQuestion = (ConstraintLayout) findViewById(R.id.LayoutChoiceQuestion);
+        cImageButtonSendAnswerChoice = (ImageButton) findViewById(R.id.ImageButtonSendAnswerChoice);
+        cImageButtonSendAnswerChoice.setVisibility(View.INVISIBLE);
 
         cTextViewAnswer = (TextView) findViewById(R.id.TextViewAnswerUser);
         cTextViewComment = (TextView) findViewById(R.id.TextViewComment);
-        cRadioAnswerBad = (RadioButton) findViewById(R.id.RadioAnswerBad);
-        cRadioAnswerGood = (RadioButton) findViewById(R.id.RadioAnswerGood);
-        cRadioAnswerPerfect = (RadioButton) findViewById(R.id.RadioAnswerPerfect);
+        cTextViewScore = (TextView) findViewById(R.id.TextViewScore);
+
 
         cRadioChoiceA = (RadioButton) findViewById(R.id.RadioChoiceA);
         cRadioChoiceB = (RadioButton) findViewById(R.id.RadioChoiceB);
@@ -152,15 +152,20 @@ public class QuestionDoneActivity extends BaseActivity {
         } else {
 //            cLayoutChoiceQuestion.removeAllViews();
             cLayoutNormalQuestion.setVisibility(View.VISIBLE);
+            if(map.get("Comment")==null){
+                cTextViewComment.setText("Comment :    -");
+                cTextViewScore.setText("Score :    -");
+            }else {
+                cTextViewComment.setText("Comment :   "+map.get("Comment"));
+            }
             cTextViewAnswer.setText("Your answer :    "+map.get("Answer"));
-            cTextViewComment.setText("Comment :   "+map.get("Comment"));
             cScore = Integer.parseInt(map.get("Score"));
             if (cScore == 1) {
-                cRadioAnswerBad.setChecked(true);
+                cTextViewScore.setText("Score :    Bad");
             } else if (cScore == 2) {
-                cRadioAnswerGood.setChecked(true);
+                cTextViewScore.setText("Score :    Good");
             } else if (cScore == 3) {
-                cRadioAnswerPerfect.setChecked(true);
+                cTextViewScore.setText("Score :    Perfect");
             }
         }
         cRadioChoiceA.setChecked(false);

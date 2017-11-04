@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/Line3"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="115dp" />
+        app:layout_constraintGuide_begin="83dp" />
 
     <TextView
         android:id="@+id/TextViewTimeChat"

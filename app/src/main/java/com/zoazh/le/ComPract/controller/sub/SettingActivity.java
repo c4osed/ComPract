@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.zoazh.le.ComPract.R;
+
 import com.zoazh.le.ComPract.controller.main.ProfileActivity;
 
 public class SettingActivity extends AppCompatActivity {
@@ -27,6 +28,9 @@ public class SettingActivity extends AppCompatActivity {
                     break;
                 case R.id.LayoutPrivacy:
                     startActivity(new Intent(getApplicationContext(), PrivacyActivity.class));
+                    break;
+                case R.id.LayoutNotification:
+                    startActivity(new Intent(getApplicationContext(), NotificationSettingActivity.class));
                     break;
             }
         }

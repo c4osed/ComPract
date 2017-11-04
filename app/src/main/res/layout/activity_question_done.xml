@@ -70,7 +70,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TopBar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -125,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Question Type"
+                android:textColor="@color/black"
                 app:layout_constraintLeft_toLeftOf="@+id/TextViewAuthor"
                 app:layout_constraintRight_toRightOf="@+id/TextViewAuthor"
                 app:layout_constraintTop_toBottomOf="@+id/TextViewAuthor" />
@@ -186,11 +188,13 @@
                     android:layout_marginStart="8dp"
                     android:paddingLeft="20dp"
                     android:text="Answer"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp" />
 
                 <TextView
                     android:id="@+id/TextViewComment"
@@ -203,51 +207,27 @@
                     android:layout_marginTop="8dp"
                     android:paddingLeft="20dp"
                     android:text="Comment"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TextViewAnswerUser" />
 
-                <RadioButton
-                    android:id="@+id/RadioAnswerBad"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/TextViewScore"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:clickable="false"
-                    android:text="Bad"
-                    android:visibility="visible"
+                    android:paddingLeft="20dp"
+                    android:text="Score"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/TextViewComment" />
-
-                <RadioButton
-                    android:id="@+id/RadioAnswerGood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:clickable="false"
-                    android:text="Good"
-                    android:visibility="visible"
-                    app:layout_constraintHorizontal_bias="0.575"
-                    app:layout_constraintLeft_toRightOf="@+id/RadioAnswerBad"
-                    app:layout_constraintRight_toLeftOf="@+id/RadioAnswerPerfect"
-                    app:layout_constraintTop_toBottomOf="@+id/TextViewComment" />
-
-                <RadioButton
-                    android:id="@+id/RadioAnswerPerfect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:clickable="false"
-                    android:text="Perfect"
-                    android:visibility="visible"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TextViewComment" />
 

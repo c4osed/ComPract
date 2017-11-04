@@ -7,4 +7,11 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="ringtone">
+        <item>Ring</item>
+        <item>Blizzard</item>
+        <item>Electronic</item>
+        <item>Drum</item>
+        <item>Dance</item>
+    </string-array>
 </resources>

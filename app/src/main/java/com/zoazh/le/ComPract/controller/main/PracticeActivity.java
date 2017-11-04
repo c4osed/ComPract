@@ -34,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import com.zoazh.le.ComPract.R;
 import com.zoazh.le.ComPract.controller.sub.ChatList;
 import com.zoazh.le.ComPract.controller.sub.CreateQuestionActivity;
+import com.zoazh.le.ComPract.controller.sub.NotificationsActivity;
 import com.zoazh.le.ComPract.controller.sub.QuestionActivity;
 import com.zoazh.le.ComPract.controller.sub.ViewProfileActivity;
 import com.zoazh.le.ComPract.model.BaseActivity;
@@ -43,6 +44,10 @@ import com.zoazh.le.ComPract.model.database.User;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,12 +58,14 @@ public class PracticeActivity extends BaseActivity {
     private DatabaseReference cDatabaseRef = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth cAuth = FirebaseAuth.getInstance();
     private ProgressDialog cProgress;
+    private TextView cTextNoQuestion;
 
     private String[] learnLanguage;
     private String[] fillterLanguage;
     private String check;
     private ImageView cImageButtonChat;
     private ImageButton cButtonChat;
+    private ImageButton cImageButtonNotification;
 
     private ConstraintLayout cBottomBar;
     private ConstraintLayout cLayoutPractice;
@@ -76,7 +83,6 @@ public class PracticeActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        ListPractice();
     }
 
     @Override
@@ -85,10 +91,19 @@ public class PracticeActivity extends BaseActivity {
         setContentView(R.layout.activity_practice);
 
         cListView = (ListView) findViewById(R.id.ListViewPractice);
+        cListView.setAdapter(null);
 
         cButtonChat = (ImageButton) findViewById(R.id.ImageButtonChat);
+        cImageButtonNotification = (ImageButton) findViewById(R.id.ImageButtonNotification);
 
-        //BTM BAR
+
+//        cTextNoQuestion = (TextView) findViewById(R.id.textNoQuestion);
+//        if(cListView.getVisibility()==View.VISIBLE){
+//            cTextNoQuestion.setVisibility(View.INVISIBLE);
+//        }else {
+//            cTextNoQuestion.setVisibility(View.VISIBLE);
+//        }
+
         cImageButtonChat = (ImageView) findViewById(R.id.ImageButtonChat);
         cBottomBar = (ConstraintLayout) findViewById(R.id.BottomBar);
         cLayoutPractice = (ConstraintLayout) cBottomBar.findViewById(R.id.LayoutPractice);
@@ -105,10 +120,13 @@ public class PracticeActivity extends BaseActivity {
         //OnClick
         cFilterimage.setOnClickListener(clickListener);
         cImageButtonChat.setOnClickListener(clickListener);
+        cImageButtonNotification.setOnClickListener(clickListener);
         cButtonChat.setOnClickListener(clickListener);
         cLayoutAdvise.setOnClickListener(clickListener);
         cLayoutSearch.setOnClickListener(clickListener);
         cLayoutProfile.setOnClickListener(clickListener);
+
+
 
         cDatabaseRef.child("user").child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,6 +169,9 @@ public class PracticeActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.ImageButtonChat:
                     startActivity(new Intent(getApplicationContext(), ChatList.class));
+                    break;
+                case R.id.ImageButtonNotification:
+                    startActivity(new Intent(getApplicationContext(), NotificationsActivity.class));
                     break;
                 case R.id.LayoutAdvise:
                     startActivity(new Intent(PracticeActivity.this, AdviseActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
@@ -254,6 +275,8 @@ public class PracticeActivity extends BaseActivity {
 
                                         adapter = new ListPractice(getApplicationContext(), cListQuestion);
                                         cListView.setAdapter(adapter);
+
+                                        cListView.setVisibility(View.VISIBLE);
                                     }
                                 }
 
@@ -270,10 +293,8 @@ public class PracticeActivity extends BaseActivity {
 
                         }
                     });
-
-
+//                    cTextNoQuestion.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
