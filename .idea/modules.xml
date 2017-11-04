@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ComPract.iml" filepath="$PROJECT_DIR$/ComPract.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compract.iml" filepath="$PROJECT_DIR$/compract.iml" />
+      <module fileurl="file://C:\Users\Zatic Prasertarcha\Documents\GitHub\ComPract\app\app.iml" filepath="C:\Users\Zatic Prasertarcha\Documents\GitHub\ComPract\app\app.iml" />
     </modules>
   </component>
 </project>
