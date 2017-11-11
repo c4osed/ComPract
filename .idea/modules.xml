@@ -4,10 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ComPract.iml" filepath="$PROJECT_DIR$/ComPract.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-<<<<<<< HEAD
-      <module fileurl="file://C:\Users\Zatic Prasertarcha\Documents\GitHub\ComPract\app\app.iml" filepath="C:\Users\Zatic Prasertarcha\Documents\GitHub\ComPract\app\app.iml" />
-=======
->>>>>>> c9d54f13021b93941ab98bf14c2b3939a0469626
     </modules>
   </component>
 </project>
