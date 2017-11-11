@@ -143,7 +143,7 @@ public class ChatActivity extends BaseActivity {
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
 
         cUID = map.get("UID");
-        cName = cAuth.getCurrentUser().getDisplayName();
+        cName = map.get("name");
         cEmail = map.get("email");
         cProfilePicture = map.get("profilePicture");
 
@@ -392,7 +392,7 @@ public class ChatActivity extends BaseActivity {
 
                                 + "\"data\": {\"foo\": \"bar\"},"
                                 + "\"android_group\": \"1\", "
-                                + "\"headings\": {\"en\": \"" + cName + "\"},"
+                                + "\"headings\": {\"en\": \"" + cAuth.getCurrentUser().getDisplayName() + "\"},"
                                 + "\"contents\": {\"en\": \"" + messageText + "\"}"
                                 + "}";
 
