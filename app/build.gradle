@@ -1,12 +1,7 @@
 apply plugin: 'com.android.application'
 android {
-<<<<<<< HEAD
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
-=======
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
->>>>>>> c9d54f13021b93941ab98bf14c2b3939a0469626
     defaultConfig {
         applicationId "com.zoazh.le.ComPract"
         minSdkVersion 19
