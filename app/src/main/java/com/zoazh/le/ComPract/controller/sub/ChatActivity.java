@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -77,6 +79,8 @@ public class ChatActivity extends BaseActivity {
     private String cName;
     private String cProfilePicture;
     private String cEmail;
+    private String checkBlock=null;
+    public String checkBlock2 =null;
 
     HashMap<String, String> map;
     List<HashMap<String, String>> cListMessage = new ArrayList<HashMap<String, String>>();
@@ -139,11 +143,13 @@ public class ChatActivity extends BaseActivity {
         map = (HashMap<String, String>) getIntent().getSerializableExtra("map");
 
         cUID = map.get("UID");
-        cName = map.get("name");
+        cName = cAuth.getCurrentUser().getDisplayName();
         cEmail = map.get("email");
         cProfilePicture = map.get("profilePicture");
 
         cTextName.setText(cName);
+//cDatabaseRef.child("user").child(cAuth.getCurrentUser().getDisplayName())
+
 
         //registerForContextMenu(cListViewMessage);
 
@@ -179,6 +185,41 @@ public class ChatActivity extends BaseActivity {
 
             }
         });
+
+        cDatabaseRef.child("block").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    cImageButtonSend.setClickable(false);
+                    cInputMessage.setFocusable(false);
+                    cInputMessage.setText("You blocked this user.");
+                    checkBlock = "block";
+                    cImageButtonSend.setBackgroundColor(Color.GRAY);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        cDatabaseRef.child("block").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    checkBlock2 = "block";
+                }else {
+                    checkBlock2 = null;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
@@ -205,12 +246,13 @@ public class ChatActivity extends BaseActivity {
 
         OnlineTimer(true);
 
+
         cListenerRead = cDatabaseRef.child("message").child(cUID).child(cAuth.getCurrentUser().getUid()).orderByChild("messageSender").equalTo(cUID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data2 : dataSnapshot.getChildren()) {
                     Message message2 = data2.getValue(Message.class);
-                    if (message2.messageRead.equals("")) {
+                    if (message2.messageRead.equals("")&&checkBlock==null) {
                         cDatabaseRef.child("message").child(cUID).child(cAuth.getCurrentUser().getUid()).child(data2.getKey()).child("messageRead").setValue("Read");
                     }
                 }
@@ -310,15 +352,14 @@ public class ChatActivity extends BaseActivity {
                 case R.id.ImageButtonSend:
                     messageText = cInputMessage.getText().toString();
                     sendMessage();
-                    sendNotification();
+
                     break;
 
             }
         }
     };
 
-    private void sendNotification()
-    {
+    private void sendNotification() {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -351,8 +392,8 @@ public class ChatActivity extends BaseActivity {
 
                                 + "\"data\": {\"foo\": \"bar\"},"
                                 + "\"android_group\": \"1\", "
-                                + "\"headings\": {\"en\": \""+cName+"\"},"
-                                + "\"contents\": {\"en\": \""+messageText+"\"}"
+                                + "\"headings\": {\"en\": \"" + cName + "\"},"
+                                + "\"contents\": {\"en\": \"" + messageText + "\"}"
                                 + "}";
 
 
@@ -391,12 +432,25 @@ public class ChatActivity extends BaseActivity {
         if (!messageText.isEmpty()) {
             //String messageTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(new Date());
 
-            Message message = new Message(cAuth.getCurrentUser().getUid(), messageText, new Date().getTime(), new Date().getTime() * -1, "");
+            final Message message = new Message(cAuth.getCurrentUser().getUid(), messageText, new Date().getTime(), new Date().getTime() * -1, "");
 
-            cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).push().setValue(message);
 //            cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).child("recentMessage").setValue(messageText);
 //            cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).child("recentTime").setValue(new Date().getTime());
-            cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).push().setValue(message);
+            cDatabaseRef.child("block").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    cDatabaseRef.child("message").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).push().setValue(message);
+                    if (checkBlock2 == null) {
+                        cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).push().setValue(message);
+                        sendNotification();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 //            cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).child("recentMessage").setValue(messageText);
 //            cDatabaseRef.child("message").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).child("recentTime").setValue(new Date().getTime());
             cInputMessage.setText("");

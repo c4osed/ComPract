@@ -105,7 +105,8 @@ public class MyClass {
             String date1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(userOnlineTime + 1 * 60 * 1000);
             String date2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(userOnlineTime + 2 * 60 * 1000);
             String dateArray[] = {nowTime, date1, date2};
-            if (Arrays.asList(dateArray).contains(onlineTime)) {
+//            Log.e(nowTime+"+"+date1+"+"+date2+)
+            if (Arrays.asList(dateArray).contains(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(onlineTime))) {
                 return true;
             }
             return false;
