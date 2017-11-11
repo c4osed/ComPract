@@ -49,6 +49,8 @@ public class ViewProfileActivity extends BaseActivity {
     private TextView cTextNative;
     private TextView cTextLearn;
 
+    private Button cButtonBlock;
+
     HashMap<String, String> map;
 
     private int following;
@@ -77,6 +79,7 @@ public class ViewProfileActivity extends BaseActivity {
         cTextCountry = (TextView) findViewById(R.id.TextCountryResult);
         cTextNative = (TextView) findViewById(R.id.TextNativeResult);
         cTextLearn = (TextView) findViewById(R.id.TextLearnResult);
+        cButtonBlock = (Button) findViewById(R.id.ButtonBlock);
 
         MyClass mc = new MyClass();
 
@@ -97,6 +100,7 @@ public class ViewProfileActivity extends BaseActivity {
         cButtonMessage.setOnClickListener(clickListener);
         cButtonFollow.setOnClickListener(clickListener);
         cLayoutLearn.setOnClickListener(clickListener);
+        cButtonBlock.setOnClickListener(clickListener);
 
         cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,6 +138,26 @@ public class ViewProfileActivity extends BaseActivity {
 
             }
         });
+
+        cDatabaseRef.child("block").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    cButtonBlock.setText("Unblock");
+                }
+
+//                try{
+//                    Toast.makeText(ViewProfileActivity.this,dataSnapshot.getValue()+"", Toast.LENGTH_LONG).show();
+//                }catch (Exception ex){
+//
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -161,6 +185,9 @@ public class ViewProfileActivity extends BaseActivity {
                 case R.id.LayoutLearn:
                     listLearn();
                     break;
+                case R.id.ButtonBlock:
+                    blockUser();
+                    break;
             }
         }
     };
@@ -177,8 +204,6 @@ public class ViewProfileActivity extends BaseActivity {
     }
 
     private void follow() {
-
-
         if (cButtonFollow.getText().equals("Follow")) {
             cDatabaseRef.child("following").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
             cDatabaseRef.child("follower").child(map.get("UID")).child(cAuth.getCurrentUser().getUid()).setValue(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
@@ -198,6 +223,16 @@ public class ViewProfileActivity extends BaseActivity {
             cButtonFollow.setText("Follow");
             cTextFollower.setText(follower - 1 + "");
 
+        }
+    }
+
+    private void blockUser(){
+        if(cButtonBlock.getText().toString().equalsIgnoreCase("Unblock")){
+            cDatabaseRef.child("block").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).removeValue();
+            cButtonBlock.setText("Block");
+        }else {
+            cDatabaseRef.child("block").child(cAuth.getCurrentUser().getUid()).child(map.get("UID")).setValue("blocked");
+            cButtonBlock.setText("Unblock");
         }
     }
 }

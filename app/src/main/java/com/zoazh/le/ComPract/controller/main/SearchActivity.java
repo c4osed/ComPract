@@ -511,6 +511,7 @@ public class SearchActivity extends BaseActivity {
                             continue;
                         }
 
+
                         MyClass mc = new MyClass();
                         int vAge = Integer.parseInt(mc.GetAge(user.DOB));
 
